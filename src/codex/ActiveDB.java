@@ -7,6 +7,8 @@ package codex;
 
 import java.sql.*;
 import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  *
@@ -28,6 +30,6 @@ public class ActiveDB {
             System.out.println("No Database " + e);
             return null;
         }
-
     }
+
 }

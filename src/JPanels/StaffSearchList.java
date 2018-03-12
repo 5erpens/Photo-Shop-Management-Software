@@ -5,6 +5,7 @@
  */
 package JPanels;
 
+import codex.MySQLQueries;
 import com.mysql.jdbc.StringUtils;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -22,6 +23,8 @@ public class StaffSearchList extends javax.swing.JFrame {
     private Statement pst = null;
 
     private ResultSet rs = null;
+    
+    private MySQLQueries SQuery = null;
 
     /**
      * Creates new form StaffSearchList
@@ -30,7 +33,9 @@ public class StaffSearchList extends javax.swing.JFrame {
         this.conn = conn;
         this.setUndecorated(true);
         initComponents();
-        setCTable(s);
+        SQuery = new MySQLQueries(conn);
+        id.setText(s);
+        cTable.setModel(SQuery.SearchStaff(s));
     }
 
     /**
@@ -179,64 +184,31 @@ public class StaffSearchList extends javax.swing.JFrame {
 
     private void Submit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Submit1ActionPerformed
         // TODO add your handling code here:
-        setCTable(id.getText());
+        cTable.setModel(SQuery.SearchStaff(id.getText()));
     }//GEN-LAST:event_Submit1ActionPerformed
 
     private void idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idActionPerformed
         // TODO add your handling code here:
-        setCTable(id.getText());
+        cTable.setModel(SQuery.SearchStaff(id.getText()));
     }//GEN-LAST:event_idActionPerformed
 
     private void idKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idKeyPressed
         // TODO add your handling code here:
-        setCTable(id.getText());
+        cTable.setModel(SQuery.SearchStaff(id.getText()));
 
     }//GEN-LAST:event_idKeyPressed
 
     private void idKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idKeyTyped
         // TODO add your handling code here:
-        setCTable(id.getText());
+        cTable.setModel(SQuery.SearchStaff(id.getText()));
     }//GEN-LAST:event_idKeyTyped
 
     private void idKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idKeyReleased
         // TODO add your handling code here:
-        setCTable(id.getText());
+        cTable.setModel(SQuery.SearchStaff(id.getText()));
     }//GEN-LAST:event_idKeyReleased
 
-    private void setCTable(String s) {
-        try {
-
-            String query;
-            if (s.endsWith("ID")) {
-                String s1 = s.substring(0, s.length() - 2);
-                if (s1.matches("\\d+")) {
-                    query = "select id,role,first_name,last_name,email from staff_account where  id = " + Integer.parseInt(s1);
-                } else {
-                    query = "select id,role,first_name,last_name,email from staff_account where  role || first_name || last_name|| email like '%" + s + "%'";
-                }
-            } else {
-                query = "select id,role,first_name,last_name,email from staff_account where  role || first_name || last_name|| email like '%" + s + "%'";
-            }
-
-            DefaultTableModel d = new DefaultTableModel();
-            d.setColumnIdentifiers(new Object[]{"ID", "Role", "First Name", "Last Name", "emailID"});
-
-            pst = conn.createStatement();
-            rs = pst.executeQuery(query);
-            Object[] obj = new Object[5];
-            while (rs.next()) {
-                obj[0] = rs.getInt("id");
-                obj[1] = rs.getString("role");
-                obj[2] = rs.getString("first_name");
-                obj[3] = rs.getString("last_name");
-                obj[4] = rs.getString("email");
-                d.addRow(obj);
-            }
-            cTable.setModel(d);
-        } catch (Exception e) {
-            System.out.println("Exception in Staff List: " + e);
-        }
-    }
+    
 
     /**
      * @param args the command line arguments

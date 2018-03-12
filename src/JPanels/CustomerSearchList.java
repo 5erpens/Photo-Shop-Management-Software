@@ -5,6 +5,7 @@
  */
 package JPanels;
 
+import codex.MySQLQueries;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -22,6 +23,8 @@ public class CustomerSearchList extends javax.swing.JFrame {
 
     private ResultSet rs = null;
 
+    private MySQLQueries SQuery = null;
+
     /**
      * Creates new form CustomerSearchList
      */
@@ -29,7 +32,9 @@ public class CustomerSearchList extends javax.swing.JFrame {
         this.conn = conn;
         this.setUndecorated(true);
         initComponents();
-        setCTable(s);
+        SQuery = new MySQLQueries(conn);
+        id.setText(s);
+        cTable.setModel(SQuery.SearchCustomer(s));
     }
 
     /**
@@ -184,51 +189,29 @@ public class CustomerSearchList extends javax.swing.JFrame {
 
     private void Submit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Submit1ActionPerformed
         // TODO add your handling code here:
-        setCTable(id.getText());
+        cTable.setModel(SQuery.SearchCustomer(id.getText()));
     }//GEN-LAST:event_Submit1ActionPerformed
 
     private void idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idActionPerformed
         // TODO add your handling code here:
-        setCTable(id.getText());
+        cTable.setModel(SQuery.SearchCustomer(id.getText()));
     }//GEN-LAST:event_idActionPerformed
 
     private void idKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idKeyPressed
         // TODO add your handling code here:
-        setCTable(id.getText());
+        cTable.setModel(SQuery.SearchCustomer(id.getText()));
 
     }//GEN-LAST:event_idKeyPressed
 
     private void idKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idKeyTyped
         // TODO add your handling code here:
-        setCTable(id.getText());
+        cTable.setModel(SQuery.SearchCustomer(id.getText()));
     }//GEN-LAST:event_idKeyTyped
 
     private void idKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idKeyReleased
         // TODO add your handling code here:
-        setCTable(id.getText());
+        cTable.setModel(SQuery.SearchCustomer(id.getText()));
     }//GEN-LAST:event_idKeyReleased
-
-    private void setCTable(String s) {
-
-        try {
-
-            DefaultTableModel d = new DefaultTableModel();
-            d.setColumnIdentifiers(new Object[]{"First Name", "Last Name", "emailID"});
-            String query = "select first_name,last_name,email from customer_account where first_name || last_name|| email like '%" + s + "%'";
-            pst = conn.createStatement();
-            rs = pst.executeQuery(query);
-            Object[] obj = new Object[3];
-            while (rs.next()) {
-                obj[0] = rs.getString("first_name");
-                obj[1] = rs.getString("last_name");
-                obj[2] = rs.getString("email");
-                d.addRow(obj);
-            }
-            cTable.setModel(d);
-        } catch (Exception e) {
-            System.out.println("Exception in Customer List: " + e);
-        }
-    }
 
     /**
      * @param args the command line arguments

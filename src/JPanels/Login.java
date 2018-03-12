@@ -26,6 +26,8 @@ public class Login extends javax.swing.JFrame {
     private PreparedStatement pst = null;
 
     private ResultSet rs = null;
+    
+    private MySQLQueries SQuery = null;
 
     /**
      * Creates new form Login
@@ -38,6 +40,7 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         this.setSize((int) windowSize.getScreenSize().getWidth(), (int) windowSize.getScreenSize().getHeight());
         conn = ActiveDB.initiate();
+        SQuery = new MySQLQueries(conn);
     }
 
     /**
@@ -170,24 +173,14 @@ public class Login extends javax.swing.JFrame {
 
     private void SubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitActionPerformed
         // TODO add your handling code here:
-        String query = "select * from staff_account where id=? and password=?";
 
-        try {
-            pst = conn.prepareStatement(query);
-            pst.setString(1, username.getText());
-            pst.setString(2, pass.getText());
-            rs = pst.executeQuery();
-
-            if (rs.next()) {
+            if (SQuery.LoginStaff(username.getText(),pass.getText())) {
                 new Dashboard(conn).setVisible(true);
                 this.dispose();
             } else {
                 text.setText("Invalid username or password");
             }
-        } catch (Exception e) {
-            System.out.println("Exception: " + e);
 
-        }
     }//GEN-LAST:event_SubmitActionPerformed
 
     private void Submit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Submit1ActionPerformed
