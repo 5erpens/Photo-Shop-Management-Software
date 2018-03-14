@@ -20,10 +20,6 @@ public class Dashboard extends javax.swing.JFrame {
 
     private static Connection conn = null;
 
-    private PreparedStatement pst = null;
-
-    private ResultSet rs = null;
-
     /**
      * Creates new form Login
      */
@@ -473,7 +469,7 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void Submit6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Submit6ActionPerformed
         // TODO add your handling code here:
-        new NewStaffAcc().show();
+        new NewStaffAcc(conn).show();
     }//GEN-LAST:event_Submit6ActionPerformed
 
     private void Submit7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Submit7ActionPerformed

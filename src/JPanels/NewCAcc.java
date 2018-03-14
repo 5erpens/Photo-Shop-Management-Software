@@ -6,10 +6,13 @@
 package JPanels;
 
 import codex.Bootstrap;
+import codex.CodeSet;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 
 /**
  *
@@ -25,6 +28,8 @@ public class NewCAcc extends javax.swing.JFrame {
     private PreparedStatement pst = null;
 
     private ResultSet rs = null;
+    
+    private CodeSet codeset = null;
 
     public NewCAcc(Connection conn) {
         this.conn = conn;
@@ -38,7 +43,7 @@ public class NewCAcc extends javax.swing.JFrame {
         jPanel2.setBackground(java.awt.Color.decode(template.getBackgroundSlide()));
         jPanel1.setBackground(java.awt.Color.decode(template.getTextColour()));
         jLabel1.setForeground(java.awt.Color.decode(template.getTextColour()));
-
+        populateCountryList();
     }
 
     /**
@@ -61,7 +66,7 @@ public class NewCAcc extends javax.swing.JFrame {
         jTextField7 = new javax.swing.JTextField();
         jTextField8 = new javax.swing.JTextField();
         jTextField10 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        country = new javax.swing.JComboBox<>();
         jTextField12 = new javax.swing.JTextField();
         jComboBox2 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
@@ -109,8 +114,8 @@ public class NewCAcc extends javax.swing.JFrame {
         jTextField10.setText("Address 1");
         jPanel1.add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 280, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Country", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 280, -1));
+        country.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Country", "Item 2", "Item 3", "Item 4" }));
+        jPanel1.add(country, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 280, -1));
 
         jTextField12.setText("Email Address");
         jPanel1.add(jTextField12, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 280, -1));
@@ -140,6 +145,13 @@ public class NewCAcc extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    public void populateCountryList(){
+        codeset = new CodeSet();
+        DefaultComboBoxModel dm = new DefaultComboBoxModel(codeset.getAllCountries());
+        country.setModel(dm);
+        country.setSelectedIndex(77);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -173,12 +185,13 @@ public class NewCAcc extends javax.swing.JFrame {
                 new NewCAcc(conn).setVisible(true);
             }
         });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> country;
     private javax.swing.JButton exit;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

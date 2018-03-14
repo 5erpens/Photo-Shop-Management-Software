@@ -129,4 +129,10 @@ public class MySQLQueries {
             return null;
         }
     }
+    
+    //Create new staff account
+    public void CreateStaff() {
+        
+        
+    }
 }
