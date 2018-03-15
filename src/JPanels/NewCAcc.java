@@ -7,6 +7,7 @@ package JPanels;
 
 import codex.Bootstrap;
 import codex.CodeSet;
+import codex.MySQLQueries;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,8 +29,10 @@ public class NewCAcc extends javax.swing.JFrame {
     private PreparedStatement pst = null;
 
     private ResultSet rs = null;
-    
+
     private CodeSet codeset = null;
+
+    private MySQLQueries SQuery = null;
 
     public NewCAcc(Connection conn) {
         this.conn = conn;
@@ -43,6 +46,7 @@ public class NewCAcc extends javax.swing.JFrame {
         jPanel2.setBackground(java.awt.Color.decode(template.getBackgroundSlide()));
         jPanel1.setBackground(java.awt.Color.decode(template.getTextColour()));
         jLabel1.setForeground(java.awt.Color.decode(template.getTextColour()));
+        SQuery = new MySQLQueries(conn);
         populateCountryList();
     }
 
@@ -59,17 +63,18 @@ public class NewCAcc extends javax.swing.JFrame {
         exit = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField10 = new javax.swing.JTextField();
+        lName = new javax.swing.JTextField();
+        county = new javax.swing.JTextField();
+        ad2 = new javax.swing.JTextField();
+        fName = new javax.swing.JTextField();
+        phone = new javax.swing.JTextField();
+        city = new javax.swing.JTextField();
+        ad1 = new javax.swing.JTextField();
         country = new javax.swing.JComboBox<>();
-        jTextField12 = new javax.swing.JTextField();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        email = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        postcode = new javax.swing.JTextField();
+        error = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -93,35 +98,32 @@ public class NewCAcc extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTextField1.setText("Last Name");
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 110, 280, -1));
+        lName.setText("Last Name");
+        jPanel1.add(lName, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 110, 280, -1));
 
-        jTextField3.setText("Postcode");
-        jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 210, 180, -1));
+        county.setText("County (Optional)");
+        jPanel1.add(county, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, 170, -1));
 
-        jTextField5.setText("Address 2 (optional)");
-        jPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 160, 280, -1));
+        ad2.setText("Address 2 (optional)");
+        jPanel1.add(ad2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 160, 280, -1));
 
-        jTextField6.setText("First Name");
-        jPanel1.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 280, -1));
+        fName.setText("First Name");
+        jPanel1.add(fName, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 280, -1));
 
-        jTextField7.setText("Contact Number");
-        jPanel1.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 310, 280, -1));
+        phone.setText("Contact Number");
+        jPanel1.add(phone, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 310, 280, -1));
 
-        jTextField8.setText("Town/City");
-        jPanel1.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 180, -1));
+        city.setText("Town/City");
+        jPanel1.add(city, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 180, -1));
 
-        jTextField10.setText("Address 1");
-        jPanel1.add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 280, -1));
+        ad1.setText("Address 1");
+        jPanel1.add(ad1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 280, -1));
 
-        country.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Country", "Item 2", "Item 3", "Item 4" }));
+        country.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Country" }));
         jPanel1.add(country, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 280, -1));
 
-        jTextField12.setText("Email Address");
-        jPanel1.add(jTextField12, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 280, -1));
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "County (Optional)", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, 160, -1));
+        email.setText("Email Address");
+        jPanel1.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 280, -1));
 
         jButton1.setText("Submit");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -130,6 +132,14 @@ public class NewCAcc extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(507, 360, 120, -1));
+
+        postcode.setText("Postcode");
+        jPanel1.add(postcode, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 210, 180, -1));
+
+        error.setForeground(new java.awt.Color(255, 0, 0));
+        error.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        error.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(error, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 590, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 720, 420));
 
@@ -143,15 +153,31 @@ public class NewCAcc extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+
+        error.setText("");
+        if ((fName.getText().equals("First Name") || lName.getText().equals("Lastname") || ad1.getText().equals("Address 1") || city.getText().equals("Town/City") || postcode.getText().equals("Postcode") || email.getText().equals("Email Address") || phone.getText().equals("Contact Number"))
+                || (fName.getText().equals("") || lName.getText().equals("") || ad1.getText().equals("") || city.getText().equals("") || postcode.getText().equals("") || email.getText().equals("") || phone.getText().equals(""))) {
+            error.setText("Please fill all the section");
+        } else if (!(phone.getText().matches("\\d+")) || (fName.getText().matches(".*\\d+.*")) || (lName.getText().matches(".*\\d+.*")) || !(codeset.isValidEmailAddress(email.getText()))) {
+            error.setText("Please enter valid input");
+        } else {
+            if (ad2.getText().equals("Address 2 (optional)")) {
+                ad2.setText(null);
+            }
+            if (county.getText().equals("County (Optional)")) {
+                county.setText(null);
+            }
+            SQuery.CreateCustomer(fName.getText(), lName.getText(), ad1.getText(), ad2.getText(), city.getText(), county.getText(), postcode.getText(), country.getSelectedItem().toString(), email.getText(), Long.parseLong(phone.getText()));
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public void populateCountryList(){
+    public void populateCountryList() {
         codeset = new CodeSet();
         DefaultComboBoxModel dm = new DefaultComboBoxModel(codeset.getAllCountries());
         country.setModel(dm);
         country.setSelectedIndex(77);
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -185,24 +211,25 @@ public class NewCAcc extends javax.swing.JFrame {
                 new NewCAcc(conn).setVisible(true);
             }
         });
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField ad1;
+    private javax.swing.JTextField ad2;
+    private javax.swing.JTextField city;
     private javax.swing.JComboBox<String> country;
+    private javax.swing.JTextField county;
+    private javax.swing.JTextField email;
+    private javax.swing.JLabel error;
     private javax.swing.JButton exit;
+    private javax.swing.JTextField fName;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField lName;
+    private javax.swing.JTextField phone;
+    private javax.swing.JTextField postcode;
     // End of variables declaration//GEN-END:variables
 }

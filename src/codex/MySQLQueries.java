@@ -8,6 +8,7 @@ package codex;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -25,6 +26,10 @@ public class MySQLQueries {
     private Statement st = null;
     private ResultSet rs = null;
 
+    private String query;
+
+    private CodeSet codeset = null;
+
     // Log Colours
     //Red
     private static final String ANSI_RED = "\u001B[31m";
@@ -35,19 +40,13 @@ public class MySQLQueries {
 
     public MySQLQueries(Connection conn) {
         this.conn = conn;
-    }
-
-    //Date for Logs
-    private String DateTime() {
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Calendar cal = Calendar.getInstance();
-        return dateFormat.format(cal.getTime());
+        codeset = new CodeSet();
     }
 
     //Login Staff Account
     public boolean LoginStaff(String username, String password) {
         try {
-            String query = "select * from staff_account where staff_id=? and password=?";
+            query = "select * from staff_account where staff_id=? and password=?";
             pst = conn.prepareStatement(query);
             pst.setString(1, username);
             pst.setString(2, password);
@@ -55,10 +54,10 @@ public class MySQLQueries {
 
             //Log
             if (rs.next()) {
-                System.out.println(ANSI_GREEN + DateTime() + ": Account access attempt: Staff Account ID: " + username + ": Authentication status: Successful" + ANSI_RESET);
+                System.out.println(ANSI_GREEN + codeset.DateTime() + ": Account access attempt: Staff Account ID: " + username + ": Authentication status: Successful" + ANSI_RESET);
                 return true;
             } else {
-                System.out.println(ANSI_RED + DateTime() + ": Account access attempt: Staff Account ID: " + username + ": Authentication status: Failed" + ANSI_RESET);
+                System.out.println(ANSI_RED + codeset.DateTime() + ": Account access attempt: Staff Account ID: " + username + ": Authentication status: Failed" + ANSI_RESET);
                 return false;
             }
         } catch (Exception e) {
@@ -71,9 +70,8 @@ public class MySQLQueries {
     public DefaultTableModel SearchStaff(String s) {
 
         //Log
-        System.out.println(DateTime() + ": Searching in Staff Search : Keyword: " + s);
+        System.out.println(codeset.DateTime() + ": Searching in Staff Search : Keyword: " + s);
         try {
-            String query;
             if (s.endsWith("ID")) {
                 String s1 = s.substring(0, s.length() - 2);
                 if (s1.matches("\\d+")) {
@@ -108,12 +106,12 @@ public class MySQLQueries {
     public DefaultTableModel SearchCustomer(String s) {
 
         //Log
-        System.out.println(DateTime() + ": Searching in Customer Search : Keyword: " + s);
+        System.out.println(codeset.DateTime() + ": Searching in Customer Search : Keyword: " + s);
         try {
 
             DefaultTableModel d = new DefaultTableModel();
             d.setColumnIdentifiers(new Object[]{"First Name", "Last Name", "emailID"});
-            String query = "select first_name,last_name,email from customer_account where first_name || last_name|| email like '%" + s + "%'";
+            query = "select first_name,last_name,email from customer_account where first_name || last_name|| email like '%" + s + "%'";
             st = conn.createStatement();
             rs = st.executeQuery(query);
             Object[] obj = new Object[3];
@@ -129,10 +127,55 @@ public class MySQLQueries {
             return null;
         }
     }
-    
+
     //Create new staff account
-    public void CreateStaff() {
-        
-        
+    public void CreateStaff(String first_name, String last_name, String address_1, String address_2, String town_city, String county, String postcode, String country, String role, String email, long contact_no) {
+
+        query = "insert into staff_account (first_name, last_name, address_1, address_2, town_city, county, postcode, country, role, email, contact_no)" + " value (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            pst = conn.prepareStatement(query);
+            pst.setString(1, first_name);
+            pst.setString(2, last_name);
+            pst.setString(3, address_1);
+            pst.setString(4, address_2);
+            pst.setString(5, town_city);
+            pst.setString(6, county);
+            pst.setString(7, postcode);
+            pst.setString(8, country);
+            pst.setString(9, role);
+            pst.setString(10, email);
+            pst.setLong(11, contact_no);
+            pst.executeUpdate();
+            System.out.println(codeset.DateTime() + ": New staff account creation successful: Staff Last Name: " + last_name + " Staff Role: " + role);
+
+        } catch (SQLException e) {
+            System.out.println(codeset.DateTime() + ": New staff account creation failed");
+            System.out.println("Exception in creating staff account: " + e);
+        }
+    }
+
+    //Create new staff account
+    public void CreateCustomer(String first_name, String last_name, String address_1, String address_2, String town_city, String county, String postcode, String country, String email, long contact_no) {
+
+        query = "insert into customer_account (first_name, last_name, address_1, address_2, town_city, county, postcode, country, email, contact_no)" + " value (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            pst = conn.prepareStatement(query);
+            pst.setString(1, first_name);
+            pst.setString(2, last_name);
+            pst.setString(3, address_1);
+            pst.setString(4, address_2);
+            pst.setString(5, town_city);
+            pst.setString(6, county);
+            pst.setString(7, postcode);
+            pst.setString(8, country);
+            pst.setString(9, email);
+            pst.setLong(10, contact_no);
+            pst.executeUpdate();
+            System.out.println(codeset.DateTime() + ": New customer account creation successful: customer Last Name: " + last_name + " customer email: " + email);
+
+        } catch (SQLException e) {
+            System.out.println(codeset.DateTime() + ": New customer account creation failed");
+            System.out.println("Exception in creating customer account: " + e);
+        }
     }
 }

@@ -67,9 +67,10 @@ public class NewStaffAcc extends javax.swing.JFrame {
         ad1 = new javax.swing.JTextField();
         role = new javax.swing.JComboBox<>();
         email = new javax.swing.JTextField();
-        county = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         country = new javax.swing.JComboBox<>();
+        county = new javax.swing.JTextField();
+        error = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -108,6 +109,11 @@ public class NewStaffAcc extends javax.swing.JFrame {
         jPanel1.add(ad2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 160, 280, -1));
 
         fName.setText("First Name");
+        fName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fNameActionPerformed(evt);
+            }
+        });
         jPanel1.add(fName, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 280, -1));
 
         phone.setText("Contact Number");
@@ -119,14 +125,11 @@ public class NewStaffAcc extends javax.swing.JFrame {
         ad1.setText("Address 1");
         jPanel1.add(ad1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 280, -1));
 
-        role.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Role", "Item 2", "Item 3", "Item 4" }));
+        role.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Receptionist", "Technician", "Shift Manager", "Office Manager" }));
         jPanel1.add(role, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 260, 280, -1));
 
         email.setText("Email Address");
         jPanel1.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 280, -1));
-
-        county.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "County (Optional)", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(county, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, 160, -1));
 
         jButton1.setText("Submit");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -144,6 +147,14 @@ public class NewStaffAcc extends javax.swing.JFrame {
         });
         jPanel1.add(country, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 280, -1));
 
+        county.setText("County (Optional)");
+        jPanel1.add(county, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, 170, -1));
+
+        error.setForeground(new java.awt.Color(255, 0, 0));
+        error.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        error.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(error, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 590, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 720, 420));
 
         pack();
@@ -156,7 +167,21 @@ public class NewStaffAcc extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
+        error.setText("");
+        if((fName.getText().equals("First Name") || lName.getText().equals("Lastname") || ad1.getText().equals("Address 1")|| city.getText().equals("Town/City")|| postcode.getText().equals("Postcode")|| email.getText().equals("Email Address")|| phone.getText().equals("Contact Number"))
+                ||(fName.getText().equals("") || lName.getText().equals("") || ad1.getText().equals("")|| city.getText().equals("")|| postcode.getText().equals("")|| email.getText().equals("")|| phone.getText().equals(""))){
+            error.setText("Please fill all the section");
+        }else if(!(phone.getText().matches("\\d+")) || (fName.getText().matches(".*\\d+.*")) || (lName.getText().matches(".*\\d+.*")) || !(codeset.isValidEmailAddress(email.getText()))){
+            error.setText("Please enter valid input");
+        }else{
+            if(ad2.getText().equals("Address 2 (optional)")){
+                ad2.setText(null);
+            }
+            if(county.getText().equals("County (Optional)")){
+                county.setText(null);
+            }
+            SQuery.CreateStaff(fName.getText(),lName.getText(), ad1.getText(), ad2.getText(), city.getText(), county.getText(), postcode.getText(), country.getSelectedItem().toString(), role.getSelectedItem().toString(), email.getText(), Long.parseLong(phone.getText()));
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void ad2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ad2ActionPerformed
@@ -166,6 +191,10 @@ public class NewStaffAcc extends javax.swing.JFrame {
     private void countryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_countryActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_countryActionPerformed
+
+    private void fNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fNameActionPerformed
     
     public void populateCountryList(){
         codeset = new CodeSet();
@@ -214,8 +243,9 @@ public class NewStaffAcc extends javax.swing.JFrame {
     private javax.swing.JTextField ad2;
     private javax.swing.JTextField city;
     private javax.swing.JComboBox<String> country;
-    private javax.swing.JComboBox<String> county;
+    private javax.swing.JTextField county;
     private javax.swing.JTextField email;
+    private javax.swing.JLabel error;
     private javax.swing.JButton exit;
     private javax.swing.JTextField fName;
     private javax.swing.JButton jButton1;

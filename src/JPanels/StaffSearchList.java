@@ -170,6 +170,8 @@ public class StaffSearchList extends javax.swing.JFrame {
 
     private void SubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitActionPerformed
         // TODO add your handling code here:
+        new NewStaffAcc(conn).show();
+        this.dispose();
     }//GEN-LAST:event_SubmitActionPerformed
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
