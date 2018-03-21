@@ -33,6 +33,9 @@ public class NewCAcc extends javax.swing.JFrame {
     private CodeSet codeset = null;
 
     private MySQLQueries SQuery = null;
+    
+    int mouseX;
+    int mouseY;
 
     public NewCAcc(Connection conn) {
         this.conn = conn;
@@ -79,6 +82,16 @@ public class NewCAcc extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel2.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel2MouseDragged(evt);
+            }
+        });
+        jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel2MousePressed(evt);
+            }
+        });
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         exit.setText("X");
@@ -87,15 +100,17 @@ public class NewCAcc extends javax.swing.JFrame {
                 exitActionPerformed(evt);
             }
         });
-        jPanel2.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, -10, -1, 40));
+        jPanel2.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, -10, -1, 40));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setText("Create New Customer Account");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 280, -1));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 720, 60));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 670, 60));
 
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel1.setForeground(new java.awt.Color(171, 172, 173));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lName.setText("Last Name");
@@ -141,7 +156,7 @@ public class NewCAcc extends javax.swing.JFrame {
         error.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel1.add(error, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 590, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 720, 420));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 680, 420));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -167,9 +182,21 @@ public class NewCAcc extends javax.swing.JFrame {
             if (county.getText().equals("County (Optional)")) {
                 county.setText(null);
             }
-            SQuery.CreateCustomer(fName.getText(), lName.getText(), ad1.getText(), ad2.getText(), city.getText(), county.getText(), postcode.getText(), country.getSelectedItem().toString(), email.getText(), Long.parseLong(phone.getText()));
+            if(SQuery.CreateCustomer(fName.getText(), lName.getText(), ad1.getText(), ad2.getText(), city.getText(), county.getText(), postcode.getText(), country.getSelectedItem().toString(), email.getText(), Long.parseLong(phone.getText()))){
+                new CustomerAccount(conn,email.getText()).setVisible(true);
+                this.dispose();
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jPanel2MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseDragged
+        this.setLocation(evt.getXOnScreen()-mouseX, evt.getYOnScreen()-mouseY);
+    }//GEN-LAST:event_jPanel2MouseDragged
+
+    private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MousePressed
+        mouseX=evt.getX();
+        mouseY=evt.getY();
+    }//GEN-LAST:event_jPanel2MousePressed
 
     public void populateCountryList() {
         codeset = new CodeSet();

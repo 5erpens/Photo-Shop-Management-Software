@@ -69,8 +69,6 @@ public class MySQLQueries {
     //Staff Search
     public DefaultTableModel SearchStaff(String s) {
 
-        //Log
-        System.out.println(codeset.DateTime() + ": Searching in Staff Search : Keyword: " + s);
         try {
             if (s.endsWith("ID")) {
                 String s1 = s.substring(0, s.length() - 2);
@@ -105,8 +103,6 @@ public class MySQLQueries {
     //Customer Search
     public DefaultTableModel SearchCustomer(String s) {
 
-        //Log
-        System.out.println(codeset.DateTime() + ": Searching in Customer Search : Keyword: " + s);
         try {
 
             DefaultTableModel d = new DefaultTableModel();
@@ -129,7 +125,7 @@ public class MySQLQueries {
     }
 
     //Create new staff account
-    public void CreateStaff(String first_name, String last_name, String address_1, String address_2, String town_city, String county, String postcode, String country, String role, String email, long contact_no) {
+    public boolean CreateStaff(String first_name, String last_name, String address_1, String address_2, String town_city, String county, String postcode, String country, String role, String email, long contact_no) {
 
         query = "insert into staff_account (first_name, last_name, address_1, address_2, town_city, county, postcode, country, role, email, contact_no)" + " value (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
@@ -147,15 +143,17 @@ public class MySQLQueries {
             pst.setLong(11, contact_no);
             pst.executeUpdate();
             System.out.println(codeset.DateTime() + ": New staff account creation successful: Staff Last Name: " + last_name + " Staff Role: " + role);
+            return true;
 
         } catch (SQLException e) {
             System.out.println(codeset.DateTime() + ": New staff account creation failed");
             System.out.println("Exception in creating staff account: " + e);
+            return false;
         }
     }
 
     //Create new staff account
-    public void CreateCustomer(String first_name, String last_name, String address_1, String address_2, String town_city, String county, String postcode, String country, String email, long contact_no) {
+    public boolean CreateCustomer(String first_name, String last_name, String address_1, String address_2, String town_city, String county, String postcode, String country, String email, long contact_no) {
 
         query = "insert into customer_account (first_name, last_name, address_1, address_2, town_city, county, postcode, country, email, contact_no)" + " value (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
@@ -172,10 +170,14 @@ public class MySQLQueries {
             pst.setLong(10, contact_no);
             pst.executeUpdate();
             System.out.println(codeset.DateTime() + ": New customer account creation successful: customer Last Name: " + last_name + " customer email: " + email);
+            return true;
 
         } catch (SQLException e) {
             System.out.println(codeset.DateTime() + ": New customer account creation failed");
             System.out.println("Exception in creating customer account: " + e);
+            return false;
         }
     }
+    
+    
 }

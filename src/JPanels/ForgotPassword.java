@@ -7,6 +7,7 @@ package JPanels;
 
 import codex.Bootstrap;
 import java.awt.Color;
+import javax.swing.JFrame;
 
 /**
  *
@@ -17,6 +18,10 @@ public class ForgotPassword extends javax.swing.JFrame {
     /**
      * Creates new form ForgotPassword
      */
+    
+    int mouseX;
+    int mouseY;
+    
     public ForgotPassword() {
         Bootstrap template = new Bootstrap();
         this.setUndecorated(true);
@@ -28,6 +33,7 @@ public class ForgotPassword extends javax.swing.JFrame {
         jLabel1.setForeground(java.awt.Color.decode(template.getTextColour()));
         jLabel2.setForeground(java.awt.Color.decode(template.getBackgroundSlide()));
         text.setForeground(java.awt.Color.decode(template.getError()));
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -52,7 +58,9 @@ public class ForgotPassword extends javax.swing.JFrame {
         setType(java.awt.Window.Type.POPUP);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel1.setForeground(new java.awt.Color(171, 172, 173));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Submit.setText("Submit");
@@ -61,18 +69,28 @@ public class ForgotPassword extends javax.swing.JFrame {
                 SubmitActionPerformed(evt);
             }
         });
-        jPanel1.add(Submit, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 150, -1, -1));
+        jPanel1.add(Submit, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 150, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setText("Please enter the your employee ID and administraor will contact you as soon as possible.");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 74, -1, 30));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, -1, 30));
 
         text.setForeground(new java.awt.Color(204, 0, 0));
         jPanel1.add(text, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 270, 20));
 
         id.setText(" Employee ID");
-        jPanel1.add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 110, 622, -1));
+        jPanel1.add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 622, -1));
 
+        jPanel2.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel2MouseDragged(evt);
+            }
+        });
+        jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel2MousePressed(evt);
+            }
+        });
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -89,7 +107,7 @@ public class ForgotPassword extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 60));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 210));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 690, 220));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -105,6 +123,15 @@ public class ForgotPassword extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_exitActionPerformed
+
+    private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MousePressed
+        mouseX=evt.getX();
+        mouseY=evt.getY();
+    }//GEN-LAST:event_jPanel2MousePressed
+
+    private void jPanel2MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseDragged
+        this.setLocation(evt.getXOnScreen()-mouseX, evt.getYOnScreen()-mouseY);
+    }//GEN-LAST:event_jPanel2MouseDragged
 
     /**
      * @param args the command line arguments

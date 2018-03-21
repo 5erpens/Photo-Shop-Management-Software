@@ -9,7 +9,9 @@ import codex.MySQLQueries;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -24,6 +26,9 @@ public class CustomerSearchList extends javax.swing.JFrame {
     private ResultSet rs = null;
 
     private MySQLQueries SQuery = null;
+    
+    int mouseX;
+    int mouseY;
 
     /**
      * Creates new form CustomerSearchList
@@ -35,6 +40,7 @@ public class CustomerSearchList extends javax.swing.JFrame {
         SQuery = new MySQLQueries(conn);
         id.setText(s);
         cTable.setModel(SQuery.SearchCustomer(s));
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -55,10 +61,10 @@ public class CustomerSearchList extends javax.swing.JFrame {
         Submit = new javax.swing.JButton();
         text = new javax.swing.JLabel();
         id = new javax.swing.JTextField();
-        exit = new javax.swing.JButton();
         Submit1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -83,12 +89,27 @@ public class CustomerSearchList extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        cTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cTableMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(cTable);
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 650, 200));
 
         jPanel2.setBackground(new java.awt.Color(59, 63, 66));
         jPanel2.setForeground(new java.awt.Color(59, 63, 66));
+        jPanel2.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel2MouseDragged(evt);
+            }
+        });
+        jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel2MousePressed(evt);
+            }
+        });
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         exit1.setBackground(new java.awt.Color(255, 0, 0));
@@ -139,14 +160,6 @@ public class CustomerSearchList extends javax.swing.JFrame {
         });
         jPanel1.add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 480, 30));
 
-        exit.setText("X");
-        exit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitActionPerformed(evt);
-            }
-        });
-        jPanel1.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, -8, -1, 40));
-
         Submit1.setText("Search");
         Submit1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -155,20 +168,7 @@ public class CustomerSearchList extends javax.swing.JFrame {
         });
         jPanel1.add(Submit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 100, -1, 30));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 690, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-4, 0, 690, 392));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -178,11 +178,6 @@ public class CustomerSearchList extends javax.swing.JFrame {
         new NewCAcc(conn).show();
         this.dispose();
     }//GEN-LAST:event_SubmitActionPerformed
-
-    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_exitActionPerformed
 
     private void exit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exit1ActionPerformed
         // TODO add your handling code here:
@@ -214,6 +209,22 @@ public class CustomerSearchList extends javax.swing.JFrame {
         // TODO add your handling code here:
         cTable.setModel(SQuery.SearchCustomer(id.getText()));
     }//GEN-LAST:event_idKeyReleased
+
+    private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MousePressed
+        mouseX=evt.getX();
+        mouseY=evt.getY();
+    }//GEN-LAST:event_jPanel2MousePressed
+
+    private void jPanel2MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseDragged
+        this.setLocation(evt.getXOnScreen()-mouseX, evt.getYOnScreen()-mouseY);
+    }//GEN-LAST:event_jPanel2MouseDragged
+
+    private void cTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cTableMouseClicked
+        int index = cTable.getSelectedRow();
+        TableModel model = cTable.getModel();
+        new CustomerAccount(conn,model.getValueAt(index, 2).toString()).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_cTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -254,7 +265,6 @@ public class CustomerSearchList extends javax.swing.JFrame {
     private javax.swing.JButton Submit;
     private javax.swing.JButton Submit1;
     private javax.swing.JTable cTable;
-    private javax.swing.JButton exit;
     private javax.swing.JButton exit1;
     private javax.swing.JTextField id;
     private javax.swing.JLabel jLabel1;

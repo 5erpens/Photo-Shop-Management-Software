@@ -10,7 +10,9 @@ import com.mysql.jdbc.StringUtils;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -25,6 +27,9 @@ public class StaffSearchList extends javax.swing.JFrame {
     private ResultSet rs = null;
     
     private MySQLQueries SQuery = null;
+    
+    int mouseX;
+    int mouseY;
 
     /**
      * Creates new form StaffSearchList
@@ -36,6 +41,7 @@ public class StaffSearchList extends javax.swing.JFrame {
         SQuery = new MySQLQueries(conn);
         id.setText(s);
         cTable.setModel(SQuery.SearchStaff(s));
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -86,6 +92,11 @@ public class StaffSearchList extends javax.swing.JFrame {
             }
         });
         cTable.setColumnSelectionAllowed(true);
+        cTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cTableMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(cTable);
         cTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         if (cTable.getColumnModel().getColumnCount() > 0) {
@@ -96,6 +107,16 @@ public class StaffSearchList extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(59, 63, 66));
         jPanel2.setForeground(new java.awt.Color(59, 63, 66));
+        jPanel2.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel2MouseDragged(evt);
+            }
+        });
+        jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel2MousePressed(evt);
+            }
+        });
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         exit1.setBackground(new java.awt.Color(255, 0, 0));
@@ -179,11 +200,6 @@ public class StaffSearchList extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_exitActionPerformed
 
-    private void exit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exit1ActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_exit1ActionPerformed
-
     private void Submit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Submit1ActionPerformed
         // TODO add your handling code here:
         cTable.setModel(SQuery.SearchStaff(id.getText()));
@@ -209,6 +225,27 @@ public class StaffSearchList extends javax.swing.JFrame {
         // TODO add your handling code here:
         cTable.setModel(SQuery.SearchStaff(id.getText()));
     }//GEN-LAST:event_idKeyReleased
+
+    private void exit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exit1ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_exit1ActionPerformed
+
+    private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MousePressed
+        mouseX=evt.getX();
+        mouseY=evt.getY();
+    }//GEN-LAST:event_jPanel2MousePressed
+
+    private void jPanel2MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseDragged
+        this.setLocation(evt.getXOnScreen()-mouseX, evt.getYOnScreen()-mouseY);
+    }//GEN-LAST:event_jPanel2MouseDragged
+
+    private void cTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cTableMouseClicked
+        int index = cTable.getSelectedRow();
+        TableModel model = cTable.getModel();
+        new StaffAccount(conn,(model.getValueAt(index, 4).toString())).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_cTableMouseClicked
 
     
 

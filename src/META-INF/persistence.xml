@@ -10,4 +10,13 @@
       <property name="javax.persistence.jdbc.password" value="app"/>
     </properties>
   </persistence-unit>
+  <persistence-unit name="bapers?zeroDateTimeBehavior=convertToNullPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/bapers?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="Qwerty@1234"/>
+    </properties>
+  </persistence-unit>
 </persistence>
