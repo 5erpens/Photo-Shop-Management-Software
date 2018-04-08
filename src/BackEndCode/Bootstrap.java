@@ -20,11 +20,6 @@ public class Bootstrap {
 
     private static String error = "#ff0000";
 
-    public static void main(String[] args) {
-        // TODO code application logic here
-
-    }
-
     public static String getTextColour() {
         return textColour;
     }

@@ -12,6 +12,7 @@ import java.awt.Color;
 import java.sql.Connection;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 
 /**
  *
@@ -29,10 +30,13 @@ public class NewStaffAcc extends javax.swing.JFrame {
     
     private static Connection conn = null;
     
+    private static JFrame frame= new JFrame();
+    
     int mouseX;
     int mouseY;
     
-    public NewStaffAcc(Connection conn) {
+    public NewStaffAcc(Connection conn, JFrame frame) {
+        this.frame = frame;
         this.conn = conn;
         Bootstrap template = new Bootstrap();
         this.setUndecorated(true);
@@ -45,6 +49,7 @@ public class NewStaffAcc extends javax.swing.JFrame {
         jPanel1.setBackground(java.awt.Color.decode(template.getTextColour()));
         jLabel1.setForeground(java.awt.Color.decode(template.getTextColour()));
         SQuery = new MySQLQueries(conn);
+        area.setVisible(false);
         populateCountryList();
     }
 
@@ -74,6 +79,7 @@ public class NewStaffAcc extends javax.swing.JFrame {
         country = new javax.swing.JComboBox<>();
         county = new javax.swing.JTextField();
         error = new javax.swing.JLabel();
+        area = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -140,7 +146,12 @@ public class NewStaffAcc extends javax.swing.JFrame {
         jPanel1.add(ad1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 280, -1));
 
         role.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Receptionist", "Technician", "Shift Manager", "Office Manager" }));
-        jPanel1.add(role, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 260, 280, -1));
+        role.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                roleActionPerformed(evt);
+            }
+        });
+        jPanel1.add(role, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, 170, -1));
 
         email.setText("Email Address");
         jPanel1.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 280, -1));
@@ -159,7 +170,7 @@ public class NewStaffAcc extends javax.swing.JFrame {
                 countryActionPerformed(evt);
             }
         });
-        jPanel1.add(country, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 280, -1));
+        jPanel1.add(country, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 180, -1));
 
         county.setText("County (Optional)");
         jPanel1.add(county, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, 170, -1));
@@ -169,13 +180,16 @@ public class NewStaffAcc extends javax.swing.JFrame {
         error.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel1.add(error, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 590, -1));
 
+        area.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Development Area", "Copy Room", "Packing Room", "Finishing Room" }));
+        jPanel1.add(area, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 260, 180, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 730, 420));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
-        // TODO add your handling code here:
+        frame.enable(true);
         this.dispose();
     }//GEN-LAST:event_exitActionPerformed
 
@@ -194,8 +208,8 @@ public class NewStaffAcc extends javax.swing.JFrame {
             if(county.getText().equals("County (Optional)")){
                 county.setText(null);
             }
-            if(SQuery.CreateStaff(fName.getText(),lName.getText(), ad1.getText(), ad2.getText(), city.getText(), county.getText(), postcode.getText(), country.getSelectedItem().toString(), role.getSelectedItem().toString(), email.getText(), Long.parseLong(phone.getText()))){
-                new StaffAccount(conn,email.getText()).setVisible(true);
+            if(SQuery.CreateStaff(fName.getText(),lName.getText(), ad1.getText(), ad2.getText(), city.getText(), county.getText(), postcode.getText(), country.getSelectedItem().toString(), role.getSelectedItem().toString(), area.getSelectedItem().toString(), email.getText(), Long.parseLong(phone.getText()))){
+                new StaffAccount(conn,email.getText(),frame).setVisible(true);
                 this.dispose();
             }
         }
@@ -221,6 +235,15 @@ public class NewStaffAcc extends javax.swing.JFrame {
     private void jPanel2MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseDragged
         this.setLocation(evt.getXOnScreen()-mouseX, evt.getYOnScreen()-mouseY);
     }//GEN-LAST:event_jPanel2MouseDragged
+
+    private void roleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roleActionPerformed
+       if(role.getSelectedIndex()==1){
+           area.setVisible(true);
+       }
+       else {
+           area.setVisible(false);
+       }
+    }//GEN-LAST:event_roleActionPerformed
     
     public void populateCountryList(){
         codeset = new CodeSet();
@@ -259,7 +282,7 @@ public class NewStaffAcc extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewStaffAcc(conn).setVisible(true);
+                new NewStaffAcc(conn,new JFrame()).setVisible(true);
             }
         });
     }
@@ -267,6 +290,7 @@ public class NewStaffAcc extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField ad1;
     private javax.swing.JTextField ad2;
+    private javax.swing.JComboBox<String> area;
     private javax.swing.JTextField city;
     private javax.swing.JComboBox<String> country;
     private javax.swing.JTextField county;

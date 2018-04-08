@@ -30,11 +30,14 @@ public class StaffSearchList extends javax.swing.JFrame {
     
     int mouseX;
     int mouseY;
+    
+    private static JFrame frame= new JFrame();
 
     /**
      * Creates new form StaffSearchList
      */
-    public StaffSearchList(Connection conn, String s) {
+    public StaffSearchList(Connection conn, String s,JFrame frame) {
+        this.frame = frame;
         this.conn = conn;
         this.setUndecorated(true);
         initComponents();
@@ -191,7 +194,7 @@ public class StaffSearchList extends javax.swing.JFrame {
 
     private void SubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitActionPerformed
         // TODO add your handling code here:
-        new NewStaffAcc(conn).show();
+        new NewStaffAcc(conn,frame).show();
         this.dispose();
     }//GEN-LAST:event_SubmitActionPerformed
 
@@ -227,7 +230,7 @@ public class StaffSearchList extends javax.swing.JFrame {
     }//GEN-LAST:event_idKeyReleased
 
     private void exit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exit1ActionPerformed
-        // TODO add your handling code here:
+        frame.enable(true);
         this.dispose();
     }//GEN-LAST:event_exit1ActionPerformed
 
@@ -243,7 +246,7 @@ public class StaffSearchList extends javax.swing.JFrame {
     private void cTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cTableMouseClicked
         int index = cTable.getSelectedRow();
         TableModel model = cTable.getModel();
-        new StaffAccount(conn,(model.getValueAt(index, 4).toString())).setVisible(true);
+        new StaffAccount(conn,(model.getValueAt(index, 4).toString()),frame).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_cTableMouseClicked
 
@@ -282,7 +285,7 @@ public class StaffSearchList extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new StaffSearchList(conn, new String()).setVisible(true);
+                new StaffSearchList(conn, new String(), new JFrame()).setVisible(true);
             }
         });
     }

@@ -6,6 +6,7 @@
 package FrontEndGUI;
 
 import BackEndCode.Bootstrap;
+import BackEndCode.IDgen;
 import BackEndCode.MySQLQueries;
 import java.awt.Color;
 import java.awt.Toolkit;
@@ -23,12 +24,16 @@ public class Dashboard extends javax.swing.JFrame {
 
     private static Connection conn = null;
     
-    private static List<String> ls = new ArrayList<String>();
+    private static List<String> ls = new ArrayList<String>();;
+    
+    private IDgen idg;
 
     /**
      * Creates new form Login
      */
     public Dashboard(Connection conn, List<String> ls) {
+        
+        idg = new IDgen();
         this.conn = conn;
         this.ls = ls;
         Bootstrap template = new Bootstrap();
@@ -52,15 +57,18 @@ public class Dashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        dateChooser1 = new cambodia.raven.DateChooser();
         jPanel1 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
-        username4 = new javax.swing.JTextField();
-        employeeLogin7 = new javax.swing.JLabel();
-        Submit4 = new javax.swing.JButton();
         username5 = new javax.swing.JTextField();
         Submit5 = new javax.swing.JButton();
+        employeeLogin6 = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
         employeeLogin20 = new javax.swing.JLabel();
+        employeeLogin7 = new javax.swing.JLabel();
+        jsText = new javax.swing.JTextField();
+        Submit8 = new javax.swing.JButton();
+        js = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
         id = new javax.swing.JLabel();
@@ -115,6 +123,12 @@ public class Dashboard extends javax.swing.JFrame {
         employeeLogin3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
+        dateChooser1.setBackground(new java.awt.Color(171, 172, 173));
+        dateChooser1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        dateChooser1.setForeground(new java.awt.Color(171, 172, 173));
+        dateChooser1.setButton(js);
+        dateChooser1.setTextRefernce(jsText);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -122,30 +136,6 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanel11.setBackground(new java.awt.Color(171, 172, 173));
         jPanel11.setForeground(new java.awt.Color(60, 63, 65));
-        jPanel11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        username4.setText("Customer's Email");
-        username4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                username4userActionPerformed(evt);
-            }
-        });
-        jPanel11.add(username4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, 460, 43));
-
-        employeeLogin7.setBackground(new java.awt.Color(171, 172, 173));
-        employeeLogin7.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        employeeLogin7.setForeground(new java.awt.Color(59, 63, 66));
-        employeeLogin7.setText("Search ");
-        jPanel11.add(employeeLogin7, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 350, -1));
-
-        Submit4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        Submit4.setText("Create");
-        Submit4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Submit4ActionPerformed(evt);
-            }
-        });
-        jPanel11.add(Submit4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 260, 100, 40));
 
         username5.setText("Customer's Name");
         username5.addActionListener(new java.awt.event.ActionListener() {
@@ -153,7 +143,6 @@ public class Dashboard extends javax.swing.JFrame {
                 username5userActionPerformed(evt);
             }
         });
-        jPanel11.add(username5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, 460, 43));
 
         Submit5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         Submit5.setText("Search");
@@ -162,7 +151,11 @@ public class Dashboard extends javax.swing.JFrame {
                 Submit5ActionPerformed(evt);
             }
         });
-        jPanel11.add(Submit5, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 260, 100, 40));
+
+        employeeLogin6.setBackground(new java.awt.Color(171, 172, 173));
+        employeeLogin6.setFont(employeeLogin6.getFont().deriveFont(employeeLogin6.getFont().getStyle() | java.awt.Font.BOLD, employeeLogin6.getFont().getSize()+2));
+        employeeLogin6.setForeground(new java.awt.Color(59, 63, 66));
+        employeeLogin6.setText("Indivisual Performance Report");
 
         jPanel12.setBackground(new java.awt.Color(59, 63, 66));
         jPanel12.setForeground(new java.awt.Color(59, 63, 66));
@@ -171,12 +164,83 @@ public class Dashboard extends javax.swing.JFrame {
         employeeLogin20.setBackground(new java.awt.Color(171, 172, 173));
         employeeLogin20.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         employeeLogin20.setForeground(new java.awt.Color(171, 172, 173));
-        employeeLogin20.setText("Customers");
-        jPanel12.add(employeeLogin20, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 530, 70));
+        employeeLogin20.setText("Reports");
+        jPanel12.add(employeeLogin20, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 510, 70));
 
-        jPanel11.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 70));
+        employeeLogin7.setBackground(new java.awt.Color(171, 172, 173));
+        employeeLogin7.setFont(employeeLogin7.getFont().deriveFont(employeeLogin7.getFont().getStyle() | java.awt.Font.BOLD, employeeLogin7.getFont().getSize()+2));
+        employeeLogin7.setForeground(new java.awt.Color(59, 63, 66));
+        employeeLogin7.setText("Job Sheet");
 
-        jPanel1.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 560, 570, 340));
+        jsText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jsTextuserActionPerformed(evt);
+            }
+        });
+
+        Submit8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        Submit8.setText("Search");
+        Submit8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Submit8ActionPerformed(evt);
+            }
+        });
+
+        js.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        js.setText("...");
+        js.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jsActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addGap(65, 65, 65)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(employeeLogin7)
+                    .addComponent(employeeLogin6))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addComponent(username5, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(Submit5))
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addComponent(jsText, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(js)
+                        .addGap(12, 12, 12)
+                        .addComponent(Submit8))))
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(employeeLogin6, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Submit5)
+                            .addComponent(username5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(employeeLogin7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jsText, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Submit8)
+                        .addComponent(js)))
+                .addGap(162, 162, 162))
+        );
+
+        jPanel1.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(1290, 540, 570, 340));
 
         jPanel9.setBackground(new java.awt.Color(171, 172, 173));
 
@@ -613,7 +677,7 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(Submit7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
-        jPanel1.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 560, 600, 270));
+        jPanel1.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 540, 600, 270));
 
         jPanel2.setBackground(new java.awt.Color(171, 172, 173));
         jPanel2.setForeground(new java.awt.Color(60, 63, 65));
@@ -698,7 +762,7 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(Submit1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1260, 560, 600, 270));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 540, 600, 270));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/3840x2560-3020841-black-and-white_camera_olympus_technology.jpg"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 2060, 1260));
@@ -709,8 +773,8 @@ public class Dashboard extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void SubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitActionPerformed
-        // TODO add your handling code here:
-        new NewCAcc(conn).show();
+        this.enable(false);
+        new NewCAcc(conn,this).show();
     }//GEN-LAST:event_SubmitActionPerformed
 
     private void userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userActionPerformed
@@ -718,17 +782,9 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_userActionPerformed
 
     private void Submit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Submit1ActionPerformed
-        // TODO add your handling code here:
-        new CustomerSearchList(conn, csearch.getText()).show();
+        this.enable(false);
+        new CustomerSearchList(conn, csearch.getText(),this).show();
     }//GEN-LAST:event_Submit1ActionPerformed
-
-    private void username4userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_username4userActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_username4userActionPerformed
-
-    private void Submit4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Submit4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Submit4ActionPerformed
 
     private void username5userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_username5userActionPerformed
         // TODO add your handling code here:
@@ -749,19 +805,35 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_ssearchuserActionPerformed
 
     private void Submit6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Submit6ActionPerformed
-        // TODO add your handling code here:
-        new NewStaffAcc(conn).show();
+        this.enable(false);
+        new NewStaffAcc(conn, this).show();
     }//GEN-LAST:event_Submit6ActionPerformed
 
     private void Submit7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Submit7ActionPerformed
-        // TODO add your handling code here:
-        new StaffSearchList(conn, ssearch.getText()).show();
+        this.enable(false);
+        new StaffSearchList(conn, ssearch.getText(), this).show();
     }//GEN-LAST:event_Submit7ActionPerformed
+
+    private void jsTextuserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jsTextuserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jsTextuserActionPerformed
+
+    private void Submit8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Submit8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Submit8ActionPerformed
+
+    private void jsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jsActionPerformed
     
     private void setProfile(List<String> l){
-        id.setText(l.get(0));
+        id.setText(idg.generate(Integer.parseInt(l.get(0)), 1));
+        //id.setText(l.get(0));
         role.setText(l.get(1));
-        name.setText(l.get(2)+" "+l.get(3));
+        if(role.getText().equals("Technician")){
+                    role.setText(role.getText() + ", "+l.get(2));
+                }
+        name.setText(l.get(3)+" "+l.get(4));
     }
     
     private void setStat(){
@@ -810,13 +882,14 @@ public class Dashboard extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Submit;
     private javax.swing.JButton Submit1;
-    private javax.swing.JButton Submit4;
     private javax.swing.JButton Submit5;
     private javax.swing.JButton Submit6;
     private javax.swing.JButton Submit7;
+    private javax.swing.JButton Submit8;
     private javax.swing.JLabel activeAcc;
     private javax.swing.JLabel copyright;
     private javax.swing.JTextField csearch;
+    private cambodia.raven.DateChooser dateChooser1;
     private javax.swing.JLabel employeeLogin;
     private javax.swing.JLabel employeeLogin1;
     private javax.swing.JLabel employeeLogin11;
@@ -832,6 +905,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel employeeLogin3;
     private javax.swing.JLabel employeeLogin4;
     private javax.swing.JLabel employeeLogin5;
+    private javax.swing.JLabel employeeLogin6;
     private javax.swing.JLabel employeeLogin7;
     private javax.swing.JLabel employeeLogin8;
     private javax.swing.JLabel employeeLogin9;
@@ -863,12 +937,13 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JButton js;
+    private javax.swing.JTextField jsText;
     private javax.swing.JLabel name;
     private javax.swing.JLabel role;
     private javax.swing.JTextField ssearch;
     private javax.swing.JLabel statValued;
     private javax.swing.JLabel suspendNo;
-    private javax.swing.JTextField username4;
     private javax.swing.JTextField username5;
     // End of variables declaration//GEN-END:variables
 }

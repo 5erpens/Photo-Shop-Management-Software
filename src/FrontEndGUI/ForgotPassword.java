@@ -19,10 +19,13 @@ public class ForgotPassword extends javax.swing.JFrame {
      * Creates new form ForgotPassword
      */
     
-    int mouseX;
+    int mouseX; 
     int mouseY;
     
-    public ForgotPassword() {
+    private static JFrame frame= new JFrame();
+    
+    public ForgotPassword(JFrame frame) {
+        this.frame = frame;
         Bootstrap template = new Bootstrap();
         this.setUndecorated(true);
         initComponents();
@@ -113,14 +116,16 @@ public class ForgotPassword extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void SubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitActionPerformed
-        // TODO add your handling code here:
+        
         if (id.getText().equals(" Employee ID") || id.getText().equals("")) {
             text.setText("Please Enter your Employee ID and press enter!");
+        }else {
+            frame.enable(true);
         }
     }//GEN-LAST:event_SubmitActionPerformed
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
-        // TODO add your handling code here:
+        frame.enable(true);
         this.dispose();
     }//GEN-LAST:event_exitActionPerformed
 
@@ -163,7 +168,7 @@ public class ForgotPassword extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ForgotPassword().setVisible(true);
+                new ForgotPassword(frame).setVisible(true);
             }
         });
     }

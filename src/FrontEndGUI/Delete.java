@@ -8,6 +8,7 @@ package FrontEndGUI;
 import BackEndCode.CodeSet;
 import BackEndCode.MySQLQueries;
 import java.sql.Connection;
+import javax.swing.JFrame;
 
 /**
  *
@@ -28,11 +29,14 @@ public class Delete extends javax.swing.JFrame {
     
     private static boolean s;
     
-    private static javax.swing.JFrame frame;
+    private static JFrame frame;
     
-    public Delete(Connection conn, String id, boolean s, javax.swing.JFrame frame) {
+    private static JFrame frame2;
+    
+    public Delete(Connection conn, String id, boolean s, JFrame frame, JFrame frame2) {
         this.conn = conn;
         this.frame = frame;
+        this.frame2 = frame2;
         this.id = id;
         this.s = s;
         this.setUndecorated(true);
@@ -164,6 +168,7 @@ public class Delete extends javax.swing.JFrame {
 
     private void exit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exit1ActionPerformed
         // TODO add your handling code here:
+        frame.enable(true);
         this.dispose();
     }//GEN-LAST:event_exit1ActionPerformed
 
@@ -179,11 +184,13 @@ public class Delete extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         new MySQLQueries(conn).deleteAccount(id, s);
         frame.dispose();
+        frame2.enable(true);
         this.dispose();
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        frame.enable(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -218,7 +225,7 @@ public class Delete extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Delete(conn, id, s, frame).setVisible(true);
+                new Delete(conn, id, s, new JFrame(), new JFrame()).setVisible(true);
             }
         });
     }

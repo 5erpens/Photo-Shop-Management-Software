@@ -6,6 +6,7 @@
 package FrontEndGUI;
 
 import BackEndCode.CodeSet;
+import BackEndCode.IDgen;
 import BackEndCode.MySQLQueries;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -35,11 +36,17 @@ public class StaffAccount extends javax.swing.JFrame {
     private String query;
 
     private static String s;
+    
+    private IDgen idg;
+    
+    private static JFrame frame= new JFrame();
 
     int mouseX;
     int mouseY;
 
-    public StaffAccount(Connection conn, String s) {
+    public StaffAccount(Connection conn, String s, JFrame frame) {
+        this.frame = frame;
+        idg = new IDgen();
         this.conn = conn;
         this.setUndecorated(true);
         initComponents();
@@ -145,6 +152,11 @@ public class StaffAccount extends javax.swing.JFrame {
         jPanel9.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 20, -1, 30));
 
         jButton1.setText("Update");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -421,7 +433,7 @@ public class StaffAccount extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void exit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exit1ActionPerformed
-        // TODO add your handling code here:
+        frame.enable(true);
         this.dispose();
     }//GEN-LAST:event_exit1ActionPerformed
 
@@ -435,8 +447,13 @@ public class StaffAccount extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel9MouseDragged
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
-        new Delete(conn,id.getText(),true,this).show();
+        this.enable(false);
+        new Delete(conn,id.getText(),true,this,frame).show();
     }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     public void initiateData(String s) {
 
@@ -446,8 +463,11 @@ public class StaffAccount extends javax.swing.JFrame {
             rs = pst.executeQuery();
 
             while (rs.next()) {
-                id.setText(String.valueOf(rs.getInt("staff_id")));
+                id.setText(idg.generate(rs.getInt("staff_id"),1));
                 role.setText(rs.getString("role"));
+                if(role.getText().equals("Technician")){
+                    role.setText(role.getText() + ", "+rs.getString("department"));
+                }
                 fName.setText(rs.getString("first_name"));
                 lName.setText(rs.getString("last_name"));
                 String add2 = rs.getString("address_2");
@@ -503,7 +523,7 @@ public class StaffAccount extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new StaffAccount(conn, s).setVisible(true);
+                new StaffAccount(conn, s, new JFrame()).setVisible(true);
             }
         });
 

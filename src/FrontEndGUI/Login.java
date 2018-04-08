@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.paint.Color;
@@ -43,7 +44,8 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         this.setSize((int) windowSize.getScreenSize().getWidth(), (int) windowSize.getScreenSize().getHeight());
         conn = ActiveDB.initiate();
-        SQuery = new MySQLQueries(conn);
+        SQuery = new MySQLQueries(conn); 
+        
     }
 
     /**
@@ -189,7 +191,9 @@ public class Login extends javax.swing.JFrame {
 
     private void Submit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Submit1ActionPerformed
         // TODO add your handling code here:
-        new ForgotPassword().setVisible(true);
+        this.enable(false);
+        new ForgotPassword(this).setVisible(true);
+        
 
     }//GEN-LAST:event_Submit1ActionPerformed
 

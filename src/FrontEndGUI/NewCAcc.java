@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 
 /**
  *
@@ -34,10 +35,13 @@ public class NewCAcc extends javax.swing.JFrame {
 
     private MySQLQueries SQuery = null;
     
+    private static JFrame frame;
+    
     int mouseX;
     int mouseY;
 
-    public NewCAcc(Connection conn) {
+    public NewCAcc(Connection conn, JFrame frame) {
+        this.frame = frame;
         this.conn = conn;
         Bootstrap template = new Bootstrap();
         this.setUndecorated(true);
@@ -78,6 +82,7 @@ public class NewCAcc extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         postcode = new javax.swing.JTextField();
         error = new javax.swing.JLabel();
+        type = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -156,13 +161,16 @@ public class NewCAcc extends javax.swing.JFrame {
         error.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel1.add(error, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 590, -1));
 
+        type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Individual", "Organisation" }));
+        jPanel1.add(type, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 260, 270, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 680, 420));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
-        // TODO add your handling code here:
+        frame.enable(true);
         this.dispose();
     }//GEN-LAST:event_exitActionPerformed
 
@@ -182,8 +190,12 @@ public class NewCAcc extends javax.swing.JFrame {
             if (county.getText().equals("County (Optional)")) {
                 county.setText(null);
             }
-            if(SQuery.CreateCustomer(fName.getText(), lName.getText(), ad1.getText(), ad2.getText(), city.getText(), county.getText(), postcode.getText(), country.getSelectedItem().toString(), email.getText(), Long.parseLong(phone.getText()))){
-                new CustomerAccount(conn,email.getText()).setVisible(true);
+            if(SQuery.CreateCustomer(fName.getText(), lName.getText(), ad1.getText(), ad2.getText(), city.getText(), county.getText(), postcode.getText(), country.getSelectedItem().toString(), type.getSelectedItem().toString(), email.getText(), Long.parseLong(phone.getText()))){
+                if(type.getSelectedItem().toString().equals("Individual")){
+                    new ICustomerAccount(conn,email.getText(),frame).setVisible(true);
+                } else if(type.getSelectedItem().toString().equals("Organisation")){
+                    new OCustomerAccount(conn,email.getText(),frame).setVisible(true);
+                }
                 this.dispose();
             }
         }
@@ -235,7 +247,7 @@ public class NewCAcc extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewCAcc(conn).setVisible(true);
+                new NewCAcc(conn, new JFrame()).setVisible(true);
             }
         });
 
@@ -258,5 +270,6 @@ public class NewCAcc extends javax.swing.JFrame {
     private javax.swing.JTextField lName;
     private javax.swing.JTextField phone;
     private javax.swing.JTextField postcode;
+    private javax.swing.JComboBox<String> type;
     // End of variables declaration//GEN-END:variables
 }

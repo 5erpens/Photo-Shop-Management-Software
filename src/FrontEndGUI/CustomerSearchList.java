@@ -27,13 +27,16 @@ public class CustomerSearchList extends javax.swing.JFrame {
 
     private MySQLQueries SQuery = null;
     
+    private static JFrame frame;
+    
     int mouseX;
     int mouseY;
 
     /**
      * Creates new form CustomerSearchList
      */
-    public CustomerSearchList(Connection conn, String s) {
+    public CustomerSearchList(Connection conn, String s, JFrame frame) {
+        this.frame = frame;
         this.conn = conn;
         this.setUndecorated(true);
         initComponents();
@@ -73,16 +76,16 @@ public class CustomerSearchList extends javax.swing.JFrame {
 
         cTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "ID", "First Name", "Second Name", "Email ID"
+                "ID", "Type", "First Name", "Second Name", "Email ID"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -96,7 +99,7 @@ public class CustomerSearchList extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(cTable);
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 810, 200));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 1160, 200));
 
         jPanel2.setBackground(new java.awt.Color(59, 63, 66));
         jPanel2.setForeground(new java.awt.Color(59, 63, 66));
@@ -120,7 +123,7 @@ public class CustomerSearchList extends javax.swing.JFrame {
                 exit1ActionPerformed(evt);
             }
         });
-        jPanel2.add(exit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, -10, -1, 40));
+        jPanel2.add(exit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1170, -10, -1, 40));
 
         jLabel1.setBackground(new java.awt.Color(171, 172, 173));
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -128,7 +131,7 @@ public class CustomerSearchList extends javax.swing.JFrame {
         jLabel1.setText("Customer Search Result");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 220, -1));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 860, 60));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 60));
 
         Submit.setText("Create");
         Submit.addActionListener(new java.awt.event.ActionListener() {
@@ -136,7 +139,7 @@ public class CustomerSearchList extends javax.swing.JFrame {
                 SubmitActionPerformed(evt);
             }
         });
-        jPanel1.add(Submit, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 100, -1, 30));
+        jPanel1.add(Submit, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 100, -1, 30));
 
         text.setForeground(new java.awt.Color(204, 0, 0));
         jPanel1.add(text, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 270, 20));
@@ -158,7 +161,7 @@ public class CustomerSearchList extends javax.swing.JFrame {
                 idKeyTyped(evt);
             }
         });
-        jPanel1.add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 650, 30));
+        jPanel1.add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 1000, 30));
 
         Submit1.setText("Search");
         Submit1.addActionListener(new java.awt.event.ActionListener() {
@@ -166,21 +169,21 @@ public class CustomerSearchList extends javax.swing.JFrame {
                 Submit1ActionPerformed(evt);
             }
         });
-        jPanel1.add(Submit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 100, -1, 30));
+        jPanel1.add(Submit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 100, -1, 30));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-4, 0, 850, 392));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-4, 0, 1200, 392));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void SubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitActionPerformed
         // TODO add your handling code here:
-        new NewCAcc(conn).show();
+        new NewCAcc(conn,frame).show();
         this.dispose();
     }//GEN-LAST:event_SubmitActionPerformed
 
     private void exit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exit1ActionPerformed
-        // TODO add your handling code here:
+        frame.enable(true);
         this.dispose();
     }//GEN-LAST:event_exit1ActionPerformed
 
@@ -222,7 +225,11 @@ public class CustomerSearchList extends javax.swing.JFrame {
     private void cTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cTableMouseClicked
         int index = cTable.getSelectedRow();
         TableModel model = cTable.getModel();
-        new CustomerAccount(conn,model.getValueAt(index, 3).toString()).setVisible(true);
+        if (model.getValueAt(index, 1).equals("Individual")){
+            new ICustomerAccount(conn,model.getValueAt(index, 4).toString(),frame).show();
+        }else if (model.getValueAt(index, 1).equals("Organisation")){
+            new OCustomerAccount(conn,model.getValueAt(index, 4).toString(),frame).show();
+        }
         this.dispose();
     }//GEN-LAST:event_cTableMouseClicked
 
@@ -256,7 +263,7 @@ public class CustomerSearchList extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CustomerSearchList(conn, new String()).setVisible(true);
+                new CustomerSearchList(conn, new String(), new JFrame()).setVisible(true);
             }
         });
     }
