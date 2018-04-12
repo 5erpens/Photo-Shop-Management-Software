@@ -26,23 +26,26 @@ public class NewCAcc extends javax.swing.JFrame {
      * Creates new form NewCAcc
      */
     private static Connection conn = null;
-
+    
     private PreparedStatement pst = null;
-
+    
     private ResultSet rs = null;
-
+    
     private CodeSet codeset = null;
-
+    
     private MySQLQueries SQuery = null;
     
     private static JFrame frame;
     
+    private static String staff;
+    
     int mouseX;
     int mouseY;
-
-    public NewCAcc(Connection conn, JFrame frame) {
+    
+    public NewCAcc(Connection conn, JFrame frame, String staff) {
         this.frame = frame;
         this.conn = conn;
+        this.staff = staff;
         Bootstrap template = new Bootstrap();
         this.setUndecorated(true);
         initComponents();
@@ -178,8 +181,17 @@ public class NewCAcc extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         error.setText("");
-        if ((fName.getText().equals("First Name") || lName.getText().equals("Lastname") || ad1.getText().equals("Address 1") || city.getText().equals("Town/City") || postcode.getText().equals("Postcode") || email.getText().equals("Email Address") || phone.getText().equals("Contact Number"))
-                || (fName.getText().equals("") || lName.getText().equals("") || ad1.getText().equals("") || city.getText().equals("") || postcode.getText().equals("") || email.getText().equals("") || phone.getText().equals(""))) {
+        if (type.getSelectedItem().toString().equals("Individual")) {
+            if (lName.getText().equals("Lastname") || lName.getText().equals("")) {
+                error.setText("Please fill all the Last Name");
+            }
+        } else if (type.getSelectedItem().toString().equals("Organisation")) {
+            if (lName.getText().equals("Lastname") || lName.getText().equals("")) {
+                lName.setText(null);
+            }
+        }
+        if ((fName.getText().equals("First Name") || ad1.getText().equals("Address 1") || city.getText().equals("Town/City") || postcode.getText().equals("Postcode") || email.getText().equals("Email Address") || phone.getText().equals("Contact Number"))
+                || (fName.getText().equals("") || ad1.getText().equals("") || city.getText().equals("") || postcode.getText().equals("") || email.getText().equals("") || phone.getText().equals(""))) {
             error.setText("Please fill all the section");
         } else if (!(phone.getText().matches("\\d+")) || (fName.getText().matches(".*\\d+.*")) || (lName.getText().matches(".*\\d+.*")) || !(codeset.isValidEmailAddress(email.getText()))) {
             error.setText("Please enter valid input");
@@ -190,11 +202,11 @@ public class NewCAcc extends javax.swing.JFrame {
             if (county.getText().equals("County (Optional)")) {
                 county.setText(null);
             }
-            if(SQuery.CreateCustomer(fName.getText(), lName.getText(), ad1.getText(), ad2.getText(), city.getText(), county.getText(), postcode.getText(), country.getSelectedItem().toString(), type.getSelectedItem().toString(), email.getText(), Long.parseLong(phone.getText()))){
-                if(type.getSelectedItem().toString().equals("Individual")){
-                    new ICustomerAccount(conn,email.getText(),frame).setVisible(true);
-                } else if(type.getSelectedItem().toString().equals("Organisation")){
-                    new OCustomerAccount(conn,email.getText(),frame).setVisible(true);
+            if (SQuery.CreateCustomer(fName.getText(), lName.getText(), ad1.getText(), ad2.getText(), city.getText(), county.getText(), postcode.getText(), country.getSelectedItem().toString(), type.getSelectedItem().toString(), email.getText(), Long.parseLong(phone.getText()))) {
+                if (type.getSelectedItem().toString().equals("Individual")) {
+                    new ICustomerAccount(conn, email.getText(), frame, staff).setVisible(true);
+                } else if (type.getSelectedItem().toString().equals("Organisation")) {
+                    new OCustomerAccount(conn, email.getText(), frame, staff).setVisible(true);
                 }
                 this.dispose();
             }
@@ -202,14 +214,14 @@ public class NewCAcc extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jPanel2MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseDragged
-        this.setLocation(evt.getXOnScreen()-mouseX, evt.getYOnScreen()-mouseY);
+        this.setLocation(evt.getXOnScreen() - mouseX, evt.getYOnScreen() - mouseY);
     }//GEN-LAST:event_jPanel2MouseDragged
 
     private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MousePressed
-        mouseX=evt.getX();
-        mouseY=evt.getY();
+        mouseX = evt.getX();
+        mouseY = evt.getY();
     }//GEN-LAST:event_jPanel2MousePressed
-
+    
     public void populateCountryList() {
         codeset = new CodeSet();
         DefaultComboBoxModel dm = new DefaultComboBoxModel(codeset.getAllCountries());
@@ -247,10 +259,10 @@ public class NewCAcc extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewCAcc(conn, new JFrame()).setVisible(true);
+                new NewCAcc(conn, new JFrame(), new String()).setVisible(true);
             }
         });
-
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

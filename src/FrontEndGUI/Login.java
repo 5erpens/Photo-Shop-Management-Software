@@ -37,7 +37,6 @@ public class Login extends javax.swing.JFrame {
      * Creates new form Login
      */
     public Login() {
-        Bootstrap template = new Bootstrap();
         Toolkit windowSize = Toolkit.getDefaultToolkit();
         this.setUndecorated(true);
         this.setResizable(false);
@@ -192,7 +191,7 @@ public class Login extends javax.swing.JFrame {
     private void Submit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Submit1ActionPerformed
         // TODO add your handling code here:
         this.enable(false);
-        new ForgotPassword(this).setVisible(true);
+        new ForgotPassword(conn,this).setVisible(true);
         
 
     }//GEN-LAST:event_Submit1ActionPerformed

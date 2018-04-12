@@ -32,12 +32,15 @@ public class NewStaffAcc extends javax.swing.JFrame {
     
     private static JFrame frame= new JFrame();
     
+    private static String staff;
+    
     int mouseX;
     int mouseY;
     
-    public NewStaffAcc(Connection conn, JFrame frame) {
+    public NewStaffAcc(Connection conn, JFrame frame, String staff) {
         this.frame = frame;
         this.conn = conn;
+        this.staff = staff;
         Bootstrap template = new Bootstrap();
         this.setUndecorated(true);
         initComponents();
@@ -209,7 +212,7 @@ public class NewStaffAcc extends javax.swing.JFrame {
                 county.setText(null);
             }
             if(SQuery.CreateStaff(fName.getText(),lName.getText(), ad1.getText(), ad2.getText(), city.getText(), county.getText(), postcode.getText(), country.getSelectedItem().toString(), role.getSelectedItem().toString(), area.getSelectedItem().toString(), email.getText(), Long.parseLong(phone.getText()))){
-                new StaffAccount(conn,email.getText(),frame).setVisible(true);
+                new StaffAccount(conn,email.getText(),frame,staff).setVisible(true);
                 this.dispose();
             }
         }
@@ -282,7 +285,7 @@ public class NewStaffAcc extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewStaffAcc(conn,new JFrame()).setVisible(true);
+                new NewStaffAcc(conn,new JFrame(),new String()).setVisible(true);
             }
         });
     }

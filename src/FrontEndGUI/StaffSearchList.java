@@ -32,13 +32,16 @@ public class StaffSearchList extends javax.swing.JFrame {
     int mouseY;
     
     private static JFrame frame= new JFrame();
+    
+    private static String staff;
 
     /**
      * Creates new form StaffSearchList
      */
-    public StaffSearchList(Connection conn, String s,JFrame frame) {
+    public StaffSearchList(Connection conn, String s,JFrame frame, String staff) {
         this.frame = frame;
         this.conn = conn;
+        this.staff = staff;
         this.setUndecorated(true);
         initComponents();
         SQuery = new MySQLQueries(conn);
@@ -194,7 +197,7 @@ public class StaffSearchList extends javax.swing.JFrame {
 
     private void SubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitActionPerformed
         // TODO add your handling code here:
-        new NewStaffAcc(conn,frame).show();
+        new NewStaffAcc(conn,frame,staff).show();
         this.dispose();
     }//GEN-LAST:event_SubmitActionPerformed
 
@@ -246,11 +249,9 @@ public class StaffSearchList extends javax.swing.JFrame {
     private void cTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cTableMouseClicked
         int index = cTable.getSelectedRow();
         TableModel model = cTable.getModel();
-        new StaffAccount(conn,(model.getValueAt(index, 4).toString()),frame).setVisible(true);
+        new StaffAccount(conn,(model.getValueAt(index, 4).toString()),frame,staff).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_cTableMouseClicked
-
-    
 
     /**
      * @param args the command line arguments
@@ -285,7 +286,7 @@ public class StaffSearchList extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new StaffSearchList(conn, new String(), new JFrame()).setVisible(true);
+                new StaffSearchList(conn, new String(), new JFrame(), new String()).setVisible(true);
             }
         });
     }

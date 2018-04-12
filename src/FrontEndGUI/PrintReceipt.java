@@ -9,9 +9,20 @@ import BackEndCode.MySQLQueries;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -27,19 +38,28 @@ public class PrintReceipt extends javax.swing.JFrame {
 
     private MySQLQueries SQuery = null;
     
+    private static JFrame frame;
+    
+    private ArrayList<String> ls;
+    
+    private static int cid;
+    
     int mouseX;
     int mouseY;
 
     /**
      * Creates new form CustomerSearchList
      */
-    public PrintReceipt(Connection conn, String s) {
+    public PrintReceipt(Connection conn, ArrayList<String> ls, JFrame frame, int cid) {
         this.conn = conn;
+        this.cid = cid;
+        this.ls = ls;
+        this.frame = frame;
         this.setUndecorated(true);
         initComponents();
         SQuery = new MySQLQueries(conn);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        id.setText(s);
+        
     }
 
     /**
@@ -53,54 +73,9 @@ public class PrintReceipt extends javax.swing.JFrame {
 
         jLabel5 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        id = new javax.swing.JLabel();
-        jPanel12 = new javax.swing.JPanel();
-        jPanel13 = new javax.swing.JPanel();
-        jLabel20 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        jPanel11 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
-        role2 = new javax.swing.JLabel();
-        role3 = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
-        role4 = new javax.swing.JLabel();
-        jPanel16 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jPanel7 = new javax.swing.JPanel();
-        role5 = new javax.swing.JLabel();
-        jPanel17 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        role6 = new javax.swing.JLabel();
-        role7 = new javax.swing.JLabel();
-        role1 = new javax.swing.JLabel();
-        jPanel8 = new javax.swing.JPanel();
-        jPanel14 = new javax.swing.JPanel();
-        jLabel19 = new javax.swing.JLabel();
-        fName1 = new javax.swing.JLabel();
         Submit1 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        fName2 = new javax.swing.JLabel();
-        jPanel9 = new javax.swing.JPanel();
-        jPanel18 = new javax.swing.JPanel();
-        jPanel10 = new javax.swing.JPanel();
-        role9 = new javax.swing.JLabel();
-        jPanel19 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
-        role10 = new javax.swing.JLabel();
-        jPanel20 = new javax.swing.JPanel();
-        role11 = new javax.swing.JLabel();
-        jPanel21 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        jPanel22 = new javax.swing.JPanel();
-        role12 = new javax.swing.JLabel();
-        jPanel23 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        role13 = new javax.swing.JLabel();
-        role14 = new javax.swing.JLabel();
-        role15 = new javax.swing.JLabel();
         Submit2 = new javax.swing.JButton();
+        fName2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         exit1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -120,292 +95,12 @@ public class PrintReceipt extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.setForeground(new java.awt.Color(171, 172, 173));
 
-        jPanel3.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel3.setForeground(new java.awt.Color(59, 63, 66));
-        jPanel3.setToolTipText("");
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        id.setBackground(new java.awt.Color(59, 63, 66));
-        id.setFont(id.getFont().deriveFont(id.getFont().getStyle() | java.awt.Font.BOLD, id.getFont().getSize()+2));
-        id.setForeground(new java.awt.Color(59, 63, 66));
-        id.setText("238475256");
-        jPanel3.add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 140, 30));
-
-        jPanel12.setBackground(new java.awt.Color(59, 63, 66));
-        jPanel12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanel13.setBackground(new java.awt.Color(59, 63, 66));
-        jPanel13.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel20.setBackground(new java.awt.Color(171, 172, 173));
-        jLabel20.setFont(jLabel20.getFont().deriveFont(jLabel20.getFont().getStyle() | java.awt.Font.BOLD, jLabel20.getFont().getSize()+2));
-        jLabel20.setForeground(new java.awt.Color(171, 172, 173));
-        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel20.setText("Receipt ID");
-        jLabel20.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jLabel20.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel13.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 100, 30));
-
-        jPanel12.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 30));
-
-        jPanel3.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 30));
-
-        jPanel4.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel4.setForeground(new java.awt.Color(59, 63, 66));
-        jPanel4.setToolTipText("");
-        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanel11.setBackground(new java.awt.Color(59, 63, 66));
-        jPanel11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanel5.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel5.setForeground(new java.awt.Color(59, 63, 66));
-        jPanel5.setToolTipText("");
-        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        role2.setBackground(new java.awt.Color(59, 63, 66));
-        role2.setFont(role2.getFont().deriveFont(role2.getFont().getStyle() | java.awt.Font.BOLD, role2.getFont().getSize()+2));
-        role2.setForeground(new java.awt.Color(59, 63, 66));
-        role2.setText("£");
-        jPanel5.add(role2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 10, 30));
-
-        role3.setBackground(new java.awt.Color(59, 63, 66));
-        role3.setFont(role3.getFont().deriveFont(role3.getFont().getStyle() | java.awt.Font.BOLD, role3.getFont().getSize()+2));
-        role3.setForeground(new java.awt.Color(59, 63, 66));
-        role3.setText("Office Manager");
-        jPanel5.add(role3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 0, 130, 30));
-
-        jPanel11.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
-        jPanel6.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel6.setForeground(new java.awt.Color(59, 63, 66));
-        jPanel6.setToolTipText("");
-        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        role4.setBackground(new java.awt.Color(59, 63, 66));
-        role4.setFont(role4.getFont().deriveFont(role4.getFont().getStyle() | java.awt.Font.BOLD, role4.getFont().getSize()+2));
-        role4.setForeground(new java.awt.Color(59, 63, 66));
-        role4.setText("£");
-        jPanel6.add(role4, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 10, 30));
-
-        jPanel16.setBackground(new java.awt.Color(59, 63, 66));
-        jPanel16.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel7.setBackground(new java.awt.Color(171, 172, 173));
-        jLabel7.setFont(jLabel7.getFont().deriveFont(jLabel7.getFont().getStyle() | java.awt.Font.BOLD, jLabel7.getFont().getSize()+2));
-        jLabel7.setForeground(new java.awt.Color(171, 172, 173));
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("Role");
-        jLabel7.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel16.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 100, 30));
-
-        jPanel7.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel7.setForeground(new java.awt.Color(59, 63, 66));
-        jPanel7.setToolTipText("");
-        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        role5.setBackground(new java.awt.Color(59, 63, 66));
-        role5.setFont(role5.getFont().deriveFont(role5.getFont().getStyle() | java.awt.Font.BOLD, role5.getFont().getSize()+2));
-        role5.setForeground(new java.awt.Color(59, 63, 66));
-        role5.setText("£");
-        jPanel7.add(role5, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 10, 30));
-
-        jPanel17.setBackground(new java.awt.Color(59, 63, 66));
-        jPanel17.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel8.setBackground(new java.awt.Color(171, 172, 173));
-        jLabel8.setFont(jLabel8.getFont().deriveFont(jLabel8.getFont().getStyle() | java.awt.Font.BOLD, jLabel8.getFont().getSize()+2));
-        jLabel8.setForeground(new java.awt.Color(171, 172, 173));
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("Role");
-        jLabel8.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jLabel8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel17.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 100, 30));
-
-        jPanel7.add(jPanel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 30));
-
-        role6.setBackground(new java.awt.Color(59, 63, 66));
-        role6.setFont(role6.getFont().deriveFont(role6.getFont().getStyle() | java.awt.Font.BOLD, role6.getFont().getSize()+2));
-        role6.setForeground(new java.awt.Color(59, 63, 66));
-        role6.setText("Office Manager");
-        jPanel7.add(role6, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 0, 130, 30));
-
-        jPanel16.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
-        jPanel6.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 30));
-
-        role7.setBackground(new java.awt.Color(59, 63, 66));
-        role7.setFont(role7.getFont().deriveFont(role7.getFont().getStyle() | java.awt.Font.BOLD, role7.getFont().getSize()+2));
-        role7.setForeground(new java.awt.Color(59, 63, 66));
-        role7.setText("Office Manager");
-        jPanel6.add(role7, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 0, 130, 30));
-
-        jPanel11.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
-        jPanel4.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 30));
-
-        role1.setBackground(new java.awt.Color(59, 63, 66));
-        role1.setFont(role1.getFont().deriveFont(role1.getFont().getStyle() | java.awt.Font.BOLD, role1.getFont().getSize()+2));
-        role1.setForeground(new java.awt.Color(59, 63, 66));
-        role1.setText("Office Manager");
-        jPanel4.add(role1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 0, 130, 30));
-
-        jPanel8.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel8.setForeground(new java.awt.Color(59, 63, 66));
-        jPanel8.setToolTipText("");
-        jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanel14.setBackground(new java.awt.Color(59, 63, 66));
-        jPanel14.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel19.setBackground(new java.awt.Color(171, 172, 173));
-        jLabel19.setFont(jLabel19.getFont().deriveFont(jLabel19.getFont().getStyle() | java.awt.Font.BOLD, jLabel19.getFont().getSize()+2));
-        jLabel19.setForeground(new java.awt.Color(171, 172, 173));
-        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel19.setText("First Name");
-        jLabel19.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jLabel19.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel14.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 30));
-
-        jPanel8.add(jPanel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 30));
-
-        fName1.setBackground(new java.awt.Color(59, 63, 66));
-        fName1.setFont(fName1.getFont().deriveFont(fName1.getFont().getStyle() | java.awt.Font.BOLD, fName1.getFont().getSize()+2));
-        fName1.setForeground(new java.awt.Color(59, 63, 66));
-        fName1.setText("Bill");
-        jPanel8.add(fName1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 140, 30));
-
         Submit1.setText("Print Receipt");
         Submit1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Submit1ActionPerformed(evt);
             }
         });
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
-
-        fName2.setBackground(new java.awt.Color(59, 63, 66));
-        fName2.setFont(fName2.getFont().deriveFont(fName2.getFont().getStyle() | java.awt.Font.BOLD, fName2.getFont().getSize()+2));
-        fName2.setForeground(new java.awt.Color(59, 63, 66));
-        fName2.setText("Materials Submitted");
-
-        jPanel9.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel9.setForeground(new java.awt.Color(59, 63, 66));
-        jPanel9.setToolTipText("");
-        jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanel18.setBackground(new java.awt.Color(59, 63, 66));
-        jPanel18.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanel10.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel10.setForeground(new java.awt.Color(59, 63, 66));
-        jPanel10.setToolTipText("");
-        jPanel10.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        role9.setBackground(new java.awt.Color(59, 63, 66));
-        role9.setFont(role9.getFont().deriveFont(role9.getFont().getStyle() | java.awt.Font.BOLD, role9.getFont().getSize()+2));
-        role9.setForeground(new java.awt.Color(59, 63, 66));
-        role9.setText("£");
-        jPanel10.add(role9, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 10, 30));
-
-        jPanel19.setBackground(new java.awt.Color(59, 63, 66));
-        jPanel19.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel9.setBackground(new java.awt.Color(171, 172, 173));
-        jLabel9.setFont(jLabel9.getFont().deriveFont(jLabel9.getFont().getStyle() | java.awt.Font.BOLD, jLabel9.getFont().getSize()+2));
-        jLabel9.setForeground(new java.awt.Color(171, 172, 173));
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("Last Name");
-        jLabel9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jLabel9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel19.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 100, 30));
-
-        jPanel10.add(jPanel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 30));
-
-        role10.setBackground(new java.awt.Color(59, 63, 66));
-        role10.setFont(role10.getFont().deriveFont(role10.getFont().getStyle() | java.awt.Font.BOLD, role10.getFont().getSize()+2));
-        role10.setForeground(new java.awt.Color(59, 63, 66));
-        role10.setText("Office Manager");
-        jPanel10.add(role10, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 0, 130, 30));
-
-        jPanel18.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
-        jPanel20.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel20.setForeground(new java.awt.Color(59, 63, 66));
-        jPanel20.setToolTipText("");
-        jPanel20.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        role11.setBackground(new java.awt.Color(59, 63, 66));
-        role11.setFont(role11.getFont().deriveFont(role11.getFont().getStyle() | java.awt.Font.BOLD, role11.getFont().getSize()+2));
-        role11.setForeground(new java.awt.Color(59, 63, 66));
-        role11.setText("£");
-        jPanel20.add(role11, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 10, 30));
-
-        jPanel21.setBackground(new java.awt.Color(59, 63, 66));
-        jPanel21.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel10.setBackground(new java.awt.Color(171, 172, 173));
-        jLabel10.setFont(jLabel10.getFont().deriveFont(jLabel10.getFont().getStyle() | java.awt.Font.BOLD, jLabel10.getFont().getSize()+2));
-        jLabel10.setForeground(new java.awt.Color(171, 172, 173));
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setText("Role");
-        jLabel10.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jLabel10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel21.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 100, 30));
-
-        jPanel22.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel22.setForeground(new java.awt.Color(59, 63, 66));
-        jPanel22.setToolTipText("");
-        jPanel22.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        role12.setBackground(new java.awt.Color(59, 63, 66));
-        role12.setFont(role12.getFont().deriveFont(role12.getFont().getStyle() | java.awt.Font.BOLD, role12.getFont().getSize()+2));
-        role12.setForeground(new java.awt.Color(59, 63, 66));
-        role12.setText("£");
-        jPanel22.add(role12, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 10, 30));
-
-        jPanel23.setBackground(new java.awt.Color(59, 63, 66));
-        jPanel23.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel11.setBackground(new java.awt.Color(171, 172, 173));
-        jLabel11.setFont(jLabel11.getFont().deriveFont(jLabel11.getFont().getStyle() | java.awt.Font.BOLD, jLabel11.getFont().getSize()+2));
-        jLabel11.setForeground(new java.awt.Color(171, 172, 173));
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setText("Role");
-        jLabel11.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jLabel11.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel23.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 100, 30));
-
-        jPanel22.add(jPanel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 30));
-
-        role13.setBackground(new java.awt.Color(59, 63, 66));
-        role13.setFont(role13.getFont().deriveFont(role13.getFont().getStyle() | java.awt.Font.BOLD, role13.getFont().getSize()+2));
-        role13.setForeground(new java.awt.Color(59, 63, 66));
-        role13.setText("Office Manager");
-        jPanel22.add(role13, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 0, 130, 30));
-
-        jPanel21.add(jPanel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
-        jPanel20.add(jPanel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 30));
-
-        role14.setBackground(new java.awt.Color(59, 63, 66));
-        role14.setFont(role14.getFont().deriveFont(role14.getFont().getStyle() | java.awt.Font.BOLD, role14.getFont().getSize()+2));
-        role14.setForeground(new java.awt.Color(59, 63, 66));
-        role14.setText("Office Manager");
-        jPanel20.add(role14, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 0, 130, 30));
-
-        jPanel18.add(jPanel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
-        jPanel9.add(jPanel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 30));
-
-        role15.setBackground(new java.awt.Color(59, 63, 66));
-        role15.setFont(role15.getFont().deriveFont(role15.getFont().getStyle() | java.awt.Font.BOLD, role15.getFont().getSize()+2));
-        role15.setForeground(new java.awt.Color(59, 63, 66));
-        role15.setText("Marsh");
-        jPanel9.add(role15, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 0, 130, 30));
 
         Submit2.setText("Print Label");
         Submit2.addActionListener(new java.awt.event.ActionListener() {
@@ -414,55 +109,41 @@ public class PrintReceipt extends javax.swing.JFrame {
             }
         });
 
+        fName2.setBackground(new java.awt.Color(59, 63, 66));
+        fName2.setFont(fName2.getFont().deriveFont(fName2.getFont().getStyle() | java.awt.Font.BOLD, fName2.getFont().getSize()+2));
+        fName2.setForeground(new java.awt.Color(59, 63, 66));
+        fName2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        fName2.setText("Payment has been successfull! Do you want to print label?");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(fName2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(173, 173, 173)
                         .addComponent(Submit2)
                         .addGap(21, 21, 21)
-                        .addComponent(Submit1))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(fName2, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jScrollPane1)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(51, 51, 51)
-                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(51, 51, 51)
-                                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addGap(291, 291, 291))
+                        .addComponent(Submit1)))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(20, 20, 20)
                 .addComponent(fName2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Submit1)
                     .addComponent(Submit2))
-                .addContainerGap())
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 60, 670, 350));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 540, 120));
 
         jPanel2.setBackground(new java.awt.Color(59, 63, 66));
         jPanel2.setForeground(new java.awt.Color(59, 63, 66));
@@ -486,7 +167,7 @@ public class PrintReceipt extends javax.swing.JFrame {
                 exit1ActionPerformed(evt);
             }
         });
-        jPanel2.add(exit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, -10, -1, 40));
+        jPanel2.add(exit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, -10, -1, 40));
 
         jLabel1.setBackground(new java.awt.Color(171, 172, 173));
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -494,18 +175,30 @@ public class PrintReceipt extends javax.swing.JFrame {
         jLabel1.setText("Print Receipt");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 220, -1));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 60));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 60));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void exit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exit1ActionPerformed
-        // TODO add your handling code here:
+        frame.enable(true);
         this.dispose();
     }//GEN-LAST:event_exit1ActionPerformed
 
     private void Submit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Submit1ActionPerformed
-        // TODO add your handling code here:
+        try {
+            frame.enable(true);
+            Map pm = new HashMap();
+            pm.put("cid", cid);
+            pm.put("list", ls);
+            String r = "E:\\Projects\\Photo-Shop-Management-Software\\src\\Report\\invoice.jrxml";
+            JasperReport jr = JasperCompileManager.compileReport(r);
+            JasperPrint jp = JasperFillManager.fillReport(jr, pm, conn);
+            JasperViewer.viewReport(jp);
+            this.dispose();
+        } catch (JRException ex) {
+            Logger.getLogger(PrintReceipt.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }//GEN-LAST:event_Submit1ActionPerformed
 
@@ -519,7 +212,9 @@ public class PrintReceipt extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel2MouseDragged
 
     private void Submit2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Submit2ActionPerformed
-        // TODO add your handling code here:
+
+        this.enable(false);
+        new PrintLabel(conn,this).show();
     }//GEN-LAST:event_Submit2ActionPerformed
 
     /**
@@ -567,7 +262,7 @@ public class PrintReceipt extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PrintReceipt(conn, new String()).setVisible(true);
+                new PrintReceipt(conn, new ArrayList<String>(), new JFrame(), cid).setVisible(true);
             }
         });
     }
@@ -576,55 +271,10 @@ public class PrintReceipt extends javax.swing.JFrame {
     private javax.swing.JButton Submit1;
     private javax.swing.JButton Submit2;
     private javax.swing.JButton exit1;
-    private javax.swing.JLabel fName1;
     private javax.swing.JLabel fName2;
-    private javax.swing.JLabel id;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel16;
-    private javax.swing.JPanel jPanel17;
-    private javax.swing.JPanel jPanel18;
-    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel20;
-    private javax.swing.JPanel jPanel21;
-    private javax.swing.JPanel jPanel22;
-    private javax.swing.JPanel jPanel23;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JLabel role1;
-    private javax.swing.JLabel role10;
-    private javax.swing.JLabel role11;
-    private javax.swing.JLabel role12;
-    private javax.swing.JLabel role13;
-    private javax.swing.JLabel role14;
-    private javax.swing.JLabel role15;
-    private javax.swing.JLabel role2;
-    private javax.swing.JLabel role3;
-    private javax.swing.JLabel role4;
-    private javax.swing.JLabel role5;
-    private javax.swing.JLabel role6;
-    private javax.swing.JLabel role7;
-    private javax.swing.JLabel role9;
     // End of variables declaration//GEN-END:variables
 }

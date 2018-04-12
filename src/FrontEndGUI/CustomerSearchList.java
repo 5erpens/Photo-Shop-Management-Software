@@ -29,15 +29,18 @@ public class CustomerSearchList extends javax.swing.JFrame {
     
     private static JFrame frame;
     
+    private String staff;
+    
     int mouseX;
     int mouseY;
 
     /**
      * Creates new form CustomerSearchList
      */
-    public CustomerSearchList(Connection conn, String s, JFrame frame) {
+    public CustomerSearchList(Connection conn, String s, JFrame frame, String staff) {
         this.frame = frame;
         this.conn = conn;
+        this.staff = staff;
         this.setUndecorated(true);
         initComponents();
         SQuery = new MySQLQueries(conn);
@@ -178,7 +181,7 @@ public class CustomerSearchList extends javax.swing.JFrame {
 
     private void SubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitActionPerformed
         // TODO add your handling code here:
-        new NewCAcc(conn,frame).show();
+        new NewCAcc(conn,frame,staff).show();
         this.dispose();
     }//GEN-LAST:event_SubmitActionPerformed
 
@@ -226,9 +229,9 @@ public class CustomerSearchList extends javax.swing.JFrame {
         int index = cTable.getSelectedRow();
         TableModel model = cTable.getModel();
         if (model.getValueAt(index, 1).equals("Individual")){
-            new ICustomerAccount(conn,model.getValueAt(index, 4).toString(),frame).show();
+            new ICustomerAccount(conn,model.getValueAt(index, 4).toString(),frame,staff).show();
         }else if (model.getValueAt(index, 1).equals("Organisation")){
-            new OCustomerAccount(conn,model.getValueAt(index, 4).toString(),frame).show();
+            new OCustomerAccount(conn,model.getValueAt(index, 4).toString(),frame,staff).show();
         }
         this.dispose();
     }//GEN-LAST:event_cTableMouseClicked
@@ -263,7 +266,7 @@ public class CustomerSearchList extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CustomerSearchList(conn, new String(), new JFrame()).setVisible(true);
+                new CustomerSearchList(conn, new String(), new JFrame(), new String()).setVisible(true);
             }
         });
     }

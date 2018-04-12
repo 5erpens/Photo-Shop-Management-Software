@@ -5,8 +5,11 @@
  */
 package FrontEndGUI;
 
+import BackEndCode.CodeSet;
 import BackEndCode.MySQLQueries;
 import java.sql.Connection;
+import java.text.NumberFormat;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 
 /**
@@ -19,18 +22,27 @@ public class AddPayment extends javax.swing.JFrame {
      * Creates new form AddPayment
      */
     private MySQLQueries SQuery = null;
-    
+
+    private static DPayment frame;
+
+    private static int cid;
+
+    private String date;
+
     int mouseX;
     int mouseY;
-    
+
     private static Connection conn = null;
-    
-    public AddPayment(Connection conn) {
+
+    public AddPayment(Connection conn, int cid, JFrame frame) {
+        this.cid = cid;
         this.conn = conn;
+        this.frame = (DPayment) frame;
         this.setUndecorated(true);
-        initComponents();        
+        initComponents();
         SQuery = new MySQLQueries(conn);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
     }
 
     /**
@@ -43,30 +55,184 @@ public class AddPayment extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jPanel9 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        exit1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
-        jFormattedTextField2 = new javax.swing.JFormattedTextField();
-        jFormattedTextField3 = new javax.swing.JFormattedTextField();
-        jFormattedTextField4 = new javax.swing.JFormattedTextField();
-        jFormattedTextField5 = new javax.swing.JFormattedTextField();
+        name = new javax.swing.JFormattedTextField();
+        cn = new javax.swing.JFormattedTextField();
+        em = new javax.swing.JFormattedTextField();
+        ey = new javax.swing.JFormattedTextField();
+        ccv = new javax.swing.JFormattedTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jButton2 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
+        jPanel9 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        exit1 = new javax.swing.JButton();
+        error = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel1.setName(""); // NOI18N
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel2.setBackground(new java.awt.Color(153, 153, 153));
+
+        jLabel1.setBackground(new java.awt.Color(59, 63, 66));
+        jLabel1.setForeground(new java.awt.Color(59, 63, 66));
+        jLabel1.setText("Enter your card details to add this payment method to your account.");
+
+        jLabel3.setBackground(new java.awt.Color(59, 63, 66));
+        jLabel3.setForeground(new java.awt.Color(59, 63, 66));
+        jLabel3.setText("Card Number");
+
+        jLabel4.setBackground(new java.awt.Color(59, 63, 66));
+        jLabel4.setForeground(new java.awt.Color(59, 63, 66));
+        jLabel4.setText("Expiration");
+
+        jLabel8.setForeground(new java.awt.Color(59, 63, 66));
+        jLabel8.setText("Security Code (CCV - 3 Digit)");
+
+        jLabel11.setForeground(new java.awt.Color(59, 63, 66));
+        jLabel11.setText("Card Holder Name");
+
+        name.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                nameKeyTyped(evt);
+            }
+        });
+
+        cn.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cnKeyTyped(evt);
+            }
+        });
+
+        em.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                emKeyTyped(evt);
+            }
+        });
+
+        ey.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                eyKeyTyped(evt);
+            }
+        });
+
+        ccv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ccvActionPerformed(evt);
+            }
+        });
+        ccv.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                ccvKeyTyped(evt);
+            }
+        });
+
+        jLabel5.setBackground(new java.awt.Color(59, 63, 66));
+        jLabel5.setForeground(new java.awt.Color(59, 63, 66));
+        jLabel5.setText("YY : ");
+
+        jLabel6.setBackground(new java.awt.Color(59, 63, 66));
+        jLabel6.setForeground(new java.awt.Color(59, 63, 66));
+        jLabel6.setText("MM : ");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel8)
+                            .addComponent(ccv, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                        .addComponent(cn, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(27, 27, 27))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(em, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(ey, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(0, 38, Short.MAX_VALUE))))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cn, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(em, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ey, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ccv, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 110, -1, -1));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 378, 709, -1));
+
+        jButton2.setText("Save");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 400, 80, -1));
+
+        jLabel10.setForeground(new java.awt.Color(59, 63, 66));
+        jLabel10.setText("Terms & Conditions");
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 406, -1, -1));
+
+        jButton3.setText("Use");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 400, 80, -1));
 
         jPanel9.setBackground(new java.awt.Color(59, 63, 66));
         jPanel9.setForeground(new java.awt.Color(59, 63, 66));
@@ -101,105 +267,11 @@ public class AddPayment extends javax.swing.JFrame {
 
         jPanel1.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 64));
 
-        jPanel2.setBackground(new java.awt.Color(153, 153, 153));
-
-        jLabel1.setBackground(new java.awt.Color(59, 63, 66));
-        jLabel1.setForeground(new java.awt.Color(59, 63, 66));
-        jLabel1.setText("Enter your card details to add this payment method to your account.");
-
-        jLabel3.setBackground(new java.awt.Color(59, 63, 66));
-        jLabel3.setForeground(new java.awt.Color(59, 63, 66));
-        jLabel3.setText("Card Number");
-
-        jLabel4.setBackground(new java.awt.Color(59, 63, 66));
-        jLabel4.setForeground(new java.awt.Color(59, 63, 66));
-        jLabel4.setText("Expiration");
-
-        jLabel8.setForeground(new java.awt.Color(59, 63, 66));
-        jLabel8.setText("Security Code");
-
-        jLabel11.setForeground(new java.awt.Color(59, 63, 66));
-        jLabel11.setText("Card Holder Name");
-
-        jFormattedTextField1.setText("Enter Name");
-
-        jFormattedTextField2.setText("XXXXXXXXXXXXXXXX");
-
-        jFormattedTextField3.setText("MM");
-
-        jFormattedTextField4.setText("YY");
-
-        jFormattedTextField5.setText("XXX");
-        jFormattedTextField5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFormattedTextField5ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel4)
-                        .addGap(140, 140, 140))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(53, 53, 53)
-                                .addComponent(jFormattedTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jFormattedTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel8)
-                            .addComponent(jFormattedTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(77, Short.MAX_VALUE))))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jFormattedTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jFormattedTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jFormattedTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
-        );
-
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 110, -1, -1));
-        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 378, 709, -1));
-
-        jButton2.setText("Save");
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 400, 80, -1));
-
-        jLabel10.setForeground(new java.awt.Color(59, 63, 66));
-        jLabel10.setText("Terms & Conditions");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 406, -1, -1));
-
-        jButton3.setText("Use");
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 400, 80, -1));
+        error.setFont(error.getFont().deriveFont(error.getFont().getSize()+1f));
+        error.setForeground(new java.awt.Color(255, 0, 0));
+        error.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        error.setToolTipText("");
+        jPanel1.add(error, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 80, 470, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -218,22 +290,98 @@ public class AddPayment extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jPanel9MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MousePressed
-        mouseX=evt.getX();
-        mouseY=evt.getY();
+        mouseX = evt.getX();
+        mouseY = evt.getY();
     }//GEN-LAST:event_jPanel9MousePressed
 
     private void jPanel9MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseDragged
-        this.setLocation(evt.getXOnScreen()-mouseX, evt.getYOnScreen()-mouseY);
+        this.setLocation(evt.getXOnScreen() - mouseX, evt.getYOnScreen() - mouseY);
     }//GEN-LAST:event_jPanel9MouseDragged
 
     private void exit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exit1ActionPerformed
-        // TODO add your handling code here:
+        frame.enable(true);
         this.dispose();
     }//GEN-LAST:event_exit1ActionPerformed
 
-    private void jFormattedTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField5ActionPerformed
+    private void ccvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ccvActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jFormattedTextField5ActionPerformed
+    }//GEN-LAST:event_ccvActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+         if (conditionCheck()) {
+            frame.enable(true);
+            frame.reInitCardList(cn.getText(), false);
+            this.dispose();
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (conditionCheck()) {
+            frame.enable(true);
+            new MySQLQueries(conn).addCard(cn.getText(), name.getText(), date, ccv.getText(), cid);
+            frame.reInitCardList(cn.getText(), true);
+            this.dispose();
+        }
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void cnKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cnKeyTyped
+        char c = evt.getKeyChar();
+        if (Character.isLetter(c) || cn.getText().length() > 15) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_cnKeyTyped
+
+    private void emKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emKeyTyped
+        char c = evt.getKeyChar();
+        if (Character.isLetter(c) || em.getText().length() > 1) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_emKeyTyped
+
+    private void eyKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_eyKeyTyped
+        char c = evt.getKeyChar();
+        if (Character.isLetter(c) || ey.getText().length() > 1) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_eyKeyTyped
+
+    private void ccvKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ccvKeyTyped
+        char c = evt.getKeyChar();
+        if (Character.isLetter(c) || ccv.getText().length() > 2) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_ccvKeyTyped
+
+    private void nameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameKeyTyped
+        char c = evt.getKeyChar();
+        if (!(Character.isLetter(c) || c == '.' || Character.isWhitespace(c))) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_nameKeyTyped
+
+    private boolean conditionCheck() {
+
+        if (cn.getText().isEmpty() || em.getText().isEmpty() || ey.getText().isEmpty() || name.getText().isEmpty() || ccv.getText().isEmpty()) {
+            error.setText("Please enter valid input");
+            return false;
+        } else {
+            date = "20" + ey.getText() + "-" + em.getText() + "-01";
+            if (!(Integer.parseInt(em.getText()) <= 12 && Integer.parseInt(em.getText()) > 0)) {
+                error.setText("Please enter a valid Month");
+                return false;
+            } else if (!((new CodeSet().mysqlDate(date, false)).after(new CodeSet().mysqlDate(new CodeSet().DateTime(true), false)))) {
+                error.setText("Please enter a valid Date");
+                return false;
+            } else if(cn.getText().length()!= 16){
+                error.setText("Please enter a valid card number");
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+    }
 
     /**
      * @param args the command line arguments
@@ -265,30 +413,33 @@ public class AddPayment extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AddPayment(conn).setVisible(true);
+                new AddPayment(conn, cid, new JFrame()).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFormattedTextField ccv;
+    private javax.swing.JFormattedTextField cn;
+    private javax.swing.JFormattedTextField em;
+    private javax.swing.JLabel error;
     private javax.swing.JButton exit1;
+    private javax.swing.JFormattedTextField ey;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JFormattedTextField jFormattedTextField2;
-    private javax.swing.JFormattedTextField jFormattedTextField3;
-    private javax.swing.JFormattedTextField jFormattedTextField4;
-    private javax.swing.JFormattedTextField jFormattedTextField5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JFormattedTextField name;
     // End of variables declaration//GEN-END:variables
 }

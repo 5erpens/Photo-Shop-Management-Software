@@ -1,0 +1,10 @@
+//            Runtime r= Runtime.getRuntime();
+//            Process p = r.exec(cmd);
+//            p.waitFor();
+//            System.out.println(DateTime(true)+": Backup successfull");
+
+
+              ProcessBuilder pb = new ProcessBuilder("cmd", "/c", ".backup.bat");
+              File dir = new File("E:/Projects/Photo-Shop-Management-Software/backup");
+              pb.directory(dir);
+              pb.start();

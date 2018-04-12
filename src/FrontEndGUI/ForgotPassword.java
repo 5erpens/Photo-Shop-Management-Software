@@ -6,7 +6,10 @@
 package FrontEndGUI;
 
 import BackEndCode.Bootstrap;
+import BackEndCode.CodeSet;
+import BackEndCode.MySQLQueries;
 import java.awt.Color;
+import java.sql.Connection;
 import javax.swing.JFrame;
 
 /**
@@ -23,8 +26,10 @@ public class ForgotPassword extends javax.swing.JFrame {
     int mouseY;
     
     private static JFrame frame= new JFrame();
+    private static Connection conn;
     
-    public ForgotPassword(JFrame frame) {
+    public ForgotPassword(Connection conn,JFrame frame) {
+        this.conn = conn;
         this.frame = frame;
         Bootstrap template = new Bootstrap();
         this.setUndecorated(true);
@@ -119,8 +124,13 @@ public class ForgotPassword extends javax.swing.JFrame {
         
         if (id.getText().equals(" Employee ID") || id.getText().equals("")) {
             text.setText("Please Enter your Employee ID and press enter!");
-        }else {
+        }else if (new MySQLQueries(conn).IsExist(id.getText())){
+            new MySQLQueries(conn).notificationAdd(new CodeSet().DateTime(true)+": Paassword reset request: Staff account: " + id.getText(), "OS", "R");
+            new MySQLQueries(conn).logAdd(new CodeSet().DateTime(true)+": Paassword reset request: Staff account: " + id.getText());
             frame.enable(true);
+            this.dispose();
+        } else {
+            text.setText("Please Enter valid employee id");
         }
     }//GEN-LAST:event_SubmitActionPerformed
 
@@ -168,7 +178,7 @@ public class ForgotPassword extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ForgotPassword(frame).setVisible(true);
+                new ForgotPassword(conn,frame).setVisible(true);
             }
         });
     }

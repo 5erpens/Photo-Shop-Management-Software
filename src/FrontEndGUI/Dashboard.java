@@ -15,6 +15,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -27,6 +29,7 @@ public class Dashboard extends javax.swing.JFrame {
     private static List<String> ls = new ArrayList<String>();;
     
     private IDgen idg;
+    
 
     /**
      * Creates new form Login
@@ -69,6 +72,7 @@ public class Dashboard extends javax.swing.JFrame {
         jsText = new javax.swing.JTextField();
         Submit8 = new javax.swing.JButton();
         js = new javax.swing.JButton();
+        br = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
         id = new javax.swing.JLabel();
@@ -85,6 +89,8 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel19 = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         employeeLogin5 = new javax.swing.JLabel();
+        alert = new javax.swing.JLabel();
+        alertCount = new javax.swing.JLabel();
         exit = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         activeAcc = new javax.swing.JLabel();
@@ -107,6 +113,7 @@ public class Dashboard extends javax.swing.JFrame {
         copyright = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         employeeLogin1 = new javax.swing.JLabel();
+        log = new javax.swing.JButton();
         jPanel13 = new javax.swing.JPanel();
         ssearch = new javax.swing.JTextField();
         employeeLogin21 = new javax.swing.JLabel();
@@ -194,6 +201,14 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
+        br.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        br.setText("Backup / Restore");
+        br.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                brActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
@@ -202,20 +217,23 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addGap(65, 65, 65)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(employeeLogin7)
-                    .addComponent(employeeLogin6))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(br)
                     .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addComponent(username5, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(Submit5))
-                    .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addComponent(jsText, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(js)
-                        .addGap(12, 12, 12)
-                        .addComponent(Submit8))))
+                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(employeeLogin7)
+                            .addComponent(employeeLogin6))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel11Layout.createSequentialGroup()
+                                .addComponent(username5, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(Submit5))
+                            .addGroup(jPanel11Layout.createSequentialGroup()
+                                .addComponent(jsText, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(js)
+                                .addGap(12, 12, 12)
+                                .addComponent(Submit8))))))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,7 +255,9 @@ public class Dashboard extends javax.swing.JFrame {
                         .addComponent(jsText, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(Submit8)
                         .addComponent(js)))
-                .addGap(162, 162, 162))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(br)
+                .addContainerGap(116, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(1290, 540, 570, 340));
@@ -333,6 +353,20 @@ public class Dashboard extends javax.swing.JFrame {
         employeeLogin5.setForeground(new java.awt.Color(171, 172, 173));
         employeeLogin5.setText("   Your Profile");
         jPanel10.add(employeeLogin5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 70));
+
+        alert.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        alert.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/alert.png"))); // NOI18N
+        alert.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                alertMouseClicked(evt);
+            }
+        });
+        jPanel10.add(alert, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 0, 70, 70));
+
+        alertCount.setFont(alertCount.getFont().deriveFont(alertCount.getFont().getSize()+3f));
+        alertCount.setForeground(new java.awt.Color(171, 172, 173));
+        alertCount.setText("0");
+        jPanel10.add(alertCount, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 0, 30, 70));
 
         exit.setBackground(new java.awt.Color(255, 0, 0));
         exit.setFont(exit.getFont().deriveFont(exit.getFont().getStyle() | java.awt.Font.BOLD));
@@ -592,7 +626,16 @@ public class Dashboard extends javax.swing.JFrame {
         employeeLogin1.setText("Dashboard");
         jPanel3.add(employeeLogin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 2, 530, 70));
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 2000, -1));
+        log.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        log.setText("Log");
+        log.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logActionPerformed(evt);
+            }
+        });
+        jPanel3.add(log, new org.netbeans.lib.awtextra.AbsoluteConstraints(1850, 20, -1, -1));
+
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, -1));
 
         jPanel13.setBackground(new java.awt.Color(171, 172, 173));
         jPanel13.setForeground(new java.awt.Color(60, 63, 65));
@@ -765,7 +808,7 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 540, 600, 270));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/3840x2560-3020841-black-and-white_camera_olympus_technology.jpg"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 2060, 1260));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, 1260));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1919, 1080));
 
@@ -774,7 +817,7 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void SubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitActionPerformed
         this.enable(false);
-        new NewCAcc(conn,this).show();
+        new NewCAcc(conn,this,role.getText()).show();
     }//GEN-LAST:event_SubmitActionPerformed
 
     private void userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userActionPerformed
@@ -783,7 +826,7 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void Submit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Submit1ActionPerformed
         this.enable(false);
-        new CustomerSearchList(conn, csearch.getText(),this).show();
+        new CustomerSearchList(conn, csearch.getText(),this,role.getText()).show();
     }//GEN-LAST:event_Submit1ActionPerformed
 
     private void username5userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_username5userActionPerformed
@@ -806,12 +849,12 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void Submit6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Submit6ActionPerformed
         this.enable(false);
-        new NewStaffAcc(conn, this).show();
+        new NewStaffAcc(conn, this, role.getText()).show();
     }//GEN-LAST:event_Submit6ActionPerformed
 
     private void Submit7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Submit7ActionPerformed
         this.enable(false);
-        new StaffSearchList(conn, ssearch.getText(), this).show();
+        new StaffSearchList(conn, ssearch.getText(), this, role.getText()).show();
     }//GEN-LAST:event_Submit7ActionPerformed
 
     private void jsTextuserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jsTextuserActionPerformed
@@ -825,6 +868,20 @@ public class Dashboard extends javax.swing.JFrame {
     private void jsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jsActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jsActionPerformed
+
+    private void brActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brActionPerformed
+        new BackupRestore(conn,this).show();
+        this.enable(false);
+    }//GEN-LAST:event_brActionPerformed
+
+    private void alertMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_alertMouseClicked
+        new Alert(conn,role.getText(),this).show();
+    }//GEN-LAST:event_alertMouseClicked
+
+    private void logActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logActionPerformed
+        new Logger(conn, this).show();
+        this.enable(false);
+    }//GEN-LAST:event_logActionPerformed
     
     private void setProfile(List<String> l){
         id.setText(idg.generate(Integer.parseInt(l.get(0)), 1));
@@ -834,6 +891,23 @@ public class Dashboard extends javax.swing.JFrame {
                     role.setText(role.getText() + ", "+l.get(2));
                 }
         name.setText(l.get(3)+" "+l.get(4));
+        if(role.getText().equals("Office Manager")||role.getText().equals("Shift Manager")){
+            alert.setVisible(true);
+            alertCount.setVisible(true);
+            updateAlert();
+        } else {
+            alert.setVisible(false);
+            alertCount.setVisible(false);
+        }
+        if(l.get(1).equals("Office Manager")){
+            log.setVisible(true);
+        } else {
+            log.setVisible(false);
+        }
+    }
+    
+    public void updateAlert(){
+        alertCount.setText(String.valueOf(new MySQLQueries(conn).notification(role.getText()).getRowCount()));
     }
     
     private void setStat(){
@@ -887,6 +961,9 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton Submit7;
     private javax.swing.JButton Submit8;
     private javax.swing.JLabel activeAcc;
+    private javax.swing.JLabel alert;
+    private javax.swing.JLabel alertCount;
+    private javax.swing.JButton br;
     private javax.swing.JLabel copyright;
     private javax.swing.JTextField csearch;
     private cambodia.raven.DateChooser dateChooser1;
@@ -939,6 +1016,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JButton js;
     private javax.swing.JTextField jsText;
+    private javax.swing.JButton log;
     private javax.swing.JLabel name;
     private javax.swing.JLabel role;
     private javax.swing.JTextField ssearch;

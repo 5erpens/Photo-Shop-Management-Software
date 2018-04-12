@@ -30,35 +30,38 @@ public class CreateJob extends javax.swing.JFrame {
     private MySQLQueries SQuery = null;
 
     private Object[] o = null;
-    
+
     private DefaultTableModel d = new DefaultTableModel();
-    
+
     private static int cid;
-    
+
     private static boolean a;
     private static String e;
-    
+
     private static JFrame frame;
-    
+
+    private static String type, staff;
+
     int mouseX;
     int mouseY;
-    
 
     /**
      * Creates new form CustomerSearchList
      */
-    public CreateJob(Connection conn, String s, int i, boolean a, JFrame frame, String e) {
+    public CreateJob(Connection conn, String s, int i, boolean a, JFrame frame, String e, String type, String staff) {
         this.cid = i;
         this.conn = conn;
         this.a = a;
-        this.e=e;
+        this.e = e;
         this.frame = frame;
+        this.type = type;
+        this.staff = staff;
         this.setUndecorated(true);
         initComponents();
         SQuery = new MySQLQueries(conn);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        id.setText(s);     
-        d.setColumnIdentifiers(new Object[]{"Description","Priority","Price","Deadline","Special Instruction"});
+        id.setText(s);
+        d.setColumnIdentifiers(new Object[]{"Description", "Priority", "Price", "Deadline", "Special Instruction"});
     }
 
     /**
@@ -286,37 +289,42 @@ public class CreateJob extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void exit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exit1ActionPerformed
-        if(a){
-            new ICustomerAccount(conn,e,frame).show();
+        if (a) {
+            new ICustomerAccount(conn, e, frame,staff).show();
         } else {
-            new OCustomerAccount(conn,e,frame).show();
+            new OCustomerAccount(conn, e, frame,staff).show();
         }
         this.dispose();
     }//GEN-LAST:event_exit1ActionPerformed
 
     private void Submit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Submit1ActionPerformed
-        new MySQLQueries(conn).updateTask((DefaultTableModel)table.getModel(),cid);
-        frame.enable(true);
-        if(a){
-            new ICustomerAccount(conn,e,frame).show();
+        if (type.equals("Valued")) {
+            new MySQLQueries(conn).updateTask((DefaultTableModel) table.getModel(), cid);
+            frame.enable(true);
+            if (a) {
+                new ICustomerAccount(conn, e, frame,staff).show();
+            } else {
+                new OCustomerAccount(conn, e, frame,staff).show();
+            }
+            this.dispose();
         } else {
-            new OCustomerAccount(conn,e,frame).show();
+               this.enable(false);
+               new DPayment(conn,this,frame,Float.parseFloat(price.getText()),cid,table.getModel()).show();
         }
-        this.dispose();
     }//GEN-LAST:event_Submit1ActionPerformed
 
     private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MousePressed
-        mouseX=evt.getX();
-        mouseY=evt.getY();
+        mouseX = evt.getX();
+        mouseY = evt.getY();
     }//GEN-LAST:event_jPanel2MousePressed
 
     private void jPanel2MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseDragged
-        this.setLocation(evt.getXOnScreen()-mouseX, evt.getYOnScreen()-mouseY);
+        this.setLocation(evt.getXOnScreen() - mouseX, evt.getYOnScreen() - mouseY);
     }//GEN-LAST:event_jPanel2MouseDragged
 
     private void addTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTaskActionPerformed
 
-        new CreateTask(conn,id.getText(),this).show();
+        new CreateTask(conn, id.getText(), this).show();
         this.enable(false);
     }//GEN-LAST:event_addTaskActionPerformed
 
@@ -325,24 +333,25 @@ public class CreateJob extends javax.swing.JFrame {
     }//GEN-LAST:event_tableInputMethodTextChanged
 
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
-        new DeleteTask(conn,table.getSelectedRow(),table.getModel().getValueAt(table.getSelectedRow(), 2).toString(),this).show();
+        new DeleteTask(conn, table.getSelectedRow(), table.getModel().getValueAt(table.getSelectedRow(), 2).toString(), this).show();
         this.enable(false);
     }//GEN-LAST:event_tableMouseClicked
-    
+
     public void setTable(Object[] o, float f) {
         d.addRow(o);
         table.setModel(d);
         populatePrice(f);
     }
-    
-    public void populatePrice(float f){
-        price.setText(Float.toString(Float.parseFloat(price.getText())+f));
+
+    public void populatePrice(float f) {
+        price.setText(Float.toString(Float.parseFloat(price.getText()) + f));
     }
-    
-    public void deleteRowPrice(int i,float f){
-        ((DefaultTableModel)table.getModel()).removeRow(i);
-        price.setText(Float.toString(Float.parseFloat(price.getText())-f));
+
+    public void deleteRowPrice(int i, float f) {
+        ((DefaultTableModel) table.getModel()).removeRow(i);
+        price.setText(Float.toString(Float.parseFloat(price.getText()) - f));
     }
+
     /**
      * @param args the command line arguments
      */
@@ -380,7 +389,7 @@ public class CreateJob extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CreateJob(conn, new String(), cid, a, new JFrame(), new String()).setVisible(true);
+                new CreateJob(conn, new String(), cid, a, new JFrame(), new String(), new String(), new String()).setVisible(true);
             }
         });
     }

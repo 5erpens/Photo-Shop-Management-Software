@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 
 /**
@@ -33,26 +34,30 @@ public class StaffAccount extends javax.swing.JFrame {
 
     private MySQLQueries SQuery = null;
 
-    private String query;
+    private String query, staff;
 
-    private static String s;
-    
+    private static String s, cid;
+
     private IDgen idg;
-    
-    private static JFrame frame= new JFrame();
+
+    private static JFrame frame = new JFrame();
+
+    private ArrayList<String> ls;
 
     int mouseX;
     int mouseY;
 
-    public StaffAccount(Connection conn, String s, JFrame frame) {
+    public StaffAccount(Connection conn, String s, JFrame frame, String staff) {
         this.frame = frame;
         idg = new IDgen();
         this.conn = conn;
+        this.staff = staff;
         this.setUndecorated(true);
         initComponents();
         SQuery = new MySQLQueries(conn);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initiateData(s);
+
     }
 
     /**
@@ -69,13 +74,13 @@ public class StaffAccount extends javax.swing.JFrame {
         jPanel9 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         exit1 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        del = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         address = new javax.swing.JLabel();
         jPanel16 = new javax.swing.JPanel();
@@ -105,12 +110,14 @@ public class StaffAccount extends javax.swing.JFrame {
         lName = new javax.swing.JLabel();
         jPanel15 = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
+        edit = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel9.setBackground(new java.awt.Color(59, 63, 66));
         jPanel9.setForeground(new java.awt.Color(59, 63, 66));
@@ -143,13 +150,15 @@ public class StaffAccount extends javax.swing.JFrame {
         });
         jPanel9.add(exit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, -10, -1, 40));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/bin2.png"))); // NOI18N
-        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+        del.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/bin2.png"))); // NOI18N
+        del.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel3MouseClicked(evt);
+                delMouseClicked(evt);
             }
         });
-        jPanel9.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 20, -1, 30));
+        jPanel9.add(del, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 20, -1, 30));
+
+        jPanel1.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 750, 64));
 
         jButton1.setText("Update");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -157,6 +166,8 @@ public class StaffAccount extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 624, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 152, -1, -1));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -171,16 +182,20 @@ public class StaffAccount extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(jTable1);
 
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 376, 700, 230));
+
         jPanel5.setBackground(new java.awt.Color(153, 153, 153));
         jPanel5.setForeground(new java.awt.Color(59, 63, 66));
         jPanel5.setToolTipText("");
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel7.setBackground(new java.awt.Color(59, 63, 66));
-        jLabel7.setFont(jLabel7.getFont().deriveFont(jLabel7.getFont().getStyle() | java.awt.Font.BOLD, jLabel7.getFont().getSize()+2));
-        jLabel7.setForeground(new java.awt.Color(59, 63, 66));
-        jLabel7.setText("Task List ");
-        jPanel5.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, 30));
+        jLabel8.setBackground(new java.awt.Color(59, 63, 66));
+        jLabel8.setFont(jLabel8.getFont().deriveFont(jLabel8.getFont().getStyle() | java.awt.Font.BOLD, jLabel8.getFont().getSize()+2));
+        jLabel8.setForeground(new java.awt.Color(59, 63, 66));
+        jLabel8.setText("Task List ");
+        jPanel5.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, 30));
+
+        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 346, 700, -1));
 
         jPanel4.setBackground(new java.awt.Color(153, 153, 153));
         jPanel4.setForeground(new java.awt.Color(59, 63, 66));
@@ -207,6 +222,8 @@ public class StaffAccount extends javax.swing.JFrame {
 
         jPanel4.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 30));
 
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 228, -1, -1));
+
         jPanel6.setBackground(new java.awt.Color(153, 153, 153));
         jPanel6.setForeground(new java.awt.Color(59, 63, 66));
         jPanel6.setToolTipText("");
@@ -232,6 +249,8 @@ public class StaffAccount extends javax.swing.JFrame {
 
         jPanel6.add(jPanel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 30));
 
+        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 276, -1, -1));
+
         jPanel3.setBackground(new java.awt.Color(153, 153, 153));
         jPanel3.setForeground(new java.awt.Color(59, 63, 66));
         jPanel3.setToolTipText("");
@@ -256,6 +275,8 @@ public class StaffAccount extends javax.swing.JFrame {
         jPanel11.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 100, 30));
 
         jPanel3.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 30));
+
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 132, 350, -1));
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
         jPanel2.setForeground(new java.awt.Color(59, 63, 66));
@@ -287,6 +308,8 @@ public class StaffAccount extends javax.swing.JFrame {
 
         jPanel2.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 30));
 
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 132, -1, -1));
+
         jPanel7.setBackground(new java.awt.Color(153, 153, 153));
         jPanel7.setForeground(new java.awt.Color(59, 63, 66));
         jPanel7.setToolTipText("");
@@ -308,9 +331,11 @@ public class StaffAccount extends javax.swing.JFrame {
         jLabel23.setText("Contact Number");
         jLabel23.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel23.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel18.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 100, 30));
+        jPanel18.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 30));
 
         jPanel7.add(jPanel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 30));
+
+        jPanel1.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 276, 350, -1));
 
         jPanel8.setBackground(new java.awt.Color(153, 153, 153));
         jPanel8.setForeground(new java.awt.Color(59, 63, 66));
@@ -337,6 +362,8 @@ public class StaffAccount extends javax.swing.JFrame {
 
         jPanel8.add(jPanel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 30));
 
+        jPanel1.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, -1));
+
         jPanel10.setBackground(new java.awt.Color(153, 153, 153));
         jPanel10.setForeground(new java.awt.Color(59, 63, 66));
         jPanel10.setToolTipText("");
@@ -362,70 +389,18 @@ public class StaffAccount extends javax.swing.JFrame {
 
         jPanel10.add(jPanel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 30));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(8, 8, 8)
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 750, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20)
-                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
-                .addGap(60, 60, 60)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel1))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addGap(42, 42, 42))
-        );
+        jPanel1.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 180, -1, -1));
+
+        edit.setBackground(new java.awt.Color(59, 63, 66));
+        edit.setFont(edit.getFont().deriveFont(edit.getFont().getStyle() | java.awt.Font.BOLD, edit.getFont().getSize()+2));
+        edit.setForeground(new java.awt.Color(59, 63, 66));
+        edit.setText("Edit Profile");
+        edit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editMouseClicked(evt);
+            }
+        });
+        jPanel1.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 100, -1, 30));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, 760, 700));
 
@@ -446,27 +421,35 @@ public class StaffAccount extends javax.swing.JFrame {
         this.setLocation(evt.getXOnScreen() - mouseX, evt.getYOnScreen() - mouseY);
     }//GEN-LAST:event_jPanel9MouseDragged
 
-    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+    private void delMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_delMouseClicked
         this.enable(false);
-        new Delete(conn,id.getText(),true,this,frame).show();
-    }//GEN-LAST:event_jLabel3MouseClicked
+        new Delete(conn, cid, true, this, frame).show();
+    }//GEN-LAST:event_delMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public void initiateData(String s) {
+    private void editMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseClicked
 
+        new EditStaffAcc(conn, frame, ls, staff).show();
+        this.dispose();
+    }//GEN-LAST:event_editMouseClicked
+
+    public void initiateData(String s) {
+        ls = new ArrayList<>();
         try {
             query = "select * from staff_account where email=\"" + s + "\"";
             pst = conn.prepareStatement(query);
             rs = pst.executeQuery();
 
             while (rs.next()) {
-                id.setText(idg.generate(rs.getInt("staff_id"),1));
+                cid = String.valueOf(rs.getInt("staff_id"));
+                id.setText(idg.generate(rs.getInt("staff_id"), 1));
                 role.setText(rs.getString("role"));
-                if(role.getText().equals("Technician")){
-                    role.setText(role.getText() + ", "+rs.getString("department"));
+
+                if (role.getText().equals("Technician")) {
+                    role.setText(role.getText() + ", " + rs.getString("department"));
                 }
                 fName.setText(rs.getString("first_name"));
                 lName.setText(rs.getString("last_name"));
@@ -486,6 +469,32 @@ public class StaffAccount extends javax.swing.JFrame {
                 email.setText(rs.getString("email"));
                 cno.setText(String.valueOf(rs.getLong("contact_no")));
                 System.out.println("Opened staff account : " + String.valueOf(rs.getInt("staff_id")));
+                new MySQLQueries(conn).logAdd(new CodeSet().DateTime(true)+": Opened staff account : " + String.valueOf(rs.getInt("staff_id")));
+                ls.add(String.valueOf(rs.getInt("staff_id")));
+                ls.add(rs.getString("first_name"));
+                ls.add(rs.getString("last_name"));
+                ls.add(rs.getString("address_1"));
+                ls.add(rs.getString("address_2"));
+                ls.add(rs.getString("town_city"));
+                ls.add(rs.getString("county"));
+                ls.add(rs.getString("postcode"));
+                ls.add(rs.getString("country"));
+                ls.add(rs.getString("role"));
+                ls.add(rs.getString("department"));
+                ls.add(rs.getString("email"));
+                ls.add(String.valueOf(rs.getLong("contact_no")));
+                if (staff.equals("Office Manager") || staff.equals("Shift Manager")) {
+                    del.enable();
+                    del.setVisible(true);
+                    edit.enable();
+                    edit.setVisible(true);
+                } else {
+                    del.disable();
+                    del.setVisible(false);
+                    edit.disable();
+                    edit.setVisible(false);
+
+                }
             }
         } catch (SQLException e) {
             System.out.println("Exception in opening staff profile : " + e);
@@ -523,7 +532,7 @@ public class StaffAccount extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new StaffAccount(conn, s, new JFrame()).setVisible(true);
+                new StaffAccount(conn, s, new JFrame(), new String()).setVisible(true);
             }
         });
 
@@ -533,6 +542,8 @@ public class StaffAccount extends javax.swing.JFrame {
     private javax.swing.JLabel address;
     private javax.swing.border.BevelBorder bevelBorder1;
     private javax.swing.JLabel cno;
+    private javax.swing.JLabel del;
+    private javax.swing.JLabel edit;
     private javax.swing.JLabel email;
     private javax.swing.JButton exit1;
     private javax.swing.JLabel fName;
@@ -546,9 +557,8 @@ public class StaffAccount extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;

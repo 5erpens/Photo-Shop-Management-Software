@@ -5,6 +5,12 @@
  */
 package BackEndCode;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.security.CodeSource;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,6 +23,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.Timer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -25,7 +36,9 @@ import javax.mail.internet.InternetAddress;
 public class CodeSet {
 
     //Staff Identify 
-    List<String> ls = null;
+    private List<String> ls = null;
+
+    private List<String> prime = new ArrayList<String>();
 
     //All country list from Stack Overflow
     public String[] getAllCountries() {
@@ -53,12 +66,40 @@ public class CodeSet {
 
     //Codesnip taken from stackoverflow
     //https://stackoverflow.com/questions/16426703/how-to-convert-a-date-dd-mm-yyyy-to-yyyy-mm-dd-hhmmss-android#16426777
-    public String convertStringToDataString(String stringData)
-            throws ParseException {
+    public String convertStringToDataString(String stringData, boolean n) {
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat sdf;
+        if (n) {
+            sdf = new SimpleDateFormat("dd-MM-yyyy");
+        } else {
+            sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        }
         SimpleDateFormat output = new SimpleDateFormat("yyyy-MM-dd");
-        Date data = sdf.parse(stringData);
+        Date data = null;
+        try {
+            data = sdf.parse(stringData);
+        } catch (ParseException ex) {
+            Logger.getLogger(CodeSet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String formattedTime = output.format(data);
+        return formattedTime;
+    }
+
+    public String filename(String stringData, boolean n) {
+
+        SimpleDateFormat sdf;
+        if (n) {
+            sdf = new SimpleDateFormat("dd-MM-yyyy");
+        } else {
+            sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        }
+        SimpleDateFormat output = new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss");
+        Date data = null;
+        try {
+            data = sdf.parse(stringData);
+        } catch (ParseException ex) {
+            Logger.getLogger(CodeSet.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String formattedTime = output.format(data);
         return formattedTime;
     }
@@ -108,5 +149,76 @@ public class CodeSet {
         return ls;
     }
 
-    // public void 
+    public float calculateVAT(float f) {
+        return f * (1f + .20f);
+    }
+
+    public List<String> getPrime() {
+        return prime;
+    }
+
+    public void addPrime(int i) {
+        prime.add(String.valueOf(i));
+    }
+
+    public String Backupdbtosql() {
+        String path = "E:/Projects/Photo-Shop-Management-Software/src/backup/";
+        path = path + new CodeSet().filename(new CodeSet().DateTime(true), false) + ".sql";
+        String k = "C:/Program Files/MySQL/MySQL Server 5.7/bin/mysqldump.exe -uroot -pQwerty@1234 --add-drop-database -B bapers -r" + path;
+        Process p = null;
+        try {
+            Runtime rt = Runtime.getRuntime();
+            p = rt.exec(k);
+            int pc = p.waitFor();
+            if (pc == 0) {
+                return "Backup taken successfull";
+            } else {
+                return "Backup taken failed";
+            }
+
+        } catch (Exception e) {
+
+            System.out.println(DateTime(true) + ": Backup taken failed");
+            System.out.println(" Exception while taking backup : " + e);
+            return "Backup taken failed";
+        }
+    }
+
+    public DefaultTableModel populateBackup() {
+
+        File folder = new File(getClass().getResource("/backup").getFile());
+        File[] file = folder.listFiles();
+        DefaultTableModel d = new DefaultTableModel();
+        d.setColumnIdentifiers(new Object[]{"Backup List"});
+        Object[] o = new Object[1];
+        for (int i = 0; i < file.length; i++) {
+            o[0] = file[i].getName();
+            d.addRow(o);
+        }
+        return d;
+    }
+
+    public String Restoresql(String s) {
+        String path = "E:/Projects/Photo-Shop-Management-Software/src/backup/";
+        path = path + s;
+        String[] k = new String[]{"C:/Program Files/MySQL/MySQL Server 5.7/bin/mysql.exe", "--user=root", "--password=Qwerty@1234", "-e", "source " + path};
+        Process p = null;
+        try {
+            Runtime rt = Runtime.getRuntime();
+            p = rt.exec(k);
+            int pc = p.waitFor();
+            if (pc == 0) {
+                System.out.println(DateTime(true) + ": file: "+s+": Data restoring successfull");
+                return "Data restoring successfull";
+            } else {
+                System.out.println(DateTime(true) + ": file: "+s+": Data restoring failed");
+                return "Data restoring failed";
+            }
+        } catch (Exception e) {
+
+            System.out.println(DateTime(true) + ": Data restoring failed");
+            System.out.println(" Exception while taking backup : " + e);
+            return "Backup taken failed";
+        }
+    }
 }
