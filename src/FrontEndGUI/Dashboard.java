@@ -139,6 +139,11 @@ public class Dashboard extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                jPanel1MouseMoved(evt);
+            }
+        });
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel11.setBackground(new java.awt.Color(171, 172, 173));
@@ -882,6 +887,12 @@ public class Dashboard extends javax.swing.JFrame {
         new Logger(conn, this).show();
         this.enable(false);
     }//GEN-LAST:event_logActionPerformed
+
+    private void jPanel1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseMoved
+        if(role.getText().equals("Office Manager")||role.getText().equals("Shift Manager")){
+            updateAlert();
+        }
+    }//GEN-LAST:event_jPanel1MouseMoved
     
     private void setProfile(List<String> l){
         id.setText(idg.generate(Integer.parseInt(l.get(0)), 1));

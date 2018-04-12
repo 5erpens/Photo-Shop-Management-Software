@@ -343,8 +343,9 @@ public class MySQLQueries {
                 pst.setString(8, x);
                 pst.executeUpdate();
                 System.out.println(codeset.DateTime(true) + ": New task added: customer id: " + String.valueOf(cid) + " task : " + d.getValueAt(i, 0).toString());
-                logAdd(codeset.DateTime(true) + ": New task added: customer id: " + String.valueOf(cid) + " task : " + d.getValueAt(i, 0).toString());
+                logAdd(codeset.DateTime(true) + ": New task added: customer id: " + String.valueOf(cid) + " task : " + d.getValueAt(i, 0).toString() + " Job-id: " + jobID);
             }
+            notificationAdd(codeset.DateTime(true) + ": New Job added: customer id: " + String.valueOf(cid) + " Job-id: " + jobID, "OS", "G");
             return jobID;
         } catch (SQLException e) {
             System.out.println(codeset.DateTime(true) + ": New task adding failed: customer id: " + String.valueOf(cid));
@@ -441,20 +442,25 @@ public class MySQLQueries {
         } else {
             query = "INSERT INTO receipt (type,card_id,date,prime_id,card_number) VALUES('" + type + "',(SELECT card_id from card where number = '" + cardno + "'),'" + new CodeSet().convertStringToDataString(new CodeSet().DateTime(true), false) + "',?,'" + cardno + "')";
         }
-
         for (int i = 0; i < primeList.size(); i++) {
+
             try {
                 pst = conn.prepareStatement(query);
                 pst.setInt(1, Integer.parseInt(primeList.get(i)));
                 pst.executeUpdate();
+
                 System.out.println(codeset.DateTime(true) + ": Payment Completed for job-task id: " + String.valueOf(primeList.get(i)));
-                logAdd(codeset.DateTime(true) + ": Payment Completed for job-task id: " + String.valueOf(primeList.get(i)));
+
             } catch (SQLException e) {
                 System.out.println(codeset.DateTime(true) + ": Payment failed for job-task id: " + String.valueOf(primeList.get(i)));
                 logAdd(codeset.DateTime(true) + ": Payment failed for job-task id: " + String.valueOf(primeList.get(i)));
                 System.out.println("Exception while generating receipt" + e);
             }
         }
+        for (int i = 0; i < primeList.size(); i++) {
+            logAdd(codeset.DateTime(true) + ": Payment Completed for job-task id: " + String.valueOf(primeList.get(i)));
+        }
+
     }
 
     public DefaultTableModel paymentTask(CodeSet cs, int cid, TableModel t) {
@@ -685,6 +691,22 @@ public class MySQLQueries {
             pst.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(MySQLQueries.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public String getJobID(String s) {
+
+        try {
+            query = "select job_id from job where prime_id = " + s;
+            st = conn.createStatement();
+            rs = st.executeQuery(query);
+            if (rs.next()) {
+                return rs.getString("job_id");
+            }
+            return null;
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLQueries.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
     }
 }

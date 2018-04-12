@@ -172,7 +172,7 @@ CREATE TABLE `job` (
   CONSTRAINT `job_customer_account_customer_id_fk` FOREIGN KEY (`customer_id`) REFERENCES `customer_account` (`customer_id`),
   CONSTRAINT `job_staff_account_staff_id_fk` FOREIGN KEY (`staff_id`) REFERENCES `staff_account` (`staff_id`),
   CONSTRAINT `job_task_task_id_fk` FOREIGN KEY (`task_id`) REFERENCES `task` (`task_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -181,8 +181,54 @@ CREATE TABLE `job` (
 
 LOCK TABLES `job` WRITE;
 /*!40000 ALTER TABLE `job` DISABLE KEYS */;
-INSERT INTO `job` VALUES (8,'20180408151803',3,NULL,1,'2018-04-08 15:18:03','2018-04-10','Standard','Pending',NULL,'Easter Egg',0),(9,'20180408151803',3,NULL,2,'2018-04-08 15:18:03','2018-04-08','Urgent','Pending',NULL,'',0),(10,'20180408151803',3,NULL,3,'2018-04-08 15:18:03','2018-04-11','Standard','Pending',NULL,'',0),(11,'20180408151949',4,NULL,7,'2018-04-08 15:19:49','2018-04-13','Urgent','Pending',NULL,'',0),(12,'20180408151949',4,NULL,6,'2018-04-08 15:19:50','2018-04-14','Standard','Pending',NULL,'',0),(13,'20180408151949',4,NULL,4,'2018-04-08 15:19:50','2018-04-20','Standard','Pending',NULL,'',0),(14,'20180408210959',3,NULL,7,'2018-04-08 21:09:59','2018-04-25','Urgent','Pending',NULL,'',0),(15,'20180408210959',3,NULL,6,'2018-04-08 21:09:59','2018-04-08','Standard','Pending',NULL,'',0),(16,'20180408212807',4,NULL,1,'2018-04-08 21:28:07','2018-04-08','Standard','Pending',NULL,'',0),(17,'20180408212807',4,NULL,7,'2018-04-08 21:28:07','2018-04-11','Urgent','Pending',NULL,'',0),(18,'20180408232712',2,NULL,5,'2018-04-08 23:27:12','2018-04-08','Urgent','Pending',NULL,'',0),(19,'20180408232712',2,NULL,3,'2018-04-08 23:27:12','2018-04-10','Standard','Pending',NULL,'',0),(20,'20180408232843',1,NULL,4,'2018-04-08 23:28:43','2018-04-08','Standard','Pending',NULL,'',0),(21,'20180408232843',1,NULL,4,'2018-04-08 23:28:43','2018-04-09','Urgent','Pending',NULL,'',0),(22,'20180408232930',1,NULL,6,'2018-04-08 23:29:30','2018-04-08','Urgent','Pending',NULL,'',0),(23,'20180408232930',1,NULL,7,'2018-04-08 23:29:30','2018-04-18','Standard','Pending',NULL,'',0),(24,'20180409022710',4,NULL,5,'2018-04-09 02:27:10','2018-04-09','Standard','Pending',NULL,'',0),(25,'20180409022710',4,NULL,2,'2018-04-09 02:27:10','2018-04-09','Standard','Pending',NULL,'',0),(26,'20180409022710',4,NULL,4,'2018-04-09 02:27:10','2018-04-11','Standard','Pending',NULL,'',0),(27,'20180409151949',4,NULL,4,'2018-04-09 15:19:49','2018-04-01','Urgent','Pending',NULL,'',0),(28,'20180409151949',4,NULL,4,'2018-04-09 15:19:49','2018-04-19','Standard','Pending',NULL,'',0),(29,'20180409215455',5,NULL,1,'2018-04-09 21:54:55','2018-04-09','Standard','Pending',NULL,'',0),(30,'20180409215455',5,NULL,1,'2018-04-09 21:54:55','2018-04-09','Standard','Pending',NULL,'',0),(35,'20180410004208',5,NULL,3,'2018-04-10 00:42:08','2018-04-10','Standard','Pending',NULL,'',0),(36,'20180410004208',5,NULL,4,'2018-04-10 00:42:08','2018-04-11','Standard','Pending',NULL,'',0);
+INSERT INTO `job` VALUES (8,'20180408151803',3,NULL,1,'2018-04-08 15:18:03','2018-04-10','Standard','Pending',NULL,'Easter Egg',0),(9,'20180408151803',3,NULL,2,'2018-04-08 15:18:03','2018-04-08','Urgent','Pending',NULL,'',0),(10,'20180408151803',3,NULL,3,'2018-04-08 15:18:03','2018-04-11','Standard','Pending',NULL,'',0),(11,'20180408151949',4,NULL,7,'2018-04-08 15:19:49','2018-04-13','Urgent','Pending',NULL,'',0),(12,'20180408151949',4,NULL,6,'2018-04-08 15:19:50','2018-04-14','Standard','Pending',NULL,'',0),(13,'20180408151949',4,NULL,4,'2018-04-08 15:19:50','2018-04-20','Standard','Pending',NULL,'',0),(14,'20180408210959',3,NULL,7,'2018-04-08 21:09:59','2018-04-25','Urgent','Pending',NULL,'',0),(15,'20180408210959',3,NULL,6,'2018-04-08 21:09:59','2018-04-08','Standard','Pending',NULL,'',0),(16,'20180408212807',4,NULL,1,'2018-04-08 21:28:07','2018-04-08','Standard','Pending',NULL,'',0),(17,'20180408212807',4,NULL,7,'2018-04-08 21:28:07','2018-04-11','Urgent','Pending',NULL,'',0),(18,'20180408232712',2,NULL,5,'2018-04-08 23:27:12','2018-04-08','Urgent','Pending',NULL,'',0),(19,'20180408232712',2,NULL,3,'2018-04-08 23:27:12','2018-04-10','Standard','Pending',NULL,'',0),(20,'20180408232843',1,NULL,4,'2018-04-08 23:28:43','2018-04-08','Standard','Pending',NULL,'',0),(21,'20180408232843',1,NULL,4,'2018-04-08 23:28:43','2018-04-09','Urgent','Pending',NULL,'',0),(22,'20180408232930',1,NULL,6,'2018-04-08 23:29:30','2018-04-08','Urgent','Pending',NULL,'',0),(23,'20180408232930',1,NULL,7,'2018-04-08 23:29:30','2018-04-18','Standard','Pending',NULL,'',0),(24,'20180409022710',4,NULL,5,'2018-04-09 02:27:10','2018-04-09','Standard','Pending',NULL,'',0),(25,'20180409022710',4,NULL,2,'2018-04-09 02:27:10','2018-04-09','Standard','Pending',NULL,'',0),(26,'20180409022710',4,NULL,4,'2018-04-09 02:27:10','2018-04-11','Standard','Pending',NULL,'',0),(27,'20180409151949',4,NULL,4,'2018-04-09 15:19:49','2018-04-01','Urgent','Pending',NULL,'',0),(28,'20180409151949',4,NULL,4,'2018-04-09 15:19:49','2018-04-19','Standard','Pending',NULL,'',0),(29,'20180409215455',5,NULL,1,'2018-04-09 21:54:55','2018-04-09','Standard','Pending',NULL,'',0),(30,'20180409215455',5,NULL,1,'2018-04-09 21:54:55','2018-04-09','Standard','Pending',NULL,'',0),(35,'20180410004208',5,NULL,3,'2018-04-10 00:42:08','2018-04-10','Standard','Pending',NULL,'',0),(36,'20180410004208',5,NULL,4,'2018-04-10 00:42:08','2018-04-11','Standard','Pending',NULL,'',0),(37,'20180412062625',5,NULL,3,'2018-04-12 06:26:25','2018-04-12','Urgent','Pending',NULL,'',0),(38,'20180412062625',5,NULL,4,'2018-04-12 06:26:25','2018-04-13','Standard','Pending',NULL,'',0),(39,'20180412082810',5,NULL,1,'2018-04-12 08:28:10','2018-04-12','Standard','Pending',NULL,'',0),(40,'20180412082810',5,NULL,1,'2018-04-12 08:28:10','2018-04-12','Standard','Pending',NULL,'',0);
 /*!40000 ALTER TABLE `job` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `log`
+--
+
+DROP TABLE IF EXISTS `log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `log` (
+  `logger` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `log`
+--
+
+LOCK TABLES `log` WRITE;
+/*!40000 ALTER TABLE `log` DISABLE KEYS */;
+INSERT INTO `log` VALUES ('2018-04-12 06:19:06: Account access attempt: Staff Account ID: 1: Authentication status: Successful'),('2018-04-12 06:25:09: Account access attempt: Staff Account ID: 1: Authentication status: Successful'),('2018-04-12 06:25:43: Opened customer account : 5'),('2018-04-12 06:26:25: New task added: customer id: 5 task : Bag up'),('2018-04-12 06:26:25: New task added: customer id: 5 task : Colour film processing'),('2018-04-12 06:26:25: Payment Completed for job-task id: 37'),('38'),('2018-04-12 06:26:25: Payment Completed for job-task id: 38'),('2018-04-12 06:27:39: Account access attempt: Staff Account ID: 5: Authentication status: Failed'),('2018-04-12 06:27:44: Account access attempt: Staff Account ID: 5: Authentication status: Successful'),('2018-04-12 06:27:46: Account access attempt: Staff Account ID: 5: Authentication status: Successful'),('2018-04-12 06:31:21: Account access attempt: Staff Account ID: 5: Authentication status: Failed'),('2018-04-12 06:31:27: Account access attempt: Staff Account ID: 5: Authentication status: Successful'),('2018-04-12 06:34:20: Account access attempt: Staff Account ID: 5: Authentication status: Successful'),('2018-04-12 06:34:45: Account access attempt: Staff Account ID: 2: Authentication status: Successful'),('2018-04-12 06:35:01: Account access attempt: Staff Account ID: 1: Authentication status: Successful'),('2018-04-12 08:22:53: file: Data restoring successfull: Data restore successfull'),('2018-04-12 08:23:29: Account access attempt: Staff Account ID: 1: Authentication status: Successful'),('2018-04-12 08:27:55: Account access attempt: Staff Account ID: 1: Authentication status: Successful'),('2018-04-12 08:28:02: Opened customer account : 5'),('2018-04-12 08:28:10: New task added: customer id: 5 task : Use of large copy camera'),('2018-04-12 08:28:10: New task added: customer id: 5 task : Use of large copy camera'),('2018-04-12 08:28:10: Payment Completed for job-task id: 39'),('40'),('2018-04-12 08:28:11: Payment Completed for job-task id: 40'),('2018-04-12 08:29:10: Opened customer account : 5'),('2018-04-12 08:32:13: Account access attempt: Staff Account ID: 1: Authentication status: Successful');
+/*!40000 ALTER TABLE `log` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `notification`
+--
+
+DROP TABLE IF EXISTS `notification`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `notification` (
+  `access` enum('O','S','OS') NOT NULL DEFAULT 'OS',
+  `code` enum('R','G') NOT NULL DEFAULT 'G',
+  `message` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `notification`
+--
+
+LOCK TABLES `notification` WRITE;
+/*!40000 ALTER TABLE `notification` DISABLE KEYS */;
+INSERT INTO `notification` VALUES ('OS','G','2018-04-12 08:28:10: New Job added: customer id: 5 Jobid: 20180412082810');
+/*!40000 ALTER TABLE `notification` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -205,7 +251,7 @@ CREATE TABLE `receipt` (
   KEY `receipt_job_prime_id_fk` (`prime_id`),
   CONSTRAINT `receipt_job_prime_id_fk` FOREIGN KEY (`prime_id`) REFERENCES `job` (`prime_id`),
   CONSTRAINT `reciept_card_id_fk` FOREIGN KEY (`card_id`) REFERENCES `card` (`card_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -214,7 +260,7 @@ CREATE TABLE `receipt` (
 
 LOCK TABLES `receipt` WRITE;
 /*!40000 ALTER TABLE `receipt` DISABLE KEYS */;
-INSERT INTO `receipt` VALUES (1,'Cash',NULL,'2018-04-09',10,NULL),(2,'Card',1,'2018-04-09',22,'1234567890123456'),(3,'Card',2,'2018-04-09',29,'1234567890123457'),(4,'Card',2,'2018-04-09',30,'1234567890123457'),(5,'Card',3,'2018-04-10',35,'7892567892673546'),(6,'Card',3,'2018-04-10',36,'7892567892673546'),(7,'Card',4,'2018-04-10',18,'3234354545544545'),(8,'Cash',NULL,'2018-04-10',19,NULL);
+INSERT INTO `receipt` VALUES (1,'Cash',NULL,'2018-04-09',10,NULL),(2,'Card',1,'2018-04-09',22,'1234567890123456'),(3,'Card',2,'2018-04-09',29,'1234567890123457'),(4,'Card',2,'2018-04-09',30,'1234567890123457'),(5,'Card',3,'2018-04-10',35,'7892567892673546'),(6,'Card',3,'2018-04-10',36,'7892567892673546'),(7,'Card',4,'2018-04-10',18,'3234354545544545'),(8,'Cash',NULL,'2018-04-10',19,NULL),(9,'Card',2,'2018-04-12',37,'1234567890123457'),(10,'Cash',NULL,'2018-04-12',39,NULL);
 /*!40000 ALTER TABLE `receipt` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -319,4 +365,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-12  0:42:36
+-- Dump completed on 2018-04-12  8:32:18

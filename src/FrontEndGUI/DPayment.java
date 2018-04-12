@@ -39,8 +39,6 @@ public class DPayment extends javax.swing.JFrame {
 
     private CodeSet codeset = null;
 
-    private MySQLQueries SQuery = null;
-
     private String query;
 
     private static String s;
@@ -70,7 +68,6 @@ public class DPayment extends javax.swing.JFrame {
         type = "Cash";
         this.setUndecorated(true);
         initComponents();
-        SQuery = new MySQLQueries(conn);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(null);
         subtotal.setText(String.valueOf(f));
@@ -411,7 +408,8 @@ public class DPayment extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         new MySQLQueries(conn).generateReceipt(type,
                 card.getSelectedItem().toString(),
-                new MySQLQueries(conn).getPrime(new MySQLQueries(conn).updateTask((DefaultTableModel) t, cid)));
+                new MySQLQueries(conn).getPrime(new MySQLQueries(conn).updateTask((DefaultTableModel) t
+                        , cid)));
         frame.dispose();
         frame2.enable(true);
         this.dispose();
