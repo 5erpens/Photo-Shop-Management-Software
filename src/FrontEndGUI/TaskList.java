@@ -6,41 +6,38 @@
 package FrontEndGUI;
 
 import BackEndCode.Bootstrap;
-import BackEndCode.CodeSet;
 import BackEndCode.MySQLQueries;
 import java.awt.Color;
 import java.sql.Connection;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 
 /**
  *
  * @author Sai
  */
-public class NewStaffAcc extends javax.swing.JFrame {
+public class TaskList extends javax.swing.JFrame {
 
     /**
      * Creates new form NewCAcc
      */
     
-    private MySQLQueries SQuery = null;
-    
-    private CodeSet codeset = null;
+   
     
     private static Connection conn = null;
     
     private static JFrame frame= new JFrame();
     
-    private static String staff;
+    private ArrayList<String> ls;
+    
     
     int mouseX;
     int mouseY;
     
-    public NewStaffAcc(Connection conn, JFrame frame, String staff) {
+    public TaskList(Connection conn, JFrame frame) {
         this.frame = frame;
         this.conn = conn;
-        this.staff = staff;
+        ls = new ArrayList<>();
         Bootstrap template = new Bootstrap();
         this.setUndecorated(true);
         initComponents();
@@ -51,9 +48,7 @@ public class NewStaffAcc extends javax.swing.JFrame {
         jPanel2.setBackground(java.awt.Color.decode(template.getBackgroundSlide()));
         jPanel1.setBackground(java.awt.Color.decode(template.getTextColour()));
         jLabel1.setForeground(java.awt.Color.decode(template.getTextColour()));
-        SQuery = new MySQLQueries(conn);
-        area.setVisible(false);
-        populateCountryList();
+        table.setModel(new MySQLQueries(conn).TaskList(""));
     }
 
     /**
@@ -69,20 +64,12 @@ public class NewStaffAcc extends javax.swing.JFrame {
         exit = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        lName = new javax.swing.JTextField();
-        postcode = new javax.swing.JTextField();
-        ad2 = new javax.swing.JTextField();
-        fName = new javax.swing.JTextField();
-        phone = new javax.swing.JTextField();
-        city = new javax.swing.JTextField();
-        ad1 = new javax.swing.JTextField();
-        role = new javax.swing.JComboBox<>();
-        email = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        country = new javax.swing.JComboBox<>();
-        county = new javax.swing.JTextField();
         error = new javax.swing.JLabel();
-        area = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        table = new javax.swing.JTable();
+        search = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -105,88 +92,71 @@ public class NewStaffAcc extends javax.swing.JFrame {
                 exitActionPerformed(evt);
             }
         });
-        jPanel2.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, -10, -1, 40));
+        jPanel2.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, -10, -1, 40));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel1.setText("Create New Staff Account");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 280, -1));
+        jLabel1.setText("Create New Tasks");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 160, -1));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 720, 60));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 60));
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lName.setText("Last Name");
-        jPanel1.add(lName, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 110, 280, -1));
-
-        postcode.setText("Postcode");
-        jPanel1.add(postcode, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 210, 180, -1));
-
-        ad2.setText("Address 2 (optional)");
-        ad2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ad2ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(ad2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 160, 280, -1));
-
-        fName.setText("First Name");
-        fName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fNameActionPerformed(evt);
-            }
-        });
-        jPanel1.add(fName, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 280, -1));
-
-        phone.setText("Contact Number");
-        jPanel1.add(phone, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 310, 280, -1));
-
-        city.setText("Town/City");
-        jPanel1.add(city, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 180, -1));
-
-        ad1.setText("Address 1");
-        jPanel1.add(ad1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 280, -1));
-
-        role.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Receptionist", "Technician", "Shift Manager", "Office Manager" }));
-        role.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                roleActionPerformed(evt);
-            }
-        });
-        jPanel1.add(role, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, 170, -1));
-
-        email.setText("Email Address");
-        jPanel1.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 280, -1));
-
-        jButton1.setText("Submit");
+        jButton1.setText("Create New");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(507, 360, 120, -1));
-
-        country.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Country", "Item 2", "Item 3", "Item 4" }));
-        country.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                countryActionPerformed(evt);
-            }
-        });
-        jPanel1.add(country, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 180, -1));
-
-        county.setText("County (Optional)");
-        jPanel1.add(county, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, 170, -1));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 120, 100, 30));
 
         error.setForeground(new java.awt.Color(255, 0, 0));
         error.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         error.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel1.add(error, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 590, -1));
 
-        area.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Development Area", "Copy Room", "Packing Room", "Finishing Room" }));
-        jPanel1.add(area, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 260, 180, -1));
+        jLabel6.setBackground(new java.awt.Color(59, 63, 66));
+        jLabel6.setFont(jLabel6.getFont().deriveFont(jLabel6.getFont().getStyle() | java.awt.Font.BOLD, jLabel6.getFont().getSize()+2));
+        jLabel6.setForeground(new java.awt.Color(59, 63, 66));
+        jLabel6.setText("Search");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 90, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 730, 420));
+        table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(table);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 640, 220));
+
+        search.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                searchKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                searchKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                searchKeyTyped(evt);
+            }
+        });
+        jPanel1.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 530, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 700, 410));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -195,40 +165,6 @@ public class NewStaffAcc extends javax.swing.JFrame {
         frame.enable(true);
         this.dispose();
     }//GEN-LAST:event_exitActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        error.setText("");
-        if((fName.getText().equals("First Name") || lName.getText().equals("Lastname") || ad1.getText().equals("Address 1")|| city.getText().equals("Town/City")|| postcode.getText().equals("Postcode")|| email.getText().equals("Email Address")|| phone.getText().equals("Contact Number"))
-                ||(fName.getText().equals("") || lName.getText().equals("") || ad1.getText().equals("")|| city.getText().equals("")|| postcode.getText().equals("")|| email.getText().equals("")|| phone.getText().equals(""))){
-            error.setText("Please fill all the section");
-        }else if(!(phone.getText().matches("\\d+")) || (fName.getText().matches(".*\\d+.*")) || (lName.getText().matches(".*\\d+.*")) || !(codeset.isValidEmailAddress(email.getText()))){
-            error.setText("Please enter valid input");
-        }else{
-            if(ad2.getText().equals("Address 2 (optional)")){
-                ad2.setText(null);
-            }
-            if(county.getText().equals("County (Optional)")){
-                county.setText(null);
-            }
-            if(SQuery.CreateStaff(fName.getText(),lName.getText(), ad1.getText(), ad2.getText(), city.getText(), county.getText(), postcode.getText(), country.getSelectedItem().toString(), role.getSelectedItem().toString(), area.getSelectedItem().toString(), email.getText(), Long.parseLong(phone.getText()))){
-                new StaffAccount(conn,email.getText(),frame,staff).setVisible(true);
-                this.dispose();
-            }
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void ad2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ad2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ad2ActionPerformed
-
-    private void countryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_countryActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_countryActionPerformed
-
-    private void fNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fNameActionPerformed
 
     private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MousePressed
         mouseX=evt.getX();
@@ -239,20 +175,37 @@ public class NewStaffAcc extends javax.swing.JFrame {
         this.setLocation(evt.getXOnScreen()-mouseX, evt.getYOnScreen()-mouseY);
     }//GEN-LAST:event_jPanel2MouseDragged
 
-    private void roleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roleActionPerformed
-       if(role.getSelectedIndex()==1){
-           area.setVisible(true);
-       }
-       else {
-           area.setVisible(false);
-       }
-    }//GEN-LAST:event_roleActionPerformed
-    
-    public void populateCountryList(){
-        codeset = new CodeSet();
-        DefaultComboBoxModel dm = new DefaultComboBoxModel(codeset.getAllCountries());
-        country.setModel(dm);
-        country.setSelectedIndex(77);
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        new AddTask(conn,this).show();
+        this.disable();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void searchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchKeyPressed
+        table.setModel(new MySQLQueries(conn).TaskList(search.getText()));
+    }//GEN-LAST:event_searchKeyPressed
+
+    private void searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchKeyReleased
+        table.setModel(new MySQLQueries(conn).TaskList(search.getText()));
+    }//GEN-LAST:event_searchKeyReleased
+
+    private void searchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchKeyTyped
+        table.setModel(new MySQLQueries(conn).TaskList(search.getText()));
+    }//GEN-LAST:event_searchKeyTyped
+
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+        ArrayList<String> l = new ArrayList<>();
+        l.add(table.getModel().getValueAt(table.getSelectedRow(),0).toString());
+        l.add(table.getModel().getValueAt(table.getSelectedRow(),1).toString());
+        l.add(table.getModel().getValueAt(table.getSelectedRow(),2).toString());
+        l.add(table.getModel().getValueAt(table.getSelectedRow(),3).toString());
+        l.add(table.getModel().getValueAt(table.getSelectedRow(),4).toString());
+        l.add(table.getModel().getValueAt(table.getSelectedRow(),5).toString());
+        new ModifyTask(conn,this,l).show();
+        this.disable();
+    }//GEN-LAST:event_tableMouseClicked
+
+    public void intake(){
+        table.setModel(new MySQLQueries(conn).TaskList(""));
     }
     /**
      * @param args the command line arguments
@@ -271,43 +224,41 @@ public class NewStaffAcc extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewStaffAcc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TaskList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewStaffAcc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TaskList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewStaffAcc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TaskList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewStaffAcc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TaskList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewStaffAcc(conn,new JFrame(),new String()).setVisible(true);
+                new TaskList(conn,new JFrame()).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField ad1;
-    private javax.swing.JTextField ad2;
-    private javax.swing.JComboBox<String> area;
-    private javax.swing.JTextField city;
-    private javax.swing.JComboBox<String> country;
-    private javax.swing.JTextField county;
-    private javax.swing.JTextField email;
     private javax.swing.JLabel error;
     private javax.swing.JButton exit;
-    private javax.swing.JTextField fName;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField lName;
-    private javax.swing.JTextField phone;
-    private javax.swing.JTextField postcode;
-    private javax.swing.JComboBox<String> role;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField search;
+    private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }
