@@ -12,10 +12,10 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/E:/Projects/Photo-Shop-Management-Software/src/edit/Discount.java</file>
             <file>file:/E:/Projects/Photo-Shop-Management-Software/src/BackEndCode/MySQLQueries.java</file>
-            <file>file:/E:/Projects/Photo-Shop-Management-Software/src/FrontEndGUI/DPayment.java</file>
-            <file>file:/E:/Projects/Photo-Shop-Management-Software/src/FrontEndGUI/CreateJob.java</file>
-            <file>file:/E:/Projects/Photo-Shop-Management-Software/src/FrontEndGUI/Dashboard.java</file>
+            <file>file:/E:/Projects/Photo-Shop-Management-Software/src/FrontEndGUI/Payment.java</file>
+            <file>file:/E:/Projects/Photo-Shop-Management-Software/src/BackEndCode/CodeSet.java</file>
         </group>
     </open-files>
 </project-private>

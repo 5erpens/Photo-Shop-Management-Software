@@ -267,7 +267,7 @@
               <StringArray count="4">
                 <StringItem index="0" value="Development Area"/>
                 <StringItem index="1" value="Copy Room"/>
-                <StringItem index="2" value="Packing Room"/>
+                <StringItem index="2" value="Packing Department"/>
                 <StringItem index="3" value="Finishing Room"/>
               </StringArray>
             </Property>

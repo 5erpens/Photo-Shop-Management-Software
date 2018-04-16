@@ -6,6 +6,10 @@
 package FrontEndGUI;
 
 import BackEndCode.MySQLQueries;
+import java.awt.Component;
+import java.awt.MouseInfo;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.sql.Connection;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
@@ -22,7 +26,7 @@ public class Alert extends javax.swing.JFrame {
     private static Dashboard frame;
     private static Connection conn = null;
     private static String role;
-    int i = 0;
+    
     public Alert(Connection conn, String role, JFrame frame) {
         initComponents();
         this.conn = conn;
@@ -142,13 +146,12 @@ public class Alert extends javax.swing.JFrame {
     }//GEN-LAST:event_addTaskActionPerformed
 
     private void jPanel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseEntered
-        i++;
         table.setModel(new MySQLQueries(conn).notification(role));
     }//GEN-LAST:event_jPanel1MouseEntered
 
     private void jPanel1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseExited
         table.setModel(new MySQLQueries(conn).notification(role));
-         if (i > 1) {
+         if (!isMouseWithinComponent(this)) {
             this.dispose();
         }
     }//GEN-LAST:event_jPanel1MouseExited
@@ -162,13 +165,20 @@ public class Alert extends javax.swing.JFrame {
     }//GEN-LAST:event_formMouseExited
 
     private void tableMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseEntered
-       i = 0;
+
     }//GEN-LAST:event_tableMouseEntered
 
     private void addTaskMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addTaskMouseEntered
 
     }//GEN-LAST:event_addTaskMouseEntered
 
+    private boolean isMouseWithinComponent(Component c)
+{
+    Point mousePos = MouseInfo.getPointerInfo().getLocation();
+    Rectangle bounds = c.getBounds();
+    bounds.setLocation(c.getLocationOnScreen());
+    return bounds.contains(mousePos);
+}
     /**
      * @param args the command line arguments
      */

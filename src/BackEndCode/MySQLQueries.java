@@ -5,7 +5,6 @@
  */
 package BackEndCode;
 
-import com.sun.org.apache.bcel.internal.generic.Type;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -82,10 +81,10 @@ public class MySQLQueries {
                 if (s1.matches("\\d+")) {
                     query = "select staff_id,role,first_name,last_name,email from staff_account where  staff_id = " + Integer.parseInt(s1);
                 } else {
-                    query = "select staff_id,role,first_name,last_name,email from staff_account where first_name || last_name|| email like '%" + s + "%'";
+                    query = "select staff_id,role,first_name,last_name,email from staff_account where first_name like '%" + s + "%' || last_name like '%" + s + "%' || email like '%" + s + "%'";
                 }
             } else {
-                query = "select staff_id,role,first_name,last_name,email from staff_account where first_name || last_name|| email like '%" + s + "%'";
+                query = "select staff_id,role,first_name,last_name,email from staff_account where first_name like '%" + s + "%' || last_name like '%" + s + "%' || email like '%" + s + "%'";
             }
             DefaultTableModel d = new DefaultTableModel();
             d.setColumnIdentifiers(new Object[]{"ID", "Role", "First Name", "Last Name", "emailID"});
@@ -116,10 +115,10 @@ public class MySQLQueries {
                 if (s1.matches("\\d+")) {
                     query = "select customer_id,customer_type,first_name,last_name,email from customer_account where customer_id = " + Integer.parseInt(s1);
                 } else {
-                    query = "select customer_id,customer_type,first_name,last_name,email from customer_account where first_name || last_name|| email like '%" + s + "%'";
+                    query = "select customer_id,customer_type,first_name,last_name,email from customer_account where first_name like '%" + s + "%' || last_name like '%" + s + "%'|| email like '%" + s + "%'";
                 }
             } else {
-                query = "select customer_id,customer_type,first_name,last_name,email from customer_account where first_name || last_name|| email like '%" + s + "%'";
+                query = "select customer_id,customer_type,first_name,last_name,email from customer_account where customer_type like '%" + s + "%' || first_name like '%" + s + "%' || last_name like '%" + s + "%'|| email like '%" + s + "%'";
             }
 
             DefaultTableModel d = new DefaultTableModel();
@@ -181,9 +180,9 @@ public class MySQLQueries {
     }
 
     //Create new staff account
-    public boolean CreateCustomer(String first_name, String last_name, String address_1, String address_2, String town_city, String county, String postcode, String country, String type, String email, long contact_no) {
+    public boolean CreateCustomer(String first_name, String last_name, String address_1, String address_2, String town_city, String county, String postcode, String country, String type, String email, long contact_no, String acctype, String dt, float per) {
 
-        query = "insert into customer_account (customer_type, first_name, last_name, address_1, address_2, town_city, county, postcode, country, email, contact_no)" + " value (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
+        query = "insert into customer_account (customer_type, first_name, last_name, address_1, address_2, town_city, county, postcode, country, email, contact_no, type, discount_type, percentage)" + " value (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?)";
         try {
             pst = conn.prepareStatement(query);
             pst.setString(1, type);
@@ -201,6 +200,9 @@ public class MySQLQueries {
             pst.setString(9, country);
             pst.setString(10, email);
             pst.setLong(11, contact_no);
+            pst.setString(12, acctype);
+            pst.setString(13, dt);
+            pst.setFloat(14, per);
             pst.executeUpdate();
             System.out.println(codeset.DateTime(true) + ": New customer account creation successful: customer Last Name: " + last_name + " customer email: " + email);
             logAdd(codeset.DateTime(true) + ": New customer account creation successful: customer Last Name: " + last_name + " customer email: " + email);
@@ -324,13 +326,52 @@ public class MySQLQueries {
         }
     }
 
+    public String updateTask(DefaultTableModel d, int cid, ArrayList<String> a) {
+        try {
+            String jobID = codeset.DateTime(false);
+
+            for (int i = 0; i < d.getRowCount(); i++) {
+                query = "insert into job (job_id, customer_id, task_id, date, deadline, priority, status, special_instruction,price,discount)"
+                        + " values (?,?,(select task_id from task where description = ?),?,?,?,?,?,?,?)";
+                pst = conn.prepareStatement(query);
+                pst.setString(1, jobID);
+                pst.setInt(2, cid);
+                pst.setString(3, d.getValueAt(i, 0).toString());
+                pst.setString(4, codeset.DateTime(true));
+                pst.setString(5, d.getValueAt(i, 3).toString());
+                pst.setString(6, d.getValueAt(i, 1).toString());
+                pst.setString(7, "Pending");
+                String x = d.getValueAt(i, 4).toString();
+                pst.setString(8, x);
+                pst.setFloat(9, Float.parseFloat(d.getValueAt(i, 2).toString()));
+                pst.setFloat(10, Float.parseFloat(a.get(i)));
+                pst.executeUpdate();
+                System.out.println(codeset.DateTime(true) + ": New task added: customer id: " + String.valueOf(cid) + " task : " + d.getValueAt(i, 0).toString());
+                logAdd(codeset.DateTime(true) + ": New task added: customer id: " + String.valueOf(cid) + " task : " + d.getValueAt(i, 0).toString() + " Job-id: " + jobID);
+            }
+            notificationAdd(codeset.DateTime(true) + ": New Job added: customer id: " + String.valueOf(cid) + " Job-id: " + jobID, "OS", "G");
+            return jobID;
+        } catch (SQLException e) {
+            System.out.println(codeset.DateTime(true) + ": New task adding failed: customer id: " + String.valueOf(cid));
+            logAdd(codeset.DateTime(true) + ": New task adding failed: customer id: " + String.valueOf(cid));
+            System.out.println("Exception at adding task: " + e);
+            return null;
+        }
+    }
+
+    /**
+     *
+     * @param d
+     * @param cid
+     * @return
+     */
     public String updateTask(DefaultTableModel d, int cid) {
         try {
             String jobID = codeset.DateTime(false);
 
             for (int i = 0; i < d.getRowCount(); i++) {
-                query = "insert into job (job_id, customer_id, task_id, date, deadline, priority, status, special_instruction)"
-                        + " values (?,?,(select task_id from task where description = ?),?,?,?,?,?)";
+                query = "insert into job (job_id, customer_id, task_id, date, deadline, priority, status, special_instruction,price)"
+                        + " values (?,?,(select task_id from task where description = ?),?,?,?,?,?,?)";
                 pst = conn.prepareStatement(query);
                 pst.setString(1, jobID);
                 pst.setInt(2, cid);
@@ -341,6 +382,7 @@ public class MySQLQueries {
                 pst.setString(7, "Pending");
                 String x = d.getValueAt(i, 4).toString();
                 pst.setString(8, x);
+                pst.setFloat(9, Float.parseFloat(d.getValueAt(i, 2).toString()));
                 pst.executeUpdate();
                 System.out.println(codeset.DateTime(true) + ": New task added: customer id: " + String.valueOf(cid) + " task : " + d.getValueAt(i, 0).toString());
                 logAdd(codeset.DateTime(true) + ": New task added: customer id: " + String.valueOf(cid) + " task : " + d.getValueAt(i, 0).toString() + " Job-id: " + jobID);
@@ -358,7 +400,7 @@ public class MySQLQueries {
     public DefaultTableModel populateCTask(String s) {
 
         try {
-            query = "select job.job_id, task.description, job.status, job.deadline, task.price, if(COALESCE(receipt.receipt_id,false) ,'Paid','Unpaid' ) as paid from job left join receipt on job.prime_id = receipt.prime_id left join task on job.task_id = task.task_id where customer_id = " + s;
+            query = "select job.job_id, task.description, job.status, job.deadline, job.price, if(COALESCE(receipt.receipt_id,false) ,'Paid','Unpaid' ) as paid from job left join receipt on job.prime_id = receipt.prime_id left join task on job.task_id = task.task_id where customer_id = " + s;
 
             DefaultTableModel d = new DefaultTableModel();
             d.setColumnIdentifiers(new Object[]{"Job ID", "Task", "Status", "Duration", "Price", "Paid"});
@@ -464,16 +506,17 @@ public class MySQLQueries {
     }
 
     public DefaultTableModel paymentTask(CodeSet cs, int cid, TableModel t) {
-        query = "select job.prime_id, task.description, task.price from job left join receipt on job.prime_id = receipt.prime_id left join task on job.task_id = task.task_id where COALESCE(receipt.receipt_id,false) = false and customer_id = " + cid + " order by job.prime_id asc";
+        query = "select job.prime_id, task.description, job.price, job.discount from job left join receipt on job.prime_id = receipt.prime_id left join task on job.task_id = task.task_id where COALESCE(receipt.receipt_id,false) = false and customer_id = " + cid + " order by job.prime_id asc";
         try {
             st = conn.createStatement();
             rs = st.executeQuery(query);
-            Object[] obj = new Object[3];
+            Object[] obj = new Object[4];
             DefaultTableModel d = (DefaultTableModel) t;
             while (rs.next()) {
                 obj[0] = false;
                 obj[1] = rs.getString("description");
                 obj[2] = rs.getString("price");
+                obj[3] = String.valueOf(rs.getFloat("discount"));
                 cs.addPrime(rs.getInt("prime_id"));
                 d.addRow(obj);
             }
@@ -485,6 +528,11 @@ public class MySQLQueries {
         }
     }
 
+    /**
+     *
+     * @param b
+     * @param cid
+     */
     public void setAccountStatus(boolean b, int cid) {
         String s = String.valueOf(cid);
         try {
@@ -541,9 +589,14 @@ public class MySQLQueries {
         }
     }
 
+    /**
+     *
+     * @param ls
+     * @return
+     */
     public boolean editCust(ArrayList<String> ls) {
         try {
-            query = "UPDATE customer_account SET first_name=?, last_name=?, address_1=?, address_2=?, town_city=?, county=?, postcode=?, country=?, customer_type=?, email=?, contact_no=?, type=? WHERE customer_id = " + ls.get(0);
+            query = "UPDATE customer_account SET first_name=?, last_name=?, address_1=?, address_2=?, town_city=?, county=?, postcode=?, country=?, customer_type=?, email=?, contact_no=?, type=?, discount_type= ?, percentage = ? WHERE customer_id = " + ls.get(0);
             pst = conn.prepareStatement(query);
             pst.setString(1, ls.get(1));
             if (ls.get(9).equals("Organisation")) {
@@ -561,6 +614,8 @@ public class MySQLQueries {
             pst.setString(10, ls.get(10));
             pst.setLong(11, Long.parseLong(ls.get(11)));
             pst.setString(12, ls.get(12));
+            pst.setString(13, ls.get(13));
+            pst.setFloat(14, Float.parseFloat(ls.get(14)));
             pst.executeUpdate();
             System.out.println(codeset.DateTime(true) + ": Customer account: " + ls.get(0) + " profile update successfull");
             logAdd(codeset.DateTime(true) + ": Customer account: " + ls.get(0) + " profile update successfull");
@@ -707,6 +762,340 @@ public class MySQLQueries {
         } catch (SQLException ex) {
             Logger.getLogger(MySQLQueries.class.getName()).log(Level.SEVERE, null, ex);
             return null;
+        }
+    }
+
+    public void addTask(ArrayList<String> ls) {
+        try {
+            query = "INSERT INTO task (description, Department, `Shelf slot`, price, duration,percentage) VALUES (?, ?, ?, ?, ?,?)";
+            pst = conn.prepareStatement(query);
+            pst.setString(1, ls.get(0));
+            pst.setString(2, ls.get(1));
+            pst.setString(3, ls.get(2));
+            pst.setFloat(4, Float.parseFloat(ls.get(3)));
+            pst.setString(5, ls.get(4));
+            pst.setFloat(6, Float.parseFloat(ls.get(5)));
+            pst.executeUpdate();
+            logAdd(codeset.DateTime(true) + ": New Task: " + ls.get(0) + " : Added to task list");
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLQueries.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public DefaultTableModel JobList(String s) {
+
+        try {
+            if (s.endsWith("ID")) {
+                String s1 = s.substring(0, s.length() - 2);
+                if (s1.matches("\\d+")) {
+                    query = "select j.prime_id,j.job_id,j.customer_id,j.staff_id,(select description from task as t where t.task_id = j.task_id) as task, j.date,j.deadline,j.priority,j.status,j.start_time,j.special_instruction, j.staff_instruction from job as j where j.prime_id =" + Integer.parseInt(s1);
+                }
+            } else if (s.equals("Standard") || s.equals("standard") || s.equals("Urgent") || s.equals("urgent")) {
+                query = "select  j.prime_id,j.job_id,j.customer_id,j.staff_id,(select description from task as t where t.task_id = j.task_id) as task, j.date,j.deadline,j.priority,j.status,j.start_time,j.special_instruction, j.staff_instruction from job as j where j.priority like '%" + s + "%'";
+            } else if (s.equals("Pending") || s.equals("pending") || s.equals("finished") || s.equals("Finished")) {
+                query = "select  j.prime_id,j.job_id,j.customer_id,j.staff_id,(select description from task as t where t.task_id = j.task_id) as task, j.date,j.deadline,j.priority,j.status,j.start_time,j.special_instruction, j.staff_instruction from job as j where j.status like '%" + s + "%'";
+            } else if (s.equals("In-Progress") || s.equals("in-progress") || s.equals("InProgress") || s.equals("inprogress") || s.equals("in-Progress") || s.equals("In-progress") || s.equals("Inprogress") || s.equals("inProgress")) {
+                query = "select  j.prime_id,j.job_id,j.customer_id,j.staff_id,(select description from task as t where t.task_id = j.task_id) as task, j.date,j.deadline,j.priority,j.status,j.start_time,j.special_instruction, j.staff_instruction from job as j where j.status = 'In-Progress'";
+            } else if (s.equals("Enter Keywords") || s.isEmpty()) {
+                query = "select  j.prime_id,j.job_id,j.customer_id,j.staff_id,(select description from task as t where t.task_id = j.task_id) as task, j.date,j.deadline,j.priority,j.status,j.start_time,j.special_instruction, j.staff_instruction from job as j";
+            } else if (s.startsWith("2")) {
+                query = "select  j.prime_id,j.job_id,j.customer_id,j.staff_id,(select description from task as t where t.task_id = j.task_id) as task, j.date,j.deadline,j.priority,j.status,j.start_time,j.special_instruction, j.staff_instruction from job as j where j.job_id like '%" + s + "%'";
+            } else {
+                query = "select  j.prime_id,j.job_id,j.customer_id,j.staff_id,t.description as task, j.date,j.deadline,j.priority,j.status,j.start_time,j.special_instruction, j.staff_instruction from job as j inner join task t on j.task_id = t.task_id where t.description like '%" + s + "%'";
+            }
+
+            DefaultTableModel d = new DefaultTableModel();
+            d.setColumnIdentifiers(new Object[]{"Job-Task ID", "Job ID", "Customer ID", "Staff ID", "Task", "Date", "Deadline", "Priority", "Status", "Start Time", "Special Instruction", "Staff Instruction"});
+            st = conn.createStatement();
+            rs = st.executeQuery(query);
+            Object[] obj = new Object[12];
+            while (rs.next()) {
+                obj[0] = rs.getInt(1);
+                obj[1] = rs.getLong(2);
+                obj[2] = rs.getString(3);
+                obj[3] = rs.getString(4);
+                obj[4] = rs.getString(5);
+                obj[5] = rs.getString(6);
+                obj[6] = rs.getString(7);
+                obj[7] = rs.getString(8);
+                obj[8] = rs.getString(9);
+                obj[9] = rs.getString(10);
+                obj[10] = rs.getString(11);
+                obj[10] = rs.getString(12);
+                d.addRow(obj);
+            }
+            return d;
+        } catch (NumberFormatException | SQLException e) {
+            System.out.println("Exception in Job List: " + e);
+            return null;
+        }
+    }
+
+    public DefaultTableModel deadline() {
+        try {
+            query = "select j.prime_id,j.job_id,j.customer_id,t.description,j.date,t.price from job as j left join receipt as r on j.prime_id = r.prime_id left join task as t on j.task_id = t.task_id where (j.date < '" + new CodeSet().monthDeadline() + "') and (r.receipt_id is null )";
+
+            DefaultTableModel d = new DefaultTableModel();
+            d.setColumnIdentifiers(new Object[]{"ID", "Job ID", "Customer ID", "Task", "Date", "Price"});
+            st = conn.createStatement();
+            rs = st.executeQuery(query);
+            Object[] obj = new Object[10];
+            while (rs.next()) {
+                obj[0] = rs.getLong(1);
+                obj[1] = rs.getString(2);
+                obj[2] = rs.getString(3);
+                obj[3] = rs.getString(4);
+                obj[4] = rs.getString(5);
+                obj[5] = rs.getString(6);
+                d.addRow(obj);
+            }
+
+            if (d.getRowCount() > 0) {
+                notificationAdd(new CodeSet().DateTime(true) + ": " + String.valueOf(d.getRowCount()) + " due payment left: Please check due list", "OS", "R");
+            }
+            return d;
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLQueries.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    public String Jobs(int s) {
+        switch (s) {
+            case 1:
+                query = "select count(*) as count from job where status = 'In-Progress' || status = 'Pending'";
+                break;
+            case 2:
+                query = "select count(*) as count from job where status = 'Finished'";
+                break;
+            case 3:
+                query = "select count(*) as count from job where status = 'On_Hold'";
+                break;
+            default:
+                break;
+        }
+
+        try {
+            pst = conn.prepareStatement(query);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                return String.valueOf((rs.getInt(1)));
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("Exception in Stat suspended account: " + e);
+            return null;
+        }
+    }
+
+    public ArrayList<String> techPopulate(String i) {
+        query = "select j.prime_id,j.job_id,j.deadline,j.customer_id, t.description,j.special_instruction from job as j join task as t on j.task_id = t.task_id where j.status = 'In-Progress' and staff_id =" + i;
+
+        try {
+            pst = conn.prepareStatement(query);
+            rs = pst.executeQuery();
+            ArrayList<String> ls = new ArrayList<>();
+            if (rs.next()) {
+                ls.add(String.valueOf(rs.getInt(1)));
+                ls.add(rs.getString(2));
+                ls.add(rs.getString(3));
+                ls.add(rs.getString(4));
+                ls.add(rs.getString(5));
+                ls.add(rs.getString(6));
+                return ls;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("Exception Technician " + e);
+            return null;
+        }
+    }
+
+    public void updateTaskStatus(String s, String tid, String status, String inst) {
+
+        if (inst == null || inst.isEmpty()) {
+            inst = "";
+        }
+        try {
+            query = "update job set status = '" + status + "', staff_instruction = '" + inst + "', end_time = '" + new CodeSet().DateTime(true) + "' where prime_id = " + tid;
+            pst = conn.prepareStatement(query);
+            pst.executeUpdate();
+            logAdd(new CodeSet().DateTime(true) + ": Job-Task: " + tid + ": status updated: " + status + ": by Staff id: " + s);
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLQueries.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public boolean checkStaff(String s) {
+        try {
+            query = "select count(*) as result from job where  status = 'In-Progress'  and staff_id = " + s;
+            pst = conn.prepareStatement(query);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                if (rs.getLong(1) == 0) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLQueries.class.getName()).log(Level.SEVERE, null, ex);
+            return true;
+        }
+    }
+
+    public void assignToStaff(String id, String area) {
+        try {
+            query = "select j.prime_id as prime from job as j join task as t on j.task_id = t.task_id where t.Department = '" + area + "' and status = 'Pending' order by deadline asc, prime_id ASC limit 1";
+
+            pst = conn.prepareStatement(query);
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+                logAdd("Job-Task id: " + String.valueOf(rs.getLong("prime")) + " : assigned to the staff_id: " + id);
+                query = "update job set staff_id = " + id + " , status = 'In-Progress', start_time = '" + new CodeSet().DateTime(true) + "' where prime_id = " + String.valueOf(rs.getLong("prime"));
+                pst = conn.prepareStatement(query);
+                pst.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLQueries.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public ArrayList<String> discount(String cid) {
+        try {
+            query = "select discount_type, percentage from customer_account where customer_id = " + cid;
+            pst = conn.prepareStatement(query);
+            rs = pst.executeQuery();
+            ArrayList<String> ld = new ArrayList<>();
+            if (rs.next()) {
+                ld.add(rs.getString(1));
+                if (ld.get(0).equals("Fixed")) {
+                    ld.add(String.valueOf(rs.getFloat(2)));
+                    return ld;
+                }
+                return ld;
+            }
+            return null;
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLQueries.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    public float monthlySpending(String cid) {
+
+        try {
+            query = "select sum(price) as sum from job  where customer_id = ? and date < ? and date > ?";
+            pst = conn.prepareStatement(query);
+            pst.setInt(1, Integer.parseInt(cid));
+            pst.setString(2, new CodeSet().monthDeadlineUpperLimit());
+            pst.setString(3, new CodeSet().monthDeadline());
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                return (rs.getFloat("sum"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLQueries.class.getName()).log(Level.SEVERE, null, ex);
+            return 0f;
+        }
+        System.out.println("aaa");
+        return 0;
+    }
+
+    public float FlexibleDiscount(String cid) {
+        try {
+            float f = monthlySpending(cid);
+            query = "select discount_rate from band";
+            st = conn.createStatement();
+            rs = st.executeQuery(query);
+            float[] fl = new float[3];
+            int i = 0;
+            while (rs.next()) {
+                fl[i] = rs.getFloat(1);
+                i++;
+            }
+
+            if (f < 1000f) {
+                return fl[0];
+            } else if (f < 2000f) {
+                return fl[1];
+            } else {
+                return fl[2];
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLQueries.class.getName()).log(Level.SEVERE, null, ex);
+            return 0f;
+        }
+    }
+
+    public float VariabeDiscount(String des) {
+        try {
+            query = "select percentage from task where description = '" + des + "'";
+            pst = conn.prepareStatement(query);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                return rs.getFloat(1);
+            } else {
+                return -1f;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLQueries.class.getName()).log(Level.SEVERE, null, ex);
+            return -1f;
+        }
+    }
+
+    public DefaultTableModel TaskList(String s) {
+        try {
+            query = " select description, Department, `Shelf Slot`, price, duration, percentage from task where description like '%" + s + "%' || Department like '%" + s + "%' || `Shelf Slot` like '%" + s + "%'";
+            DefaultTableModel d = new DefaultTableModel();
+            d.setColumnIdentifiers(new Object[]{"description", "Department", "Shelf Slot", "price", "duration", "percentage"});
+            st = conn.createStatement();
+            rs = st.executeQuery(query);
+            Object[] obj = new Object[6];
+            while (rs.next()) {
+                obj[0] = rs.getString(1);
+                obj[1] = rs.getString(2);
+                obj[2] = rs.getString(3);
+                obj[3] = rs.getString(4);
+                obj[4] = rs.getString(5);
+                obj[5] = rs.getString(6);
+                d.addRow(obj);
+            }
+            return d;
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLQueries.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    public void ModifyTable(ArrayList<String> ls, ArrayList<String> l) {
+        try {
+            query = "update task set description = ?, Department = ?, `Shelf Slot`= ?, price = ?, duration = ?, percentage = ? where  description = '" + l.get(0) + "' and `Shelf Slot` = '" + l.get(2) + "'";
+            pst = conn.prepareStatement(query);
+            pst.setString(1, ls.get(0));
+            pst.setString(2, ls.get(1));
+            pst.setString(3, ls.get(2));
+            pst.setFloat(4, Float.parseFloat(ls.get(3)));
+            pst.setString(5, ls.get(4));
+            pst.setFloat(6, Float.parseFloat(ls.get(5)));
+            pst.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLQueries.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void DeleteTask(ArrayList<String> l){
+        try {
+            query = "delete from task where description = '" + l.get(0) + "' and `Shelf Slot` = '" + l.get(2) + "'";
+            st = conn.createStatement();
+            st.executeUpdate(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLQueries.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

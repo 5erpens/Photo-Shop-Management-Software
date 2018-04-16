@@ -4,13 +4,7 @@
   <NonVisualComponents>
     <Component class="cambodia.raven.DateChooser" name="dc">
       <Properties>
-        <Property name="button" type="javax.swing.JButton" editor="org.netbeans.modules.form.ComponentChooserEditor">
-          <ComponentRef name="date"/>
-        </Property>
         <Property name="textFocusable" type="boolean" value="false"/>
-        <Property name="textRefernce" type="javax.swing.JTextField" editor="org.netbeans.modules.form.ComponentChooserEditor">
-          <ComponentRef name="datetext"/>
-        </Property>
       </Properties>
     </Component>
   </NonVisualComponents>
@@ -63,47 +57,36 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="30" pref="30" max="-2" attributes="0"/>
-                          <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="51" pref="51" max="-2" attributes="0"/>
-                          <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="28" pref="28" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <EmptySpace min="2" pref="2" max="-2" attributes="0"/>
-                                  <Component id="jPanel8" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="fName3" min="-2" pref="140" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="Submit1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jScrollPane1" min="-2" pref="601" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="28" pref="28" max="-2" attributes="0"/>
-                          <Component id="task" min="-2" pref="270" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="28" pref="28" max="-2" attributes="0"/>
-                          <Component id="fName" min="-2" pref="140" max="-2" attributes="0"/>
-                          <EmptySpace min="180" pref="180" max="-2" attributes="0"/>
-                          <Component id="fName2" min="-2" pref="140" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                          <Component id="Submit1" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <EmptySpace min="28" pref="28" max="-2" attributes="0"/>
-                                  <Component id="Priority" min="-2" pref="270" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-                                  <Component id="datetext" max="32767" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="date" min="-2" pref="30" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="30" pref="30" max="-2" attributes="0"/>
-                                  <Component id="jScrollPane1" min="-2" pref="601" max="-2" attributes="0"/>
+                                  <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="28" pref="28" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <EmptySpace min="2" pref="2" max="-2" attributes="0"/>
+                                          <Component id="jPanel8" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="fName3" min="-2" pref="140" max="-2" attributes="0"/>
+                                      <Component id="task" alignment="0" min="-2" pref="270" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                          <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="fName" alignment="0" min="-2" pref="140" max="-2" attributes="0"/>
+                              <Component id="jPanel4" max="32767" attributes="0"/>
+                              <Component id="Priority" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -122,29 +105,25 @@
                   <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace min="2" pref="2" max="-2" attributes="0"/>
-                          <Component id="jPanel8" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="2" pref="2" max="-2" attributes="0"/>
+                                  <Component id="jPanel8" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="fName3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
+                          <Component id="task" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="fName3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
-                  <Component id="task" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="4" pref="4" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="fName" min="-2" max="-2" attributes="0"/>
-                      <Component id="fName2" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="Priority" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                          <Component id="datetext" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="date" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="fName" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
+                          <Component id="Priority" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" min="-2" pref="94" max="-2" attributes="0"/>
-                  <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" min="-2" pref="136" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                   <Component id="Submit1" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -380,12 +359,18 @@
         <Component class="javax.swing.JComboBox" name="Priority">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="2">
+              <StringArray count="4">
                 <StringItem index="0" value="Standard"/>
-                <StringItem index="1" value="Urgent"/>
+                <StringItem index="1" value="6 Hour"/>
+                <StringItem index="2" value="3 Hour"/>
+                <StringItem index="3" value="1 Hour"/>
               </StringArray>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="PriorityActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
@@ -438,32 +423,6 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Priority"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="fName2">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="42" green="3f" red="3b" type="rgb"/>
-            </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.editors2.FontEditor">
-              <FontInfo relative="true">
-                <Font bold="true" component="fName2" property="font" relativeSize="true" size="2"/>
-              </FontInfo>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="42" green="3f" red="3b" type="rgb"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Deadline"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="date">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="..."/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dateActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JTextField" name="datetext">
         </Component>
         <Component class="javax.swing.JLabel" name="fName3">
           <Properties>

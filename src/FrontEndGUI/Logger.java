@@ -42,8 +42,8 @@ public class Logger extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        exit1 = new javax.swing.JButton();
         addTask = new javax.swing.JButton();
+        exit1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
 
@@ -58,8 +58,9 @@ public class Logger extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel1.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jPanel1MouseEntered(evt);
@@ -69,17 +70,6 @@ public class Logger extends javax.swing.JFrame {
             }
         });
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        exit1.setBackground(new java.awt.Color(255, 0, 0));
-        exit1.setForeground(new java.awt.Color(255, 255, 255));
-        exit1.setText("X");
-        exit1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        exit1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exit1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(exit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, -10, -1, 40));
 
         addTask.setBackground(new java.awt.Color(171, 172, 173));
         addTask.setFont(addTask.getFont().deriveFont(addTask.getFont().getStyle() | java.awt.Font.BOLD, addTask.getFont().getSize()+2));
@@ -101,6 +91,17 @@ public class Logger extends javax.swing.JFrame {
         });
         jPanel1.add(addTask, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 600, 90, 30));
 
+        exit1.setBackground(new java.awt.Color(255, 0, 0));
+        exit1.setForeground(new java.awt.Color(255, 255, 255));
+        exit1.setText("X");
+        exit1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        exit1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exit1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(exit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, -10, -1, 40));
+
         table.setAutoCreateRowSorter(true);
         table.setBackground(new java.awt.Color(0, 0, 0));
         table.setFont(table.getFont().deriveFont(table.getFont().getSize()+2f));
@@ -121,9 +122,12 @@ public class Logger extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        table.setColumnSelectionAllowed(false);
         table.setGridColor(new java.awt.Color(0, 0, 0));
         table.setInheritsPopupMenu(true);
         table.setSelectionBackground(new java.awt.Color(0, 102, 0));
+        table.setShowHorizontalLines(false);
+        table.setShowVerticalLines(false);
         table.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 tableMouseEntered(evt);
@@ -134,7 +138,7 @@ public class Logger extends javax.swing.JFrame {
             table.getColumnModel().getColumn(0).setResizable(false);
         }
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 780, 630));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 780, 610));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

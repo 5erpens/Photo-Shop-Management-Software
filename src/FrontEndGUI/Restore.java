@@ -32,9 +32,12 @@ public class Restore extends javax.swing.JFrame {
     
     private static BackupRestore frame;
     
-    public Restore(Connection conn, String id, JFrame frame) {
+    private static Dashboard frame2;
+    
+    public Restore(Connection conn, String id, JFrame frame, JFrame frame2) {
         this.conn = conn;
         this.frame = (BackupRestore) frame;
+        this.frame2 = (Dashboard) frame2;
         this.id = id;
         this.s = s;
         this.setUndecorated(true);
@@ -159,6 +162,9 @@ public class Restore extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         frame.initiateError(new CodeSet().Restoresql(id));
+        frame2.enable();
+        frame2.setStat();
+        frame2.disable();
         frame.enable(true);
         this.dispose();
         
@@ -202,7 +208,7 @@ public class Restore extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Restore(conn, id,frame).setVisible(true);
+                new Restore(conn, id,new JFrame(), new JFrame()).setVisible(true);
             }
         });
     }

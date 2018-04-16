@@ -58,6 +58,9 @@ public class NewCAcc extends javax.swing.JFrame {
         jLabel1.setForeground(java.awt.Color.decode(template.getTextColour()));
         SQuery = new MySQLQueries(conn);
         populateCountryList();
+        dt.setVisible(false);
+        per.setVisible(false);
+        pers.setVisible(false);
     }
 
     /**
@@ -86,6 +89,10 @@ public class NewCAcc extends javax.swing.JFrame {
         postcode = new javax.swing.JTextField();
         error = new javax.swing.JLabel();
         type = new javax.swing.JComboBox<>();
+        dt = new javax.swing.JComboBox<>();
+        acct = new javax.swing.JComboBox<>();
+        per = new javax.swing.JTextField();
+        pers = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -125,7 +132,7 @@ public class NewCAcc extends javax.swing.JFrame {
         jPanel1.add(lName, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 110, 280, -1));
 
         county.setText("County (Optional)");
-        jPanel1.add(county, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, 170, -1));
+        jPanel1.add(county, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 210, 140, -1));
 
         ad2.setText("Address 2 (optional)");
         jPanel1.add(ad2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 160, 280, -1));
@@ -137,13 +144,13 @@ public class NewCAcc extends javax.swing.JFrame {
         jPanel1.add(phone, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 310, 280, -1));
 
         city.setText("Town/City");
-        jPanel1.add(city, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 180, -1));
+        jPanel1.add(city, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 120, -1));
 
         ad1.setText("Address 1");
         jPanel1.add(ad1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 280, -1));
 
         country.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Country" }));
-        jPanel1.add(country, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 280, -1));
+        jPanel1.add(country, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 210, 150, -1));
 
         email.setText("Email Address");
         jPanel1.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 280, -1));
@@ -157,7 +164,7 @@ public class NewCAcc extends javax.swing.JFrame {
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(507, 360, 120, -1));
 
         postcode.setText("Postcode");
-        jPanel1.add(postcode, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 210, 180, -1));
+        jPanel1.add(postcode, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 210, 120, -1));
 
         error.setForeground(new java.awt.Color(255, 0, 0));
         error.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -165,7 +172,41 @@ public class NewCAcc extends javax.swing.JFrame {
         jPanel1.add(error, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 590, -1));
 
         type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Individual", "Organisation" }));
-        jPanel1.add(type, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 260, 270, -1));
+        jPanel1.add(type, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 140, -1));
+
+        dt.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Flexible", "Fixed", "Variable" }));
+        dt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dtActionPerformed(evt);
+            }
+        });
+        jPanel1.add(dt, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 260, 120, -1));
+
+        acct.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Default", "Valued" }));
+        acct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                acctActionPerformed(evt);
+            }
+        });
+        jPanel1.add(acct, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 260, 130, -1));
+
+        per.setText("Discount %");
+        per.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                perKeyTyped(evt);
+            }
+        });
+        jPanel1.add(per, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 260, 130, -1));
+
+        pers.setBackground(new java.awt.Color(59, 63, 66));
+        pers.setFont(pers.getFont().deriveFont(pers.getFont().getStyle() | java.awt.Font.BOLD, pers.getFont().getSize()+2));
+        pers.setForeground(new java.awt.Color(59, 63, 66));
+        pers.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        pers.setText("%");
+        pers.setAutoscrolls(true);
+        pers.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        pers.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(pers, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 260, 20, 20));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 680, 420));
 
@@ -195,14 +236,24 @@ public class NewCAcc extends javax.swing.JFrame {
             error.setText("Please fill all the section");
         } else if (!(phone.getText().matches("\\d+")) || (fName.getText().matches(".*\\d+.*")) || (lName.getText().matches(".*\\d+.*")) || !(codeset.isValidEmailAddress(email.getText()))) {
             error.setText("Please enter valid input");
-        } else {
+        } else if(dt.getSelectedIndex()==1 && (per.getText() == null || per.getText().equals("Discount %") || per.getText().isEmpty())){
+            error.setText("Please enter valid discount percentage");
+        }else { 
+            if(acct.getSelectedIndex()==0){
+                dt.addItem("Null");
+                dt.setSelectedItem("Null");
+                per.setText("0.00");
+            }
+            if(!(dt.getSelectedIndex()==1)){
+                per.setText("0.00");
+            }
             if (ad2.getText().equals("Address 2 (optional)")) {
                 ad2.setText(null);
             }
             if (county.getText().equals("County (Optional)")) {
                 county.setText(null);
             }
-            if (SQuery.CreateCustomer(fName.getText(), lName.getText(), ad1.getText(), ad2.getText(), city.getText(), county.getText(), postcode.getText(), country.getSelectedItem().toString(), type.getSelectedItem().toString(), email.getText(), Long.parseLong(phone.getText()))) {
+            if (SQuery.CreateCustomer(fName.getText(), lName.getText(), ad1.getText(), ad2.getText(), city.getText(), county.getText(), postcode.getText(), country.getSelectedItem().toString(), type.getSelectedItem().toString(), email.getText(), Long.parseLong(phone.getText()), acct.getSelectedItem().toString(), dt.getSelectedItem().toString(), Float.parseFloat(per.getText()))) {
                 if (type.getSelectedItem().toString().equals("Individual")) {
                     new ICustomerAccount(conn, email.getText(), frame, staff).setVisible(true);
                 } else if (type.getSelectedItem().toString().equals("Organisation")) {
@@ -221,6 +272,33 @@ public class NewCAcc extends javax.swing.JFrame {
         mouseX = evt.getX();
         mouseY = evt.getY();
     }//GEN-LAST:event_jPanel2MousePressed
+
+    private void acctActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acctActionPerformed
+        if(acct.getSelectedIndex()==1){
+            dt.setVisible(true);
+        }else{
+            dt.setVisible(false);
+            dt.setSelectedIndex(0);
+        }
+    }//GEN-LAST:event_acctActionPerformed
+
+    private void dtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dtActionPerformed
+        if(dt.getSelectedIndex()==1){
+            per.setVisible(true);
+            pers.setVisible(true);
+        } else{
+            per.setVisible(false);
+            per.setText("0.00");
+            pers.setVisible(false);
+        }
+    }//GEN-LAST:event_dtActionPerformed
+
+    private void perKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_perKeyTyped
+        char c = evt.getKeyChar();
+        if(!(Character.isDigit(c)|| c == '.')){
+            evt.consume();
+        }
+    }//GEN-LAST:event_perKeyTyped
     
     public void populateCountryList() {
         codeset = new CodeSet();
@@ -266,11 +344,13 @@ public class NewCAcc extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> acct;
     private javax.swing.JTextField ad1;
     private javax.swing.JTextField ad2;
     private javax.swing.JTextField city;
     private javax.swing.JComboBox<String> country;
     private javax.swing.JTextField county;
+    private javax.swing.JComboBox<String> dt;
     private javax.swing.JTextField email;
     private javax.swing.JLabel error;
     private javax.swing.JButton exit;
@@ -280,6 +360,8 @@ public class NewCAcc extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField lName;
+    private javax.swing.JTextField per;
+    private javax.swing.JLabel pers;
     private javax.swing.JTextField phone;
     private javax.swing.JTextField postcode;
     private javax.swing.JComboBox<String> type;

@@ -30,7 +30,7 @@ public class BackupRestore extends javax.swing.JFrame {
 
     private MySQLQueries SQuery = null;
 
-    private static JFrame frame;
+    private static Dashboard frame;
 
     int mouseX;
     int mouseY;
@@ -40,7 +40,7 @@ public class BackupRestore extends javax.swing.JFrame {
      */
     public BackupRestore(Connection conn, JFrame frame) {
         this.conn = conn;
-        this.frame = frame;
+        this.frame = (Dashboard) frame;
         this.setUndecorated(true);
         initComponents();
         SQuery = new MySQLQueries(conn);
@@ -243,7 +243,7 @@ public class BackupRestore extends javax.swing.JFrame {
 
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
         this.enable(false);
-        new Restore(conn,table.getValueAt(table.getSelectedRow(), 0).toString(),this).show();
+        new Restore(conn,table.getValueAt(table.getSelectedRow(), 0).toString(),this,frame).show();
         this.enable(false);
     }//GEN-LAST:event_tableMouseClicked
 

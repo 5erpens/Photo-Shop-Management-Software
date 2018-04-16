@@ -75,12 +75,7 @@ public class StaffAccount extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         exit1 = new javax.swing.JButton();
         del = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jPanel5 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         address = new javax.swing.JLabel();
         jPanel16 = new javax.swing.JPanel();
@@ -159,43 +154,7 @@ public class StaffAccount extends javax.swing.JFrame {
         jPanel9.add(del, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 20, -1, 30));
 
         jPanel1.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 750, 64));
-
-        jButton1.setText("Update");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 624, -1, -1));
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 152, -1, -1));
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(jTable1);
-
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 376, 700, 230));
-
-        jPanel5.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel5.setForeground(new java.awt.Color(59, 63, 66));
-        jPanel5.setToolTipText("");
-        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel8.setBackground(new java.awt.Color(59, 63, 66));
-        jLabel8.setFont(jLabel8.getFont().deriveFont(jLabel8.getFont().getStyle() | java.awt.Font.BOLD, jLabel8.getFont().getSize()+2));
-        jLabel8.setForeground(new java.awt.Color(59, 63, 66));
-        jLabel8.setText("Task List ");
-        jPanel5.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, 30));
-
-        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 346, 700, -1));
 
         jPanel4.setBackground(new java.awt.Color(153, 153, 153));
         jPanel4.setForeground(new java.awt.Color(59, 63, 66));
@@ -402,7 +361,7 @@ public class StaffAccount extends javax.swing.JFrame {
         });
         jPanel1.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 100, -1, 30));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, 760, 700));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, 760, 360));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -425,10 +384,6 @@ public class StaffAccount extends javax.swing.JFrame {
         this.enable(false);
         new Delete(conn, cid, true, this, frame).show();
     }//GEN-LAST:event_delMouseClicked
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void editMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseClicked
 
@@ -548,7 +503,6 @@ public class StaffAccount extends javax.swing.JFrame {
     private javax.swing.JButton exit1;
     private javax.swing.JLabel fName;
     private javax.swing.JLabel id;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
@@ -558,7 +512,6 @@ public class StaffAccount extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -572,13 +525,10 @@ public class StaffAccount extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lName;
     private javax.swing.JLabel role;
     // End of variables declaration//GEN-END:variables

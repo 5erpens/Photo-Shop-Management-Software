@@ -5,12 +5,7 @@
  */
 package BackEndCode;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.security.CodeSource;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,11 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 /**
  *
@@ -83,6 +74,57 @@ public class CodeSet {
         }
         String formattedTime = output.format(data);
         return formattedTime;
+    }
+
+    public ArrayList<String> convertDateList(String stringData) {
+
+        ArrayList<String> l = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String[] s = new String[]{"yyyy", "MM", "dd", "HH", "mm", "ss"};
+        SimpleDateFormat output;
+        Date data = null;
+        for (int i = 0; i < s.length; i++) {
+            output = new SimpleDateFormat(s[i]);
+            try {
+                data = sdf.parse(stringData);
+            } catch (ParseException ex) {
+                Logger.getLogger(CodeSet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            l.add(output.format(data));
+        }
+        return l;
+    }
+
+    public String monthDeadline() {
+        ArrayList<String> l = convertDateList(DateTime(true));
+        if (Integer.parseInt(l.get(2)) < 10) {
+            if (Integer.parseInt(l.get(1)) == 01) {
+                return l.get(0) + "-12-10 00:00:00";
+            } else {
+                return l.get(0) + "-" + String.valueOf(Integer.parseInt(l.get(1)) - 1) + "-10 00:00:00";
+            }
+        } else {
+            return l.get(0) + "-" + l.get(1) + "-10 00:00:00";
+        }
+
+    }
+
+    public String monthDeadlineLimit() {
+        ArrayList<String> l = convertDateList(monthDeadline());
+        if (Integer.parseInt(l.get(1)) == 01) {
+            return String.valueOf(Integer.parseInt(l.get(0)) - 1) + "-12-10 00:00:00";
+        } else {
+            return l.get(0) + "-" + String.valueOf(Integer.parseInt(l.get(1)) - 1) + "-10 00:00:00";
+        }
+    }
+    
+    public String monthDeadlineUpperLimit() {
+        ArrayList<String> l = convertDateList(monthDeadline());
+        if (Integer.parseInt(l.get(1)) == 12) {
+            return String.valueOf(Integer.parseInt(l.get(0)) + 1) + "-01-10 00:00:00";
+        } else {
+            return l.get(0) + "-" + String.valueOf(Integer.parseInt(l.get(1)) + 1) + "-10 00:00:00";
+        }
     }
 
     public String filename(String stringData, boolean n) {
@@ -208,10 +250,10 @@ public class CodeSet {
             p = rt.exec(k);
             int pc = p.waitFor();
             if (pc == 0) {
-                System.out.println(DateTime(true) + ": file: "+s+": Data restoring successfull");
+                System.out.println(DateTime(true) + ": file: " + s + ": Data restoring successfull");
                 return "Data restoring successfull";
             } else {
-                System.out.println(DateTime(true) + ": file: "+s+": Data restoring failed");
+                System.out.println(DateTime(true) + ": file: " + s + ": Data restoring failed");
                 return "Data restoring failed";
             }
         } catch (Exception e) {
@@ -220,5 +262,59 @@ public class CodeSet {
             System.out.println(" Exception while taking backup : " + e);
             return "Backup taken failed";
         }
+    }
+
+    public float Discount(float amount, float percentage) {
+        ArrayList<String> ld = new ArrayList<>();
+        float discount = amount * (percentage / 100f);
+        float afterDiscount = amount - discount;
+        return afterDiscount;
+    }
+
+    public float urgentPrice(int i, float f) {
+        switch (i) {
+            case 1:
+                return f + (f * .5f);
+            case 2:
+                return f + (f * 1f);
+            case 3:
+                return f + (f * 1.5f);
+            default:
+                return f;
+        }
+    }
+
+    public String urgentDeadline(int i) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date data = sdf.parse(DateTime(true));
+            Calendar cl = Calendar.getInstance();
+            cl.setTime(data);
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            int j = 24;
+            switch (i) {
+                case 1:
+                    j = 6;
+                    cl.add(Calendar.HOUR, j);
+                    return dateFormat.format(cl.getTime());
+                case 2:
+                    j = 3;
+                    cl.add(Calendar.HOUR, j);
+                    return dateFormat.format(cl.getTime());
+                case 3:
+                    j = 1;
+                    cl.add(Calendar.HOUR, j);
+                    return dateFormat.format(cl.getTime());
+                case 0:
+                    j = 24;
+                    cl.add(Calendar.HOUR, j);
+                    return dateFormat.format(cl.getTime());
+            }
+
+        } catch (ParseException ex) {
+            Logger.getLogger(CodeSet.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return null;
     }
 }

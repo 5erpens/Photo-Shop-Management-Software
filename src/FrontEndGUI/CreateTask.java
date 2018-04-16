@@ -5,6 +5,7 @@
  */
 package FrontEndGUI;
 
+import BackEndCode.CodeSet;
 import FrontEndGUI.*;
 import BackEndCode.MySQLQueries;
 import java.sql.Connection;
@@ -76,17 +77,12 @@ public class CreateTask extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         si = new javax.swing.JTextArea();
         fName = new javax.swing.JLabel();
-        fName2 = new javax.swing.JLabel();
-        date = new javax.swing.JButton();
-        datetext = new javax.swing.JTextField();
         fName3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         exit1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
-        dc.setButton(date);
         dc.setTextFocusable(false);
-        dc.setTextRefernce(datetext);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -168,7 +164,13 @@ public class CreateTask extends javax.swing.JFrame {
             }
         });
 
-        Priority.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Standard", "Urgent" }));
+        Priority.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Standard", "6 Hour", "3 Hour", "1 Hour" }));
+        Priority.setToolTipText("");
+        Priority.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PriorityActionPerformed(evt);
+            }
+        });
 
         task.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         task.addActionListener(new java.awt.event.ActionListener() {
@@ -186,18 +188,6 @@ public class CreateTask extends javax.swing.JFrame {
         fName.setForeground(new java.awt.Color(59, 63, 66));
         fName.setText("Priority");
 
-        fName2.setBackground(new java.awt.Color(59, 63, 66));
-        fName2.setFont(fName2.getFont().deriveFont(fName2.getFont().getStyle() | java.awt.Font.BOLD, fName2.getFont().getSize()+2));
-        fName2.setForeground(new java.awt.Color(59, 63, 66));
-        fName2.setText("Deadline");
-
-        date.setText("...");
-        date.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dateActionPerformed(evt);
-            }
-        });
-
         fName3.setBackground(new java.awt.Color(59, 63, 66));
         fName3.setFont(fName3.getFont().deriveFont(fName3.getFont().getStyle() | java.awt.Font.BOLD, fName3.getFont().getSize()+2));
         fName3.setForeground(new java.awt.Color(59, 63, 66));
@@ -211,37 +201,27 @@ public class CreateTask extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(30, 30, 30)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(51, 51, 51)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(Submit1)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 601, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(2, 2, 2)
-                                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(fName3, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(task, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(fName, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(180, 180, 180)
-                        .addComponent(fName2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(Submit1)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGap(30, 30, 30)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(28, 28, 28)
-                                .addComponent(Priority, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(50, 50, 50)
-                                .addComponent(datetext)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 601, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(2, 2, 2)
+                                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(fName3, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(task, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(51, 51, 51)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(fName, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Priority, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(53, 53, 53))
         );
         jPanel1Layout.setVerticalGroup(
@@ -254,23 +234,19 @@ public class CreateTask extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(fName3))
-                .addGap(1, 1, 1)
-                .addComponent(task, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fName)
-                    .addComponent(fName2))
-                .addGap(1, 1, 1)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Priority, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(datetext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(10, 10, 10)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(fName3))
+                        .addGap(1, 1, 1)
+                        .addComponent(task, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(fName)
+                        .addGap(1, 1, 1)
+                        .addComponent(Priority, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(Submit1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -318,7 +294,8 @@ public class CreateTask extends javax.swing.JFrame {
     }//GEN-LAST:event_exit1ActionPerformed
 
     private void Submit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Submit1ActionPerformed
-        Object [] o = {task.getSelectedItem(), Priority.getSelectedItem(), price.getText(),datetext.getText(),si.getText()};
+
+        Object [] o = {task.getSelectedItem(), Priority.getSelectedItem(), price.getText(),new CodeSet().urgentDeadline(Priority.getSelectedIndex()),si.getText()};
         frame.enable(true);
         frame.setTable(o,Float.parseFloat(price.getText()));
         this.dispose();        
@@ -334,12 +311,12 @@ public class CreateTask extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel2MouseDragged
 
     private void taskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taskActionPerformed
-        price.setText(new MySQLQueries(conn).populateTaskPrice(task.getSelectedItem().toString()));
+        price.setText(String.format("%.02f",new CodeSet().urgentPrice(Priority.getSelectedIndex(),Float.parseFloat(new MySQLQueries(conn).populateTaskPrice(task.getSelectedItem().toString())))));
     }//GEN-LAST:event_taskActionPerformed
 
-    private void dateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_dateActionPerformed
+    private void PriorityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PriorityActionPerformed
+        price.setText(String.format("%.02f",new CodeSet().urgentPrice(Priority.getSelectedIndex(),Float.parseFloat(new MySQLQueries(conn).populateTaskPrice(task.getSelectedItem().toString())))));
+    }//GEN-LAST:event_PriorityActionPerformed
 
     /**
      * @param args the command line arguments
@@ -394,12 +371,9 @@ public class CreateTask extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> Priority;
     private javax.swing.JButton Submit1;
-    private javax.swing.JButton date;
-    private javax.swing.JTextField datetext;
     private cambodia.raven.DateChooser dc;
     private javax.swing.JButton exit1;
     private javax.swing.JLabel fName;
-    private javax.swing.JLabel fName2;
     private javax.swing.JLabel fName3;
     private javax.swing.JLabel id;
     private javax.swing.JLabel jLabel1;

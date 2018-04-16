@@ -70,6 +70,7 @@ public class StaffSearchList extends javax.swing.JFrame {
         id = new javax.swing.JTextField();
         exit = new javax.swing.JButton();
         Submit1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -152,8 +153,9 @@ public class StaffSearchList extends javax.swing.JFrame {
         });
         jPanel1.add(Submit, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 100, -1, 30));
 
-        text.setForeground(new java.awt.Color(204, 0, 0));
-        jPanel1.add(text, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 270, 20));
+        text.setForeground(new java.awt.Color(59, 63, 66));
+        text.setText("NB: Type 'ID' at the end to filter in ID. Example 123ID");
+        jPanel1.add(text, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 310, 20));
 
         id.setText("Enter Keywords");
         id.addActionListener(new java.awt.event.ActionListener() {
@@ -189,6 +191,9 @@ public class StaffSearchList extends javax.swing.JFrame {
             }
         });
         jPanel1.add(Submit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 100, -1, 30));
+
+        jLabel2.setText("jLabel2");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 400, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-4, 0, 960, 392));
 
@@ -299,6 +304,7 @@ public class StaffSearchList extends javax.swing.JFrame {
     private javax.swing.JButton exit1;
     private javax.swing.JTextField id;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;

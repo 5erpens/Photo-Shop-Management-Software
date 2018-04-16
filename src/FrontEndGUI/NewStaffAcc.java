@@ -183,7 +183,7 @@ public class NewStaffAcc extends javax.swing.JFrame {
         error.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel1.add(error, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 590, -1));
 
-        area.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Development Area", "Copy Room", "Packing Room", "Finishing Room" }));
+        area.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Development Area", "Copy Room", "Packing Department", "Finishing Room" }));
         jPanel1.add(area, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 260, 180, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 730, 420));

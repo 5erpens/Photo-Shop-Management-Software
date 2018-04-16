@@ -65,9 +65,9 @@ public class CustomerSearchList extends javax.swing.JFrame {
         exit1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         Submit = new javax.swing.JButton();
-        text = new javax.swing.JLabel();
         id = new javax.swing.JTextField();
         Submit1 = new javax.swing.JButton();
+        text = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -144,9 +144,6 @@ public class CustomerSearchList extends javax.swing.JFrame {
         });
         jPanel1.add(Submit, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 100, -1, 30));
 
-        text.setForeground(new java.awt.Color(204, 0, 0));
-        jPanel1.add(text, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 270, 20));
-
         id.setText("Enter Keywords");
         id.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -173,6 +170,10 @@ public class CustomerSearchList extends javax.swing.JFrame {
             }
         });
         jPanel1.add(Submit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 100, -1, 30));
+
+        text.setForeground(new java.awt.Color(59, 63, 66));
+        text.setText("NB: Type 'ID' at the end to filter in ID. Example 123ID");
+        jPanel1.add(text, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 310, 20));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-4, 0, 1200, 392));
 

@@ -7,18 +7,10 @@ package FrontEndGUI;
 
 import BackEndCode.CodeSet;
 import BackEndCode.MySQLQueries;
-import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import javafx.scene.control.CheckBox;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
-import javax.swing.ListModel;
-import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -98,14 +90,11 @@ public class DPayment extends javax.swing.JFrame {
         fName2 = new javax.swing.JLabel();
         fName4 = new javax.swing.JLabel();
         subtotal = new javax.swing.JLabel();
-        fName6 = new javax.swing.JLabel();
         fName7 = new javax.swing.JLabel();
         vat = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
         fName9 = new javax.swing.JLabel();
         fName10 = new javax.swing.JLabel();
         total = new javax.swing.JLabel();
-        jSeparator2 = new javax.swing.JSeparator();
         fName12 = new javax.swing.JLabel();
         cashR = new javax.swing.JRadioButton();
         cdR = new javax.swing.JRadioButton();
@@ -114,6 +103,10 @@ public class DPayment extends javax.swing.JFrame {
         total1 = new javax.swing.JLabel();
         fName5 = new javax.swing.JLabel();
         card = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        fName8 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -153,56 +146,61 @@ public class DPayment extends javax.swing.JFrame {
         jPanel9.add(exit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, -10, -1, 40));
 
         jPanel4.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         fName2.setBackground(new java.awt.Color(59, 63, 66));
         fName2.setFont(fName2.getFont().deriveFont(fName2.getFont().getStyle() | java.awt.Font.BOLD, fName2.getFont().getSize()+2));
         fName2.setForeground(new java.awt.Color(59, 63, 66));
         fName2.setText("Subtotal");
+        jPanel4.add(fName2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 80, -1));
 
         fName4.setBackground(new java.awt.Color(59, 63, 66));
         fName4.setFont(fName4.getFont().deriveFont(fName4.getFont().getStyle() | java.awt.Font.BOLD, fName4.getFont().getSize()+2));
         fName4.setForeground(new java.awt.Color(59, 63, 66));
-        fName4.setText("£");
+        fName4.setText(" £");
+        jPanel4.add(fName4, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 30, -1, -1));
 
         subtotal.setBackground(new java.awt.Color(59, 63, 66));
         subtotal.setFont(subtotal.getFont().deriveFont(subtotal.getFont().getStyle() | java.awt.Font.BOLD, subtotal.getFont().getSize()+2));
         subtotal.setForeground(new java.awt.Color(59, 63, 66));
         subtotal.setText("Subtotal");
-
-        fName6.setBackground(new java.awt.Color(59, 63, 66));
-        fName6.setFont(fName6.getFont().deriveFont(fName6.getFont().getStyle() | java.awt.Font.BOLD, fName6.getFont().getSize()+2));
-        fName6.setForeground(new java.awt.Color(59, 63, 66));
-        fName6.setText("VAT");
+        jPanel4.add(subtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(207, 30, 150, -1));
 
         fName7.setBackground(new java.awt.Color(59, 63, 66));
         fName7.setFont(fName7.getFont().deriveFont(fName7.getFont().getStyle() | java.awt.Font.BOLD, fName7.getFont().getSize()+2));
         fName7.setForeground(new java.awt.Color(59, 63, 66));
-        fName7.setText("£");
+        fName7.setText(" £");
+        jPanel4.add(fName7, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, -1, -1));
 
         vat.setBackground(new java.awt.Color(59, 63, 66));
         vat.setFont(vat.getFont().deriveFont(vat.getFont().getStyle() | java.awt.Font.BOLD, vat.getFont().getSize()+2));
         vat.setForeground(new java.awt.Color(59, 63, 66));
         vat.setText("VAT");
+        jPanel4.add(vat, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 70, 150, -1));
 
         fName9.setBackground(new java.awt.Color(59, 63, 66));
         fName9.setFont(fName9.getFont().deriveFont(fName9.getFont().getStyle() | java.awt.Font.BOLD, fName9.getFont().getSize()+2));
         fName9.setForeground(new java.awt.Color(59, 63, 66));
         fName9.setText("Total");
+        jPanel4.add(fName9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 74, 50));
 
         fName10.setBackground(new java.awt.Color(59, 63, 66));
         fName10.setFont(fName10.getFont().deriveFont(fName10.getFont().getStyle() | java.awt.Font.BOLD, fName10.getFont().getSize()+2));
         fName10.setForeground(new java.awt.Color(59, 63, 66));
-        fName10.setText("£");
+        fName10.setText(" £");
+        jPanel4.add(fName10, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, -1, 50));
 
         total.setBackground(new java.awt.Color(59, 63, 66));
         total.setFont(total.getFont().deriveFont(total.getFont().getStyle() | java.awt.Font.BOLD, total.getFont().getSize()+2));
         total.setForeground(new java.awt.Color(59, 63, 66));
         total.setText("Total");
+        jPanel4.add(total, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 100, 157, 50));
 
         fName12.setBackground(new java.awt.Color(59, 63, 66));
         fName12.setFont(fName12.getFont().deriveFont(fName12.getFont().getStyle() | java.awt.Font.BOLD, fName12.getFont().getSize()+2));
         fName12.setForeground(new java.awt.Color(59, 63, 66));
         fName12.setText("Payment Type");
+        jPanel4.add(fName12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, -1, -1));
 
         cashR.setBackground(new java.awt.Color(153, 153, 153));
         cashR.setFont(cashR.getFont().deriveFont(cashR.getFont().getStyle() | java.awt.Font.BOLD));
@@ -213,6 +211,7 @@ public class DPayment extends javax.swing.JFrame {
                 cashRActionPerformed(evt);
             }
         });
+        jPanel4.add(cashR, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 335, -1));
 
         cdR.setBackground(new java.awt.Color(153, 153, 153));
         cdR.setFont(cdR.getFont().deriveFont(cdR.getFont().getStyle() | java.awt.Font.BOLD));
@@ -223,6 +222,7 @@ public class DPayment extends javax.swing.JFrame {
                 cdRActionPerformed(evt);
             }
         });
+        jPanel4.add(cdR, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, -1, -1));
 
         Submit1.setBackground(new java.awt.Color(171, 172, 173));
         Submit1.setFont(Submit1.getFont().deriveFont(Submit1.getFont().getStyle() | java.awt.Font.BOLD, Submit1.getFont().getSize()+2));
@@ -237,6 +237,7 @@ public class DPayment extends javax.swing.JFrame {
                 Submit1ActionPerformed(evt);
             }
         });
+        jPanel4.add(Submit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 290, -1, 28));
 
         jButton1.setText("Complete Payment");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -244,107 +245,44 @@ public class DPayment extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        jPanel4.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, 335, 42));
 
         total1.setBackground(new java.awt.Color(59, 63, 66));
         total1.setFont(total1.getFont().deriveFont(total1.getFont().getStyle() | java.awt.Font.BOLD, total1.getFont().getSize()+2));
         total1.setForeground(new java.awt.Color(59, 63, 66));
         total1.setText("Total");
+        jPanel4.add(total1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 240, 277, -1));
 
         fName5.setBackground(new java.awt.Color(59, 63, 66));
         fName5.setFont(fName5.getFont().deriveFont(fName5.getFont().getStyle() | java.awt.Font.BOLD, fName5.getFont().getSize()+2));
         fName5.setForeground(new java.awt.Color(59, 63, 66));
         fName5.setText("£");
+        jPanel4.add(fName5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, -1, -1));
 
         card.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         card.setSelectedIndex(2);
+        jPanel4.add(card, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 335, 33));
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(64, 64, 64)
-                        .addComponent(fName5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(total1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator1)
-                            .addComponent(jSeparator2)
-                            .addComponent(cashR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cdR)
-                                    .addComponent(fName12))
-                                .addGap(0, 237, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(Submit1))
-                            .addComponent(card, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(fName6, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(84, 84, 84)
-                                .addComponent(fName7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(vat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(fName2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(84, 84, 84)
-                                .addComponent(fName4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(subtotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(fName9, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(84, 84, 84)
-                                .addComponent(fName10)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(total, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addGap(23, 23, 23))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fName2)
-                    .addComponent(fName4)
-                    .addComponent(subtotal))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fName6)
-                    .addComponent(fName7)
-                    .addComponent(vat))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fName9)
-                    .addComponent(fName10)
-                    .addComponent(total))
-                .addGap(18, 18, 18)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(fName12)
-                .addGap(18, 18, 18)
-                .addComponent(cashR)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fName5)
-                    .addComponent(total1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cdR)
-                    .addComponent(Submit1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(card, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28))
-        );
+        jLabel4.setFont(jLabel4.getFont().deriveFont(jLabel4.getFont().getStyle() | java.awt.Font.BOLD, jLabel4.getFont().getSize()+2));
+        jLabel4.setForeground(new java.awt.Color(59, 63, 66));
+        jLabel4.setText("__________________________________________");
+        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 343, 50));
+
+        jLabel3.setFont(jLabel3.getFont().deriveFont(jLabel3.getFont().getStyle() | java.awt.Font.BOLD, jLabel3.getFont().getSize()+2));
+        jLabel3.setForeground(new java.awt.Color(59, 63, 66));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("__________________________________________");
+        jLabel3.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 343, 50));
+
+        fName8.setBackground(new java.awt.Color(59, 63, 66));
+        fName8.setFont(fName8.getFont().deriveFont(fName8.getFont().getStyle() | java.awt.Font.BOLD, fName8.getFont().getSize()+2));
+        fName8.setForeground(new java.awt.Color(59, 63, 66));
+        fName8.setText("VAT");
+        jPanel4.add(fName8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 70, -1));
+
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/152203094779373020.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -357,26 +295,29 @@ public class DPayment extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(38, 38, 38)
+                .addContainerGap()
+                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(30, 30, 30))
+                        .addGap(122, 122, 122)
+                        .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(jLabel1)
-                        .addGap(28, 28, 28))))
+                        .addGap(40, 40, 40)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, 450, 580));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, 450, 730));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -406,10 +347,17 @@ public class DPayment extends javax.swing.JFrame {
     }//GEN-LAST:event_cdRActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new MySQLQueries(conn).generateReceipt(type,
+       
+        if(type.equals("Cash")){
+            new MySQLQueries(conn).generateReceipt(type,
+                " ",
+                new MySQLQueries(conn).getPrime(new MySQLQueries(conn).updateTask((DefaultTableModel) t, cid)));
+        } else {
+           new MySQLQueries(conn).generateReceipt(type,
                 card.getSelectedItem().toString(),
-                new MySQLQueries(conn).getPrime(new MySQLQueries(conn).updateTask((DefaultTableModel) t
-                        , cid)));
+                new MySQLQueries(conn).getPrime(new MySQLQueries(conn).updateTask((DefaultTableModel) t, cid)));
+        }
+        
         frame.dispose();
         frame2.enable(true);
         this.dispose();
@@ -509,17 +457,18 @@ public class DPayment extends javax.swing.JFrame {
     private javax.swing.JLabel fName2;
     private javax.swing.JLabel fName4;
     private javax.swing.JLabel fName5;
-    private javax.swing.JLabel fName6;
     private javax.swing.JLabel fName7;
+    private javax.swing.JLabel fName8;
     private javax.swing.JLabel fName9;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel subtotal;
     private javax.swing.JLabel total;
     private javax.swing.JLabel total1;

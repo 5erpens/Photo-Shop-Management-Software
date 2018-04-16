@@ -55,7 +55,7 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Component id="jPanel9" pref="0" max="32767" attributes="0"/>
-              <Component id="address" pref="339" max="32767" attributes="0"/>
+              <Component id="address" pref="351" max="32767" attributes="0"/>
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="jButton2" min="-2" max="-2" attributes="0"/>

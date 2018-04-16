@@ -147,7 +147,7 @@ public class Discount extends javax.swing.JFrame {
         jobSelection.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel1.add(jobSelection, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 80, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-4, 60, 560, 350));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-4, 60, 790, 480));
 
         jPanel2.setBackground(new java.awt.Color(59, 63, 66));
         jPanel2.setForeground(new java.awt.Color(59, 63, 66));
