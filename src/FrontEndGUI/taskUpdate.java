@@ -8,13 +8,14 @@ package FrontEndGUI;
 import BackEndCode.CodeSet;
 import BackEndCode.MySQLQueries;
 import java.sql.Connection;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 
 /**
  *
  * @author Sai
  */
-public class UpdateTask extends javax.swing.JFrame {
+public class taskUpdate extends javax.swing.JFrame {
 
     /**
      * Creates new form delete
@@ -26,16 +27,20 @@ public class UpdateTask extends javax.swing.JFrame {
 
     private static String sid, tid;
 
-    private static TDashboard frame;
+    private static StatusUpdate frame;
+    
+    private static String ls;
 
-    public UpdateTask(Connection conn, String sid, String tid, JFrame frame) {
+    public taskUpdate(Connection conn, String sid, String tid, JFrame frame, String ls) {
         this.conn = conn;
-        this.frame = (TDashboard) frame;
+        this.frame = (StatusUpdate) frame;
         this.tid = tid;
         this.sid = sid;
+        this.ls = ls;
         this.setUndecorated(true);
         this.setResizable(false);
         initComponents();
+        preinitiate();
     }
 
     /**
@@ -109,23 +114,23 @@ public class UpdateTask extends javax.swing.JFrame {
 
         jButton1.setBackground(new java.awt.Color(255, 0, 0));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Yes");
+        jButton1.setText("Update");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 420, -1, -1));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 420, -1, -1));
 
-        jButton2.setText("No");
+        jButton2.setText("Reset");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 420, -1, -1));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 420, 90, -1));
 
-        st.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "On-Hold", "Finished" }));
+        st.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pending", "Finished" }));
         jPanel1.add(st, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, 178, -1));
 
         address1.setBackground(new java.awt.Color(59, 63, 66));
@@ -182,23 +187,19 @@ public class UpdateTask extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        if (st.getSelectedIndex() == 0 && (staffinst.getText().isEmpty() || staffinst.getText() == null || !staffinst.getText().matches(".*[a-zA-Z]+.*"))) {
-            error.setText("Please enter the reason for On-Hold");
-        } else {
             new MySQLQueries(conn).updateTaskStatus(sid, tid, st.getSelectedItem().toString(), staffinst.getText());
             frame.enable(true);
-            frame.assignToStaff();
+            frame.updateTable();
             this.dispose();
-        }
-
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        frame.enable(true);
-        this.dispose();
+        staffinst.setText(ls);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void preinitiate(){
+        staffinst.setText(ls);
+    }
     /**
      * @param args the command line arguments
      */
@@ -216,14 +217,22 @@ public class UpdateTask extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(UpdateTask.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(taskUpdate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UpdateTask.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(taskUpdate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(UpdateTask.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(taskUpdate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(UpdateTask.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(taskUpdate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -236,7 +245,7 @@ public class UpdateTask extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new UpdateTask(conn, new String(), new String(), new JFrame()).setVisible(true);
+                new taskUpdate(conn, new String(), new String(), new JFrame(), new String()).setVisible(true);
             }
         });
     }

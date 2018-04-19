@@ -14,7 +14,7 @@ import javax.swing.JFrame;
  *
  * @author Sai
  */
-public class Delete extends javax.swing.JFrame {
+public class resetPass extends javax.swing.JFrame {
     
     /**
      * Creates new form delete
@@ -29,14 +29,12 @@ public class Delete extends javax.swing.JFrame {
     
     private static boolean s;
     
-    private static JFrame frame;
+    private static UpdateStatus frame;
     
-    private static JFrame frame2;
     
-    public Delete(Connection conn, String id, boolean s, JFrame frame, JFrame frame2) {
+    public resetPass(Connection conn, String id, JFrame frame) {
         this.conn = conn;
-        this.frame = frame;
-        this.frame2 = frame2;
+        this.frame = (UpdateStatus) frame;
         this.id = id;
         this.s = s;
         this.setUndecorated(true);
@@ -58,13 +56,16 @@ public class Delete extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         exit1 = new javax.swing.JButton();
         address = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        newP = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
+        error = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel9.setBackground(new java.awt.Color(59, 63, 66));
         jPanel9.setForeground(new java.awt.Color(59, 63, 66));
@@ -83,7 +84,7 @@ public class Delete extends javax.swing.JFrame {
         jLabel2.setBackground(new java.awt.Color(171, 172, 173));
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(171, 172, 173));
-        jLabel2.setText("Delete account");
+        jLabel2.setText("Password Reset");
         jPanel9.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 150, -1));
 
         exit1.setBackground(new java.awt.Color(255, 0, 0));
@@ -95,73 +96,33 @@ public class Delete extends javax.swing.JFrame {
                 exit1ActionPerformed(evt);
             }
         });
-        jPanel9.add(exit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, -10, -1, 40));
+        jPanel9.add(exit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 0, -1, 40));
+
+        jPanel1.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 2, -1, 47));
 
         address.setBackground(new java.awt.Color(59, 63, 66));
         address.setFont(address.getFont().deriveFont(address.getFont().getStyle() | java.awt.Font.BOLD, address.getFont().getSize()+2));
         address.setForeground(new java.awt.Color(59, 63, 66));
         address.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        address.setText("Do you want to delete this account? ");
+        address.setText("Please enter the new password.");
         address.setAutoscrolls(true);
         address.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         address.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(address, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 270, -1));
+        jPanel1.add(newP, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 230, -1));
 
-        jButton1.setBackground(new java.awt.Color(255, 0, 0));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Yes");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButton3.setText("Reset");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButton3ActionPerformed(evt);
             }
         });
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, -1, -1));
 
-        jButton2.setText("No");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
+        error.setForeground(new java.awt.Color(255, 0, 0));
+        jPanel1.add(error, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, 150, 30));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-            .addComponent(address, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addGap(117, 117, 117))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(address)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(17, 17, 17))
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 190));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -181,18 +142,18 @@ public class Delete extends javax.swing.JFrame {
         mouseY = evt.getY();
     }//GEN-LAST:event_jPanel9MousePressed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new MySQLQueries(conn).deleteAccount(id, s);
-        frame.dispose();
-        frame2.enable(true);
-        this.dispose();
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        frame.enable(true);
-        this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+       
+        if(newP.getText() == null || newP.getText().isEmpty() || newP.getText().equals(" ")){
+            error.setText("Please enter the valid password");
+        } else {
+            new MySQLQueries(conn).initPassword(id, newP.getText());
+            frame.enable();
+            frame.updateTable();
+             this.dispose();
+        }
+       
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -211,32 +172,35 @@ public class Delete extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Delete.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(resetPass.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Delete.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(resetPass.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Delete.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(resetPass.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Delete.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(resetPass.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Delete(conn, id, s, new JFrame(), new JFrame()).setVisible(true);
+                new resetPass(conn, id, new JFrame()).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel address;
+    private javax.swing.JLabel error;
     private javax.swing.JButton exit1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JTextField newP;
     // End of variables declaration//GEN-END:variables
 }
