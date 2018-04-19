@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Invoice_subreport1" language="groovy" pageWidth="555" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5d524c14-e5b1-46a6-8011-912258c83973">
+	<property name="ireport.zoom" value="1.0245201830476058"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="jid" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select j.prime_id, j.price, t.description, j.discount , j.deadline from job j inner join task t on j.task_id = t.task_id inner join customer_account c on j.customer_id = c.customer_id where j.job_id = $P{jid}]]>
+	</queryString>
+	<field name="prime_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="price" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="description" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="discount" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="deadline" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="sum" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{price}]]></variableExpression>
+	</variable>
+	<group name="prime_id">
+		<groupExpression><![CDATA[$F{prime_id}]]></groupExpression>
+	</group>
+	<group name="description">
+		<groupExpression><![CDATA[$F{description}]]></groupExpression>
+	</group>
+	<group name="deadline">
+		<groupExpression><![CDATA[$F{deadline}]]></groupExpression>
+	</group>
+	<group name="price">
+		<groupExpression><![CDATA[$F{price}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="355" y="0" width="100" height="20" backcolor="#CCCCCC" uuid="aadfd137-3b67-4971-85b6-ddb92bed6fb1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Discount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" backcolor="#CCCCCC" uuid="f04c206f-c82c-406a-b492-bf39594be87a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="155" height="20" backcolor="#CCCCCC" uuid="9a65f17c-572d-47dc-80c3-4dcb34cd03a1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="255" y="0" width="100" height="20" backcolor="#CCCCCC" uuid="96ae8b70-5d6c-4a36-9cad-067cb3ce9287"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Deadline]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="0" width="100" height="20" backcolor="#CCCCCC" uuid="db5579d1-02fd-445b-a2e2-df36c095a786"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Price]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="100" height="20" uuid="85a96385-7f2d-4540-ae26-69cb27ba1cf1"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="255" y="0" width="100" height="20" uuid="fcd468f7-9ee4-4f34-a960-1d0edb5af869"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="355" y="0" width="100" height="20" uuid="e56131b0-5542-446f-bd4a-4ed6a53f10d2"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="455" y="0" width="100" height="20" uuid="f33f957b-9388-480c-aba4-bab736b5024d"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="100" y="0" width="155" height="20" uuid="afd0ec96-c459-40cc-b0d5-2342cc5aeaa5"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="455" y="0" width="100" height="20" uuid="cbe5bae2-c966-4aca-9721-a2881346670c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="355" y="0" width="100" height="20" uuid="3325de64-3f1d-4f24-83f5-3e3d924739c8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{discount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="c4a6783b-a8d9-477d-b64e-274e5fd57d35"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{prime_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="255" y="0" width="100" height="20" uuid="60257dd3-6182-4483-b9a8-e969b55eb9a6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{deadline}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="155" height="20" uuid="c25645be-bcb5-4f1e-aedb-d65f17afceeb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="100" height="20" uuid="4b378d5a-58f8-47a0-a2dc-acd62efdd1f6"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="100" y="0" width="155" height="20" uuid="f5ccd793-ec59-4a63-8781-3174a927e78f"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="255" y="0" width="100" height="20" uuid="ca665278-e3da-4f22-8ff5-4c3297433133"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="355" y="0" width="100" height="20" uuid="30bf0d9c-9c42-4e7f-8536-9773c494a41f"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="455" y="0" width="100" height="20" uuid="426fff45-e313-41cb-a635-da82308a2ab2"/>
+			</rectangle>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="20">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="12d297cc-ed61-458e-a831-be1f21179003"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sub-Total]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="455" height="20" uuid="161eaebe-690b-4de0-8670-1ae95915ab49"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="455" y="0" width="100" height="20" uuid="499fa21f-b41c-4ad1-a253-3c8019370cc9"/>
+			</rectangle>
+			<textField>
+				<reportElement x="455" y="0" width="100" height="20" uuid="24db0497-afd2-44f2-8e21-d105ae68f7d9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{sum}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

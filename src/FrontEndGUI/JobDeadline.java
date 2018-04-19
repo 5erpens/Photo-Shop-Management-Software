@@ -99,6 +99,11 @@ public class JobDeadline extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(table);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -149,6 +154,11 @@ public class JobDeadline extends javax.swing.JFrame {
         mouseX=evt.getX();
         mouseY=evt.getY();
     }//GEN-LAST:event_jPanel9MousePressed
+
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+        new PrintLetter(conn,this,table.getValueAt(table.getSelectedRow(), 1).toString()).show();
+        this.disable();
+    }//GEN-LAST:event_tableMouseClicked
 
     /**
      * @param args the command line arguments

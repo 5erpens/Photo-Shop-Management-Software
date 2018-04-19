@@ -258,9 +258,13 @@ public class MySQLQueries {
 
     public void deleteAccount(String id, boolean s) {
         if (s) {
+            EjectSeq3(id);
             query = "delete from staff_account where staff_id=" + id;
         } else {
+            DeleteCard(id);
+            EjectSeq1(id);
             query = "delete from customer_account where customer_id=" + id;
+
         }
         try {
             if (s) {
@@ -387,7 +391,9 @@ public class MySQLQueries {
                 System.out.println(codeset.DateTime(true) + ": New task added: customer id: " + String.valueOf(cid) + " task : " + d.getValueAt(i, 0).toString());
                 logAdd(codeset.DateTime(true) + ": New task added: customer id: " + String.valueOf(cid) + " task : " + d.getValueAt(i, 0).toString() + " Job-id: " + jobID);
             }
+
             notificationAdd(codeset.DateTime(true) + ": New Job added: customer id: " + String.valueOf(cid) + " Job-id: " + jobID, "OS", "G");
+
             return jobID;
         } catch (SQLException e) {
             System.out.println(codeset.DateTime(true) + ": New task adding failed: customer id: " + String.valueOf(cid));
@@ -919,14 +925,18 @@ public class MySQLQueries {
             inst = "";
         }
         try {
-            query = "update job set status = '" + status + "', staff_instruction = '" + inst + "', end_time = '" + new CodeSet().DateTime(true) + "' where prime_id = " + tid;
+
+            if (status.equals("On-Hold") || status.equals("Pending")) {
+                query = "update job set status = '" + status + "', staff_instruction = '" + inst + "' where prime_id = " + tid;
+            } else {
+                query = "update job set status = '" + status + "', staff_instruction = '" + inst + "', end_time = '" + new CodeSet().DateTime(true) + "' where prime_id = " + tid;
+            }
             pst = conn.prepareStatement(query);
             pst.executeUpdate();
             logAdd(new CodeSet().DateTime(true) + ": Job-Task: " + tid + ": status updated: " + status + ": by Staff id: " + s);
         } catch (SQLException ex) {
             Logger.getLogger(MySQLQueries.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     public boolean checkStaff(String s) {
@@ -1088,12 +1098,147 @@ public class MySQLQueries {
             Logger.getLogger(MySQLQueries.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void DeleteTask(ArrayList<String> l){
+
+    public void DeleteTask(ArrayList<String> l) {
         try {
             query = "delete from task where description = '" + l.get(0) + "' and `Shelf Slot` = '" + l.get(2) + "'";
             st = conn.createStatement();
             st.executeUpdate(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLQueries.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void DeleteCard(String cid) {
+        try {
+            query = "delete from card where customer_id =" + cid;
+            st = conn.createStatement();
+            st.executeUpdate(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLQueries.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void EjectSeq1(String cid) {
+        try {
+            query = " select prime_id from job where customer_id = " + cid + " and (status ='Pending' || status ='In-Progress' || status ='On-Hold')";
+            st = conn.createStatement();
+            rs = st.executeQuery(query);
+            ArrayList<String> l = new ArrayList<>();
+            while (rs.next()) {
+                l.add(String.valueOf(rs.getInt(1)));
+            }
+            EjectSeq2(l);
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLQueries.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+    }
+
+    public void EjectSeq2(ArrayList<String> l) {
+        try {
+            for (int i = 0; i < l.size(); i++) {
+                query = "update job set status = 'Customer-Removed' where prime_id = " + l.get(i);
+                pst = conn.prepareStatement(query);
+                pst.executeUpdate();
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLQueries.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void EjectSeq3(String sid) {
+        try {
+            query = " select prime_id from job where staff_id = " + sid + " and status ='In-Progress' ";
+            st = conn.createStatement();
+            rs = st.executeQuery(query);
+            String s = null;
+            if (rs.next()) {
+                s = String.valueOf(rs.getInt(1));
+            }
+            EjectSeq4(s);
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLQueries.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+    }
+
+    public void EjectSeq4(String l) {
+        try {
+            query = "update job set status = 'Pending' where prime_id = " + l;
+            pst = conn.prepareStatement(query);
+            pst.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLQueries.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public DefaultTableModel statusUpdate() {
+        try {
+            query = "select j.prime_id,j.job_id,j.customer_id,t.description,j.date,j.staff_instruction from job as j left join receipt as r on j.prime_id = r.prime_id left join task as t on j.task_id = t.task_id where j.status = 'On-Hold'";
+
+            DefaultTableModel d = new DefaultTableModel();
+            d.setColumnIdentifiers(new Object[]{"ID", "Job ID", "Customer ID", "Task", "Date", "staff_instruction"});
+            st = conn.createStatement();
+            rs = st.executeQuery(query);
+            Object[] obj = new Object[10];
+            while (rs.next()) {
+                obj[0] = rs.getLong(1);
+                obj[1] = rs.getString(2);
+                obj[2] = rs.getString(3);
+                obj[3] = rs.getString(4);
+                obj[4] = rs.getString(5);
+                obj[5] = rs.getString(6);
+                d.addRow(obj);
+            }
+            return d;
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLQueries.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    public void initPassword(String s) {
+        try {
+            query = "update staff_account set password_reset = 1 where staff_id= " + s;
+            pst = conn.prepareStatement(query);
+            pst.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLQueries.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public DefaultTableModel passwordUpdate() {
+        try {
+            query = "select staff_id, first_name, last_name,  role, email, contact_no from staff_account where password_reset = 1";
+
+            DefaultTableModel d = new DefaultTableModel();
+            d.setColumnIdentifiers(new Object[]{"ID","First Name", "Last Name", "Role", "Email", "Phone"});
+            st = conn.createStatement();
+            rs = st.executeQuery(query);
+            Object[] obj = new Object[6];
+            while (rs.next()) {
+                obj[0] = rs.getLong(1);
+                obj[1] = rs.getString(2);
+                obj[2] = rs.getString(3);
+                obj[3] = rs.getString(4);
+                obj[4] = rs.getString(5);
+                obj[5] = rs.getString(6);
+                d.addRow(obj);
+            }
+            return d;
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLQueries.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
+     public void initPassword(String s, String pass) {
+        try {
+            query = "update staff_account set password_reset = 0, password = '"+pass+"' where staff_id= " + s;
+            pst = conn.prepareStatement(query);
+            pst.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(MySQLQueries.class.getName()).log(Level.SEVERE, null, ex);
         }

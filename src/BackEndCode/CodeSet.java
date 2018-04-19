@@ -5,20 +5,28 @@
  */
 package BackEndCode;
 
+import FrontEndGUI.PrintReceipt;
 import java.io.File;
+import java.sql.Connection;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -117,7 +125,7 @@ public class CodeSet {
             return l.get(0) + "-" + String.valueOf(Integer.parseInt(l.get(1)) - 1) + "-10 00:00:00";
         }
     }
-    
+
     public String monthDeadlineUpperLimit() {
         ArrayList<String> l = convertDateList(monthDeadline());
         if (Integer.parseInt(l.get(1)) == 12) {
@@ -316,5 +324,83 @@ public class CodeSet {
             return null;
         }
         return null;
+    }
+
+    public void printInvoice(Connection conn, String s, String a) {
+        try {
+
+            Map pm = new HashMap();
+            pm.put("jid", s);
+            pm.put("acc", a);
+            String r = System.getProperty("user.dir") + "/src/Report/Invoice.jasper";
+            JasperPrint jp = JasperFillManager.fillReport(r, pm, conn);
+            JasperViewer.viewReport(jp, false);
+        } catch (JRException ex) {
+            Logger.getLogger(CodeSet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void individualPerformance(Connection conn, String end, String start) {
+        try {
+
+            Map pm = new HashMap();
+            pm.put("end", end);
+            pm.put("start", start);
+            String r = System.getProperty("user.dir") + "/src/Report/Individualreport.jasper";
+            JasperPrint jp = JasperFillManager.fillReport(r, pm, conn);
+            JasperViewer.viewReport(jp, false);
+        } catch (JRException ex) {
+            Logger.getLogger(CodeSet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void summeryPerformance(Connection conn, String end, String start) {
+        try {
+            Map pm = new HashMap();
+            pm.put("end", end);
+            pm.put("start", start);
+            String r = System.getProperty("user.dir") + "/src/Report/summary.jasper";
+            JasperPrint jp = JasperFillManager.fillReport(r, pm, conn);
+            JasperViewer.viewReport(jp, false);
+        } catch (JRException ex) {
+            Logger.getLogger(CodeSet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+     public void customerPerformance(Connection conn, String s, int i) {
+        try {
+            Map pm = new HashMap();
+            pm.put("acc1", s);
+            pm.put("acc2", i);
+            String r = System.getProperty("user.dir") + "/src/Report/cust.jasper";
+            JasperPrint jp = JasperFillManager.fillReport(r, pm, conn);
+            JasperViewer.viewReport(jp, false);
+        } catch (JRException ex) {
+            Logger.getLogger(CodeSet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+     
+     public void firstReaminder(Connection conn, String s) {
+        try {
+            Map pm = new HashMap();
+            pm.put("jid", s);
+            String r = System.getProperty("user.dir") + "/src/Report/first remainder.jasper";
+            JasperPrint jp = JasperFillManager.fillReport(r, pm, conn);
+            JasperViewer.viewReport(jp, false);
+        } catch (JRException ex) {
+            Logger.getLogger(CodeSet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+     
+     public void finalReaminder(Connection conn, String s) {
+        try {
+            Map pm = new HashMap();
+            pm.put("jid", s);
+            String r = System.getProperty("user.dir") + "/src/Report/finalrem.jasper";
+            JasperPrint jp = JasperFillManager.fillReport(r, pm, conn);
+            JasperViewer.viewReport(jp, false);
+        } catch (JRException ex) {
+            Logger.getLogger(CodeSet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cust_subreport1" language="groovy" pageWidth="802" pageHeight="555" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b42953b5-1fa3-47aa-bc26-22dee86633d4">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="acc2" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select j.job_id, j.price, j.discount, j.task_id, t.description
+from job j
+  inner join task t on j.task_id = t.task_id
+where j.customer_id = $P{acc2} and (status = 'On-Hold' || status = 'Pending' || status = 'In-Progress')]]>
+	</queryString>
+	<field name="job_id" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="price" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="discount" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="task_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="description" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="job_id">
+		<groupExpression><![CDATA[$F{job_id}]]></groupExpression>
+	</group>
+	<group name="price">
+		<groupExpression><![CDATA[$F{price}]]></groupExpression>
+	</group>
+	<group name="discount">
+		<groupExpression><![CDATA[$F{discount}]]></groupExpression>
+	</group>
+	<group name="task_id">
+		<groupExpression><![CDATA[$F{task_id}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="36">
+			<staticText>
+				<reportElement x="0" y="16" width="203" height="20" uuid="23558f92-0961-4f1c-84da-90db21472915"/>
+				<text><![CDATA[Description of work in progress:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="42676998-18f5-4b5d-ac18-ae81917856ec"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Job ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="66" height="20" uuid="09d9a6fe-6636-464a-b2d0-43ae871e2279"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Price]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="166" y="0" width="71" height="20" uuid="c4fbcd78-0001-43a0-af00-ad0716d4c3a4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Discount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="237" y="0" width="45" height="20" uuid="3e1d0a2f-041a-4dd4-89be-608cdcd1347e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Task ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="282" y="0" width="150" height="20" uuid="fe03315d-222c-4b02-b7b4-6b0c305d890a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="100" height="20" uuid="57d8fb3a-2cc4-489c-aec5-48b0d543ad34"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="100" y="0" width="66" height="20" uuid="c72a862f-51d6-4a15-afc4-54f8817e213e"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="166" y="0" width="71" height="20" uuid="9b1b40c4-0ac1-4f19-9ef0-a3ca4dc33d4b"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="282" y="0" width="150" height="20" uuid="9e5551ed-d139-445a-87cf-ba4d789e626e"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="237" y="0" width="45" height="20" uuid="bf117cd1-8555-4700-b0fa-1c8b13a54e2d"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="2dcb7518-a294-457e-a366-67ed31e7e90e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{job_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="66" height="20" uuid="abfbae3d-1b46-42ca-830e-d295ee1dcaeb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="166" y="0" width="71" height="20" uuid="805eba37-5554-4f4a-8b8b-2c3713f5ce09"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{discount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="282" y="0" width="150" height="20" uuid="d732c2b7-01fe-4d79-984d-6a71174a7c10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="100" height="20" uuid="8ddbfd06-b4f9-40ea-a32c-586c3231fff2"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="100" y="0" width="66" height="20" uuid="976b83d8-392f-4a9b-8151-0ed7a51b543b"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="166" y="0" width="71" height="20" uuid="531db2d8-ce49-4a64-b5b5-4f8457ff2d19"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="237" y="0" width="45" height="20" uuid="836978ed-e6ad-4df9-a1ca-0523156a5185"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="282" y="0" width="150" height="20" uuid="52524419-a353-47f1-9935-bba783747a22"/>
+			</rectangle>
+			<textField>
+				<reportElement x="237" y="0" width="45" height="20" uuid="01498588-f6fb-4c0c-abd5-1d1501b13db1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{task_id}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="54">
+			<staticText>
+				<reportElement x="0" y="32" width="237" height="22" uuid="71cf255c-d96b-4ca6-9f52-6d7285d3b4a7"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Description of work done:]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+</jasperReport>

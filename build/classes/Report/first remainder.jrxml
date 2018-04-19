@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0708b33d-da5a-4947-b4e9-18bf83385831">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="jid" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select j.job_id, j.customer_id, c.first_name, c.last_name, c.address_1, c.address_2, c.town_city, c.email,j.date, sum(j.price) as total,  c.contact_no,c.postcode from job j inner join task t on j.task_id = t.task_id inner join customer_account c on j.customer_id = c.customer_id where j.job_id = $P{jid}]]>
+	</queryString>
+	<field name="job_id" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="customer_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="first_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="last_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="address_1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="address_2" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="town_city" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="email" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total" class="java.lang.Double"/>
+	<field name="contact_no" class="java.math.BigInteger">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="postcode" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="139" splitType="Stretch">
+			<staticText>
+				<reportElement x="440" y="40" width="115" height="20" uuid="2a2f7ff5-567b-4ada-86a6-9b3320acd81c"/>
+				<text><![CDATA[London, EC1V 7HU]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="440" y="20" width="115" height="20" uuid="1ababe66-8dc4-4ce0-94e8-98282acc5249"/>
+				<text><![CDATA[2, Wynyatt Street]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="440" y="0" width="115" height="20" uuid="6d73c3ed-8f18-481d-9590-8b14bdc82b77"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BAPERS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="440" y="60" width="115" height="20" uuid="9d392110-2e6a-4362-b886-6db756ef79dd"/>
+				<text><![CDATA[Phone: 0207 235 7534]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="40" width="120" height="20" uuid="21cd30aa-94d1-4430-a005-43bf4278fd64"/>
+				<textFieldExpression><![CDATA[$F{first_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="78" width="120" height="20" uuid="97eab6b2-6699-4ab6-a59b-a5e151e7ef63"/>
+				<textFieldExpression><![CDATA[$F{town_city}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="98" width="120" height="20" uuid="3d6911ea-e67c-4c81-9b01-68405cbc17c2"/>
+				<textFieldExpression><![CDATA[$F{postcode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="60" width="120" height="20" uuid="11e36af7-8b16-472c-be1f-83f5f305d6a6"/>
+				<textFieldExpression><![CDATA[$F{address_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="117" width="120" height="20" uuid="bd1f510d-e93e-46a7-9119-286348eb2aa4"/>
+				<textFieldExpression><![CDATA[$F{contact_no}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="98" splitType="Stretch">
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="0" y="16" width="100" height="20" uuid="a85f1f6b-1764-4d56-b8be-608186e93c19"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="225" y="36" width="100" height="20" uuid="c3ed3dc2-8427-40fb-b580-c8456f0891cb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[REMINDER LETTER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="85" y="56" width="100" height="20" uuid="c40e388f-bb46-41df-9d47-1dc7bb7bda6c"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Job ID: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="185" y="56" width="77" height="20" uuid="8933a193-785c-4d16-84a7-4e13965f51b0"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{job_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="373" y="56" width="30" height="20" uuid="d4a22e29-ca71-4a68-8c71-deed9fdaf89f"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="262" y="56" width="100" height="20" uuid="9eb362af-8fb2-4d6e-9f26-c815ce947442"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total amount :]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="166" splitType="Stretch">
+			<staticText>
+				<reportElement x="20" y="16" width="510" height="45" uuid="23b8d14a-9b13-46ca-9b80-d3bf8af97f19"/>
+				<text><![CDATA[According to our records, it appears that we have not yet received payment of the above job order , which was posted to you on                      for photographic work done in our laboratory.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="75" y="29" width="95" height="14" uuid="e987c92d-c731-4ae2-8173-1332dcdfe844"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="20" y="61" width="510" height="45" uuid="aa4ead84-a996-4d37-b3f3-68274e814d6c"/>
+				<text><![CDATA[We would appreciate payment at your earliest convenience.
+If you have already sent a payment to us recently, please accept our apologies.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="107" width="100" height="20" uuid="c1e70eaa-4929-4caf-b564-a3746b4a7748"/>
+				<text><![CDATA[Yours sincerely,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="128" width="100" height="20" uuid="cde4a471-0446-4cd8-892e-6633f0ba1e6b"/>
+				<text><![CDATA[G. Lancaster]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+</jasperReport>

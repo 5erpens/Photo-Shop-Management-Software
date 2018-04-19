@@ -5,6 +5,7 @@
  */
 package FrontEndGUI;
 
+import BackEndCode.ActiveDB;
 import BackEndCode.MySQLQueries;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -15,13 +16,9 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.view.JasperViewer;
 
 /**
@@ -46,7 +43,7 @@ public class PrintReceipt extends javax.swing.JFrame {
     
     int mouseX;
     int mouseY;
-
+    
     /**
      * Creates new form CustomerSearchList
      */
@@ -62,6 +59,12 @@ public class PrintReceipt extends javax.swing.JFrame {
         
     }
 
+    public PrintReceipt() {
+                
+        conn = ActiveDB.initiate();
+        initComponents();
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -73,7 +76,6 @@ public class PrintReceipt extends javax.swing.JFrame {
 
         jLabel5 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        Submit1 = new javax.swing.JButton();
         Submit2 = new javax.swing.JButton();
         fName2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -95,13 +97,6 @@ public class PrintReceipt extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.setForeground(new java.awt.Color(171, 172, 173));
 
-        Submit1.setText("Print Receipt");
-        Submit1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Submit1ActionPerformed(evt);
-            }
-        });
-
         Submit2.setText("Print Label");
         Submit2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,16 +115,13 @@ public class PrintReceipt extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addComponent(fName2))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(173, 173, 173)
-                        .addComponent(Submit2)
-                        .addGap(21, 21, 21)
-                        .addComponent(Submit1)))
+                .addGap(60, 60, 60)
+                .addComponent(fName2)
                 .addContainerGap(69, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Submit2)
+                .addGap(215, 215, 215))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,9 +129,7 @@ public class PrintReceipt extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(fName2)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Submit1)
-                    .addComponent(Submit2))
+                .addComponent(Submit2)
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
@@ -184,23 +174,6 @@ public class PrintReceipt extends javax.swing.JFrame {
         frame.enable(true);
         this.dispose();
     }//GEN-LAST:event_exit1ActionPerformed
-
-    private void Submit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Submit1ActionPerformed
-        try {
-            frame.enable(true);
-            Map pm = new HashMap();
-            pm.put("cid", cid);
-            pm.put("list", ls);
-            String r = "E:\\Projects\\Photo-Shop-Management-Software\\src\\Report\\invoice.jrxml";
-            JasperReport jr = JasperCompileManager.compileReport(r);
-            JasperPrint jp = JasperFillManager.fillReport(jr, pm, conn);
-            JasperViewer.viewReport(jp);
-            this.dispose();
-        } catch (JRException ex) {
-            Logger.getLogger(PrintReceipt.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-    }//GEN-LAST:event_Submit1ActionPerformed
 
     private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MousePressed
         mouseX=evt.getX();
@@ -268,7 +241,6 @@ public class PrintReceipt extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Submit1;
     private javax.swing.JButton Submit2;
     private javax.swing.JButton exit1;
     private javax.swing.JLabel fName2;

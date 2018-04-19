@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Key" uuid="738ddc52-edf0-4d8f-a863-1a3f69d98a83">
+	<property name="ireport.zoom" value="1.3310000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="end" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="start" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select s.first_name, s.staff_id, j.job_id, j.task_id, t.department, j.date, j.start_time, j.end_time,
+  CONCAT(FLOOR(timestampdiff(hour, j.start_time,j.end_time)/24),'hr ',
+         MOD(timestampdiff(minute, j.start_time,j.end_time),60),'min ',
+         MOD(timestampdiff(second, j.start_time,j.end_time),60),'sec') as timetaken,
+  (select CONCAT(FLOOR(sum(timestampdiff(hour, start_time,end_time))/24),'hr ',
+                 MOD(sum(timestampdiff(minute, start_time,end_time)),60),'min ',
+                 MOD(sum(timestampdiff(second, start_time,end_time)),60),'sec')
+   from job where staff_id = j.staff_id and end_time is not null ) as totaltime, (select CONCAT(FLOOR(sum(timestampdiff(hour, start_time,end_time))/24),'hr ',
+                 MOD(sum(timestampdiff(minute, start_time,end_time)),60),'min ',
+                 MOD(sum(timestampdiff(second, start_time,end_time)),60),'sec')
+   from job where end_time is not null) as totaleffort
+from job j
+  inner join task t on j.task_id = t.task_id
+  inner join staff_account s on j.staff_id = s.staff_id
+where j.end_time < $P{end} and j.end_time >$P{start} and j.end_time is not null order by s.first_name asc]]>
+	</queryString>
+	<field name="first_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="staff_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="job_id" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="task_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="department" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="start_time" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="end_time" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="timetaken" class="java.lang.String"/>
+	<field name="totaltime" class="java.lang.String"/>
+	<field name="totaleffort" class="java.lang.String"/>
+	<variable name="sum" class="java.lang.String" calculation="Sum"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="66" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="13" width="802" height="20" uuid="f5a7f6a6-0028-4dd0-879b-ffae0ce5e671"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Individual Performance Report]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="262" y="33" width="45" height="20" uuid="69d39baa-0bde-46e7-826a-874e38e63d71"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Peirod :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="307" y="33" width="100" height="20" uuid="f9372e1b-a05a-48f1-9b94-c2176132a985"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{start}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="407" y="33" width="24" height="20" uuid="12bea33f-d5d1-41bd-b466-72b362d2f2de"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[ to]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="431" y="33" width="100" height="20" uuid="b757be1b-1eab-4927-98b8-55956381419f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{end}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="100" height="20" uuid="314a513d-df9b-4843-b155-95284f6ba616"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="100" y="0" width="100" height="20" uuid="8d3cc7c8-b48e-410f-adea-20f69f2f970a"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="239" y="0" width="170" height="20" uuid="c89d99ce-f17b-4d04-bcd8-0479be08b187"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="409" y="0" width="100" height="20" uuid="ac0c38fb-a11d-4441-928e-7bc5ff82f569"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="509" y="0" width="100" height="20" uuid="afb95824-01ae-4954-b0f7-66be9ff9e2b1"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="200" y="0" width="39" height="20" uuid="b435701c-29ff-4f48-86b9-2120604560fb"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="609" y="0" width="100" height="20" uuid="8f768e07-a52d-4a1f-a2d2-a0af64a46555"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="709" y="0" width="93" height="20" uuid="e30974b1-197d-452b-8688-13071963eabd"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="5e947d0f-9e9f-429a-8c67-245d390e785c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="100" height="20" uuid="034841cf-999f-4b38-bad8-f7fadfcde480"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Job-ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="0" width="39" height="20" uuid="1d2e0fed-3d9d-4bae-835d-df08fb48cf8d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Task-ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="239" y="0" width="168" height="20" uuid="f17a0f60-d73a-49fb-bae8-311cf39f28e6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[department]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="409" y="0" width="100" height="20" uuid="807fc227-f886-4ef5-a8a0-27993b1394b9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Start Time]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="509" y="0" width="100" height="20" uuid="abcd6a8b-305b-4d24-8005-7c7dc3f3cf83"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[End Time]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="609" y="0" width="100" height="20" uuid="78d68d0a-9c7b-4595-8fda-063d88847064"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[timetaken]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="709" y="0" width="93" height="20" uuid="cb44d534-a60c-49f1-b7a1-a3fd938533fa"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="100" height="20" isRemoveLineWhenBlank="true" uuid="b8d3a9fc-5c54-4035-8384-47d473e49bd4"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="100" y="0" width="100" height="20" uuid="7d3c0c31-a823-4f61-96e5-5f69554ef6bd"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="409" y="0" width="100" height="20" uuid="a9589fbb-b012-4b65-b1ef-67ce0669145f"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="509" y="0" width="100" height="20" uuid="9148ad4a-009b-4dd6-b6ba-687c8809068a"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="239" y="0" width="170" height="20" uuid="aa36ee17-5dd6-48d1-ad68-b80e56bc6798"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="200" y="0" width="39" height="20" uuid="b67d8caa-da4e-4d60-8777-8f7d3e968291"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="609" y="0" width="100" height="20" uuid="09c8bba0-7706-4173-b277-911480157cb6"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="709" y="0" width="93" height="20" uuid="50b3a2e7-4bef-4416-8cec-ef0fe808781f"/>
+			</rectangle>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="0" y="0" width="100" height="20" uuid="04251f5a-8860-4c1e-9362-57eb8b97f387"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{first_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="100" height="20" uuid="bb225f0c-4b8b-4c82-bfae-b1923e02c5e2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{job_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="0" width="39" height="20" uuid="870b2c9b-676b-4b6f-bd99-49aaf1f2f3ff"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{task_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="241" y="0" width="168" height="20" uuid="858223ad-ac8f-4d85-b615-ed2ff18d800f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{department}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="409" y="0" width="100" height="20" uuid="6fe072d6-8fc3-4282-88e2-8795210a090c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{start_time}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="509" y="0" width="100" height="20" uuid="6cb70e2e-84dc-45be-8cb7-cebc40649b5a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{end_time}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="609" y="0" width="100" height="20" uuid="3fea1bb9-4d4e-4ce4-ae00-158c1f0d94c0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{timetaken}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="709" y="0" width="93" height="20" uuid="98676dd2-e851-4804-a90d-a91d2d80dc9e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{totaltime}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="20">
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="709" height="20" uuid="dc996efb-a118-4b78-8353-abf1cd3225a6"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="709" y="0" width="93" height="20" uuid="7a6b7d4b-b180-4d8e-ad29-6171e72615e7"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="332583b4-dea4-4d93-babb-b0d504caa204"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Effort]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="709" y="0" width="93" height="20" uuid="ff9720ff-3ff2-4e62-96b9-aa1b253f8d30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totaleffort}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

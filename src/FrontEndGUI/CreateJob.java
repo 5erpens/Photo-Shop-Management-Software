@@ -331,7 +331,7 @@ public class CreateJob extends javax.swing.JFrame {
                 }
                
             }
-            new MySQLQueries(conn).updateTask((DefaultTableModel) table.getModel(), cid, fl);
+            new CodeSet().printInvoice(conn, new MySQLQueries(conn).updateTask((DefaultTableModel) table.getModel(), cid, fl),id.getText());
             frame.enable(true);
             if (a) {
                 new ICustomerAccount(conn, e, frame, staff).show();
@@ -343,6 +343,7 @@ public class CreateJob extends javax.swing.JFrame {
             this.enable(false);
             new DPayment(conn, this, frame, Float.parseFloat(price.getText()), cid, table.getModel()).show();
         }
+        
     }//GEN-LAST:event_Submit1ActionPerformed
 
     private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MousePressed

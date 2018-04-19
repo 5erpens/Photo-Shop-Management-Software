@@ -39,6 +39,10 @@ public class OCustomerAccount extends javax.swing.JFrame {
 
     private static Dashboard frame;
 
+    private static SDashboard frame1;
+
+    private static RDashboard frame2;
+
     private static String s, staff;
 
     private int i;
@@ -55,7 +59,13 @@ public class OCustomerAccount extends javax.swing.JFrame {
     public OCustomerAccount(Connection conn, String s, JFrame frame, String staff) {
         this.s = s;
         this.staff = staff;
-        this.frame = (Dashboard) frame;
+        if(staff.equals("Office Manager")){
+            this.frame = (Dashboard) frame;
+        } else if(staff.equals("Shift Manager")){
+            this.frame1 = (SDashboard) frame;
+        } else {
+            this.frame2 = (RDashboard) frame;
+        }
         this.conn = conn;
         this.setUndecorated(true);
         idg = new IDgen();
@@ -67,7 +77,6 @@ public class OCustomerAccount extends javax.swing.JFrame {
         if (role.getText().equals("Default")) {
             pay.setVisible(false);
         }
-        
     }
 
     /**
@@ -126,6 +135,7 @@ public class OCustomerAccount extends javax.swing.JFrame {
         jPanel14 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         edit = new javax.swing.JLabel();
+        prin = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -464,48 +474,60 @@ public class OCustomerAccount extends javax.swing.JFrame {
             }
         });
 
+        prin.setText("Print Customer Report");
+        prin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                prinActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(8, 8, 8)
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(648, 648, 648)
-                .addComponent(edit))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(accsus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(628, 628, 628)
-                .addComponent(pay, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(discount, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addGap(8, 8, 8)
+                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(648, 648, 648)
+                        .addComponent(edit))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(20, 20, 20)
-                        .addComponent(Percentage, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(accsus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(discount, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                .addGap(20, 20, 20)
+                                .addComponent(Percentage, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(prin)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(pay, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(53, 53, 53))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -538,7 +560,9 @@ public class OCustomerAccount extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
-                .addComponent(pay))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(pay)
+                    .addComponent(prin)))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, 760, 750));
@@ -547,7 +571,13 @@ public class OCustomerAccount extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void exit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exit1ActionPerformed
-        frame.enable(true);
+        if(staff.equals("Office Manager")){
+            frame.enable(true);
+        } else if(staff.equals("Shift Manager")){
+            frame1.enable(true);
+        } else {
+            frame2.enable(true);
+        }
         this.dispose();
     }//GEN-LAST:event_exit1ActionPerformed
 
@@ -562,17 +592,35 @@ public class OCustomerAccount extends javax.swing.JFrame {
 
     private void delMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_delMouseClicked
         this.enable(false);
-        new Delete(conn, String.valueOf(cid), false, this, frame).show();
+        if(staff.equals("Office Manager")){
+            new Delete(conn, String.valueOf(cid), false, this, frame).show();
+        } else if(staff.equals("Shift Manager")){
+            new Delete(conn, String.valueOf(cid), false, this, frame1).show();
+        } else {
+            new Delete(conn, String.valueOf(cid), false, this, frame2).show();
+        }
     }//GEN-LAST:event_delMouseClicked
 
     private void addTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTaskActionPerformed
 
-        new CreateJob(conn, id.getText(), cid, false, frame, s, role.getText(), staff).show();
+         if(staff.equals("Office Manager")){
+            new CreateJob(conn, id.getText(), cid, true, frame, s, role.getText(), staff).show();
+        } else if(staff.equals("Shift Manager")){
+            new CreateJob(conn, id.getText(), cid, true, frame1, s, role.getText(), staff).show();
+        } else {
+            new CreateJob(conn, id.getText(), cid, true, frame2, s, role.getText(), staff).show();
+        }
         this.dispose();
     }//GEN-LAST:event_addTaskActionPerformed
 
     private void payActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payActionPerformed
-        new Payment(conn, this, frame, cid).show();
+        if(staff.equals("Office Manager")){
+            new Payment(conn, this, frame, cid).show();
+        } else if(staff.equals("Shift Manager")){
+            new Payment(conn, this, frame1, cid).show();
+        } else {
+            new Payment(conn, this, frame2, cid).show();
+        }
         this.dispose();
     }//GEN-LAST:event_payActionPerformed
 
@@ -590,9 +638,19 @@ public class OCustomerAccount extends javax.swing.JFrame {
 
     private void editMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseClicked
 
-        new EditCustAcc(conn, frame, ls, staff).show();
+        if(staff.equals("Office Manager")){
+            new EditCustAcc(conn, frame, ls, staff).show();
+        } else if(staff.equals("Shift Manager")){
+            new EditCustAcc(conn, frame1, ls, staff).show();
+        } else {
+            new EditCustAcc(conn, frame2, ls, staff).show();
+        }
         this.dispose();
     }//GEN-LAST:event_editMouseClicked
+
+    private void prinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prinActionPerformed
+        new CodeSet().customerPerformance(conn, id.getText(), cid);
+    }//GEN-LAST:event_prinActionPerformed
 
     public void initiateData(String s) {
         ls = new ArrayList<>();
@@ -648,16 +706,18 @@ public class OCustomerAccount extends javax.swing.JFrame {
                     addTask.setVisible(false);
                     addTaskPanel.setVisible(false);
                 }
-                if (staff.equals("Office Manager")) {
+                if (staff.equals("Office Manager") || staff.equals("Shift Manager")) {
                     del.enable();
                     del.setVisible(true);
                     edit.enable();
                     edit.setVisible(true);
+                    prin.setVisible(true);
                 } else {
                     del.disable();
                     del.setVisible(false);
                     edit.disable();
                     edit.setVisible(false);
+                    prin.setVisible(false);
                 }
 
                 ls.add(String.valueOf(rs.getInt("customer_id")));
@@ -677,7 +737,13 @@ public class OCustomerAccount extends javax.swing.JFrame {
                 ls.add(String.valueOf(rs.getFloat("percentage")));
                 System.out.println("Opened customer account : " + String.valueOf(rs.getInt("customer_id")));
                 new MySQLQueries(conn).logAdd(new CodeSet().DateTime(true) + ": Opened customer account : " + String.valueOf(rs.getInt("customer_id")));
-                frame.setStat();
+                if (staff.equals("Office Manager")) {
+                    frame.setStat();
+                } else if (staff.equals("Shift Manager")) {
+                    frame1.setStat();
+                } else {
+                    frame2.setStat();
+                }
             }
         } catch (SQLException e) {
             System.out.println("Exception in opening customer profile : " + e);
@@ -782,6 +848,7 @@ public class OCustomerAccount extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton pay;
     private javax.swing.JLabel per;
+    private javax.swing.JButton prin;
     private javax.swing.JLabel role;
     private javax.swing.JLabel suspend;
     private javax.swing.JTable table;

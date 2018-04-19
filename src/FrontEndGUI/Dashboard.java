@@ -10,6 +10,7 @@ import BackEndCode.CodeSet;
 import BackEndCode.IDgen;
 import BackEndCode.MySQLQueries;
 import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,20 +58,29 @@ public class Dashboard extends javax.swing.JFrame {
     private void initComponents() {
 
         dateChooser1 = new cambodia.raven.DateChooser();
+        dateChooser2 = new cambodia.raven.DateChooser();
+        pop = new javax.swing.JPopupMenu();
+        note = new javax.swing.JMenuItem();
+        taskList = new javax.swing.JMenuItem();
+        dueList = new javax.swing.JMenuItem();
+        onhold = new javax.swing.JMenuItem();
+        passwd = new javax.swing.JMenuItem();
+        backup = new javax.swing.JMenuItem();
+        loggerv = new javax.swing.JMenuItem();
+        lo = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
-        username5 = new javax.swing.JTextField();
-        Submit5 = new javax.swing.JButton();
-        employeeLogin6 = new javax.swing.JLabel();
+        from = new javax.swing.JTextField();
+        ipr0 = new javax.swing.JButton();
         jPanel12 = new javax.swing.JPanel();
         employeeLogin20 = new javax.swing.JLabel();
-        employeeLogin7 = new javax.swing.JLabel();
-        jsText = new javax.swing.JTextField();
-        Submit8 = new javax.swing.JButton();
-        js = new javax.swing.JButton();
-        br = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        to = new javax.swing.JTextField();
+        ipr = new javax.swing.JButton();
+        employeeLogin8 = new javax.swing.JLabel();
+        reports = new javax.swing.JComboBox<>();
+        employeeLogin9 = new javax.swing.JLabel();
+        employeeLogin10 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
         id = new javax.swing.JLabel();
@@ -112,7 +122,6 @@ public class Dashboard extends javax.swing.JFrame {
         copyright = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         employeeLogin1 = new javax.swing.JLabel();
-        log = new javax.swing.JButton();
         jPanel13 = new javax.swing.JPanel();
         ssearch = new javax.swing.JTextField();
         employeeLogin21 = new javax.swing.JLabel();
@@ -132,8 +141,115 @@ public class Dashboard extends javax.swing.JFrame {
         dateChooser1.setBackground(new java.awt.Color(171, 172, 173));
         dateChooser1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         dateChooser1.setForeground(new java.awt.Color(171, 172, 173));
-        dateChooser1.setButton(js);
-        dateChooser1.setTextRefernce(jsText);
+        dateChooser1.setButton(ipr0);
+        dateChooser1.setTextRefernce(from);
+
+        dateChooser2.setButton(ipr);
+        dateChooser2.setTextRefernce(to);
+
+        pop.setBackground(new java.awt.Color(51, 51, 51));
+        pop.setForeground(new java.awt.Color(51, 51, 51));
+
+        note.setFont(note.getFont().deriveFont(note.getFont().getSize()+2f));
+        note.setForeground(new java.awt.Color(0, 0, 0));
+        note.setText("Notification");
+        note.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        note.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        note.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                noteActionPerformed(evt);
+            }
+        });
+        pop.add(note);
+
+        taskList.setBackground(new java.awt.Color(51, 51, 51));
+        taskList.setFont(taskList.getFont().deriveFont(taskList.getFont().getSize()+2f));
+        taskList.setForeground(new java.awt.Color(0, 0, 0));
+        taskList.setText("  Task List");
+        taskList.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        taskList.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        taskList.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        taskList.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        taskList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                taskListActionPerformed(evt);
+            }
+        });
+        pop.add(taskList);
+
+        dueList.setBackground(new java.awt.Color(51, 51, 51));
+        dueList.setFont(dueList.getFont().deriveFont(dueList.getFont().getSize()+2f));
+        dueList.setForeground(new java.awt.Color(0, 0, 0));
+        dueList.setText("Due List");
+        dueList.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        dueList.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        dueList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dueListActionPerformed(evt);
+            }
+        });
+        pop.add(dueList);
+
+        onhold.setFont(onhold.getFont().deriveFont(onhold.getFont().getSize()+2f));
+        onhold.setText("On-Hold List");
+        onhold.setFocusable(true);
+        onhold.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        onhold.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        onhold.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                onholdActionPerformed(evt);
+            }
+        });
+        pop.add(onhold);
+
+        passwd.setFont(passwd.getFont().deriveFont(passwd.getFont().getSize()+2f));
+        passwd.setText("Password Reset Requests");
+        passwd.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        passwd.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        passwd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwdActionPerformed(evt);
+            }
+        });
+        pop.add(passwd);
+
+        backup.setBackground(new java.awt.Color(51, 51, 51));
+        backup.setFont(backup.getFont().deriveFont(backup.getFont().getSize()+2f));
+        backup.setForeground(new java.awt.Color(0, 0, 0));
+        backup.setText("Backup / Restore");
+        backup.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        backup.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        backup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backupActionPerformed(evt);
+            }
+        });
+        pop.add(backup);
+
+        loggerv.setBackground(new java.awt.Color(51, 51, 51));
+        loggerv.setFont(loggerv.getFont().deriveFont(loggerv.getFont().getSize()+2f));
+        loggerv.setForeground(new java.awt.Color(0, 0, 0));
+        loggerv.setText("Logger");
+        loggerv.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        loggerv.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        loggerv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loggervActionPerformed(evt);
+            }
+        });
+        pop.add(loggerv);
+
+        lo.setFont(lo.getFont().deriveFont(lo.getFont().getSize()+2f));
+        lo.setForeground(new java.awt.Color(0, 0, 0));
+        lo.setText("Logout");
+        lo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lo.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        lo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loActionPerformed(evt);
+            }
+        });
+        pop.add(lo);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -147,30 +263,20 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanel11.setBackground(new java.awt.Color(171, 172, 173));
         jPanel11.setForeground(new java.awt.Color(60, 63, 65));
-        jPanel11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        username5.setText("Customer's Name");
-        username5.addActionListener(new java.awt.event.ActionListener() {
+        from.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                username5userActionPerformed(evt);
+                fromuserActionPerformed(evt);
             }
         });
-        jPanel11.add(username5, new org.netbeans.lib.awtextra.AbsoluteConstraints(297, 90, 140, 33));
 
-        Submit5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        Submit5.setText("Search");
-        Submit5.addActionListener(new java.awt.event.ActionListener() {
+        ipr0.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        ipr0.setText("...");
+        ipr0.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Submit5ActionPerformed(evt);
+                ipr0ActionPerformed(evt);
             }
         });
-        jPanel11.add(Submit5, new org.netbeans.lib.awtextra.AbsoluteConstraints(447, 88, -1, -1));
-
-        employeeLogin6.setBackground(new java.awt.Color(171, 172, 173));
-        employeeLogin6.setFont(employeeLogin6.getFont().deriveFont(employeeLogin6.getFont().getStyle() | java.awt.Font.BOLD, employeeLogin6.getFont().getSize()+2));
-        employeeLogin6.setForeground(new java.awt.Color(59, 63, 66));
-        employeeLogin6.setText("Indivisual Performance Report");
-        jPanel11.add(employeeLogin6, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 92, -1, 31));
 
         jPanel12.setBackground(new java.awt.Color(59, 63, 66));
         jPanel12.setForeground(new java.awt.Color(59, 63, 66));
@@ -182,65 +288,99 @@ public class Dashboard extends javax.swing.JFrame {
         employeeLogin20.setText("Reports");
         jPanel12.add(employeeLogin20, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 510, 70));
 
-        jPanel11.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, -1));
-
-        employeeLogin7.setBackground(new java.awt.Color(171, 172, 173));
-        employeeLogin7.setFont(employeeLogin7.getFont().deriveFont(employeeLogin7.getFont().getStyle() | java.awt.Font.BOLD, employeeLogin7.getFont().getSize()+2));
-        employeeLogin7.setForeground(new java.awt.Color(59, 63, 66));
-        employeeLogin7.setText("Job Sheet");
-        jPanel11.add(employeeLogin7, new org.netbeans.lib.awtextra.AbsoluteConstraints(208, 141, -1, 36));
-
-        jsText.addActionListener(new java.awt.event.ActionListener() {
+        to.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jsTextuserActionPerformed(evt);
+                touserActionPerformed(evt);
             }
         });
-        jPanel11.add(jsText, new org.netbeans.lib.awtextra.AbsoluteConstraints(297, 142, 90, 35));
 
-        Submit8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        Submit8.setText("Search");
-        Submit8.addActionListener(new java.awt.event.ActionListener() {
+        ipr.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        ipr.setText("...");
+        ipr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Submit8ActionPerformed(evt);
+                iprActionPerformed(evt);
             }
         });
-        jPanel11.add(Submit8, new org.netbeans.lib.awtextra.AbsoluteConstraints(447, 141, -1, -1));
 
-        js.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        js.setText("...");
-        js.addActionListener(new java.awt.event.ActionListener() {
+        employeeLogin8.setBackground(new java.awt.Color(171, 172, 173));
+        employeeLogin8.setFont(employeeLogin8.getFont().deriveFont(employeeLogin8.getFont().getStyle() | java.awt.Font.BOLD, employeeLogin8.getFont().getSize()+2));
+        employeeLogin8.setForeground(new java.awt.Color(59, 63, 66));
+        employeeLogin8.setText("Select Peirod");
+
+        reports.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Indivisual Performance Report", "Summery Performance Report", "Individual customer sales report" }));
+
+        employeeLogin9.setBackground(new java.awt.Color(171, 172, 173));
+        employeeLogin9.setFont(employeeLogin9.getFont().deriveFont(employeeLogin9.getFont().getStyle() | java.awt.Font.BOLD, employeeLogin9.getFont().getSize()+2));
+        employeeLogin9.setForeground(new java.awt.Color(59, 63, 66));
+        employeeLogin9.setText("From");
+
+        employeeLogin10.setBackground(new java.awt.Color(171, 172, 173));
+        employeeLogin10.setFont(employeeLogin10.getFont().deriveFont(employeeLogin10.getFont().getStyle() | java.awt.Font.BOLD, employeeLogin10.getFont().getSize()+2));
+        employeeLogin10.setForeground(new java.awt.Color(59, 63, 66));
+        employeeLogin10.setText("To");
+
+        jButton3.setText("Generate");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jsActionPerformed(evt);
+                jButton3ActionPerformed(evt);
             }
         });
-        jPanel11.add(js, new org.netbeans.lib.awtextra.AbsoluteConstraints(393, 141, -1, -1));
 
-        br.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        br.setText("Backup / Restore");
-        br.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                brActionPerformed(evt);
-            }
-        });
-        jPanel11.add(br, new org.netbeans.lib.awtextra.AbsoluteConstraints(376, 189, -1, -1));
-
-        jButton1.setFont(jButton1.getFont().deriveFont(jButton1.getFont().getStyle() | java.awt.Font.BOLD, jButton1.getFont().getSize()+2));
-        jButton1.setText("Task List");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanel11.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, -1, -1));
-
-        jButton2.setFont(jButton2.getFont().deriveFont(jButton2.getFont().getStyle() | java.awt.Font.BOLD, jButton2.getFont().getSize()+2));
-        jButton2.setText("Due List");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        jPanel11.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, -1, -1));
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(employeeLogin8, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel11Layout.createSequentialGroup()
+                                    .addComponent(from, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(ipr0))
+                                .addComponent(employeeLogin9, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel11Layout.createSequentialGroup()
+                                .addComponent(to, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ipr))
+                            .addComponent(employeeLogin10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(reports, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton3)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(employeeLogin8, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(13, 13, 13)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(employeeLogin9)
+                    .addComponent(employeeLogin10))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(from, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ipr0, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ipr, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(to, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(reports, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3))
+                .addContainerGap(49, Short.MAX_VALUE))
+        );
 
         jPanel1.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(1290, 540, 570, 270));
 
@@ -637,16 +777,6 @@ public class Dashboard extends javax.swing.JFrame {
         employeeLogin1.setText("Dashboard");
         jPanel3.add(employeeLogin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 2, 530, 70));
 
-        log.setBackground(new java.awt.Color(171, 172, 173));
-        log.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        log.setText("View Logs");
-        log.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                logActionPerformed(evt);
-            }
-        });
-        jPanel3.add(log, new org.netbeans.lib.awtextra.AbsoluteConstraints(1810, 20, -1, -1));
-
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, -1));
 
         jPanel13.setBackground(new java.awt.Color(171, 172, 173));
@@ -820,6 +950,11 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 540, 600, 270));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/3840x2560-3020841-black-and-white_camera_olympus_technology.jpg"))); // NOI18N
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, 1260));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1919, 1080));
@@ -841,14 +976,6 @@ public class Dashboard extends javax.swing.JFrame {
         new CustomerSearchList(conn, csearch.getText(),this,role.getText()).show();
     }//GEN-LAST:event_Submit1ActionPerformed
 
-    private void username5userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_username5userActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_username5userActionPerformed
-
-    private void Submit5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Submit5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Submit5ActionPerformed
-
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
         new MySQLQueries(conn).logAdd(new CodeSet().DateTime(true) + ": Staff Account ID: " + ls.get(0) + ": Logged Out");
         new Login().show();
@@ -869,31 +996,9 @@ public class Dashboard extends javax.swing.JFrame {
         new StaffSearchList(conn, ssearch.getText(), this, role.getText()).show();
     }//GEN-LAST:event_Submit7ActionPerformed
 
-    private void jsTextuserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jsTextuserActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jsTextuserActionPerformed
-
-    private void Submit8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Submit8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Submit8ActionPerformed
-
-    private void jsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jsActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jsActionPerformed
-
-    private void brActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brActionPerformed
-        new BackupRestore(conn,this).show();
-        this.enable(false);
-    }//GEN-LAST:event_brActionPerformed
-
     private void alertMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_alertMouseClicked
         new Alert(conn,role.getText(),this).show();
     }//GEN-LAST:event_alertMouseClicked
-
-    private void logActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logActionPerformed
-        new Logger(conn, this).show();
-        this.enable(false);
-    }//GEN-LAST:event_logActionPerformed
 
     private void jPanel1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseMoved
         if(role.getText().equals("Office Manager")||role.getText().equals("Shift Manager")){
@@ -901,21 +1006,84 @@ public class Dashboard extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jPanel1MouseMoved
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new TaskList(conn,this).show();
-        this.disable();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void addTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTaskActionPerformed
 
         new JobList(conn,this).show();
         this.disable();
     }//GEN-LAST:event_addTaskActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void iprActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iprActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_iprActionPerformed
+
+    private void touserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_touserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_touserActionPerformed
+
+    private void ipr0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ipr0ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ipr0ActionPerformed
+
+    private void fromuserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fromuserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fromuserActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        if(reports.getSelectedIndex() == 0){
+            new CodeSet().individualPerformance(conn, new CodeSet().convertStringToDataString(to.getText(),true), new CodeSet().convertStringToDataString(from.getText(),true));
+        } else if (reports.getSelectedIndex() == 1){
+            new CodeSet().summeryPerformance(conn, new CodeSet().convertStringToDataString(to.getText(),true), new CodeSet().convertStringToDataString(from.getText(),true));
+        } else {
+            
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void taskListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taskListActionPerformed
+         new TaskList(conn,this).show();
+        this.disable();
+    }//GEN-LAST:event_taskListActionPerformed
+
+    private void dueListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dueListActionPerformed
         new JobDeadline(conn,this).show();
         this.disable();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_dueListActionPerformed
+
+    private void backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupActionPerformed
+        new BackupRestore(conn,this).show();
+        this.enable(false);
+    }//GEN-LAST:event_backupActionPerformed
+
+    private void loggervActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loggervActionPerformed
+        new Logger(conn, this).show();
+        this.enable(false);
+    }//GEN-LAST:event_loggervActionPerformed
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        if(evt.getButton()==MouseEvent.BUTTON3){
+            pop.show(this, evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void noteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noteActionPerformed
+        new Alert(conn,role.getText(),this).show();
+    }//GEN-LAST:event_noteActionPerformed
+
+    private void loActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loActionPerformed
+        new MySQLQueries(conn).logAdd(new CodeSet().DateTime(true) + ": Staff Account ID: " + ls.get(0) + ": Logged Out");
+        new Login().show();
+        this.dispose();
+    }//GEN-LAST:event_loActionPerformed
+
+    private void onholdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onholdActionPerformed
+        new StatusUpdate(conn, this, id.getText()).show();
+        this.disable();
+    }//GEN-LAST:event_onholdActionPerformed
+
+    private void passwdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwdActionPerformed
+        new UpdateStatus(conn,this,id.getText()).show();
+        this.disable();
+        
+    }//GEN-LAST:event_passwdActionPerformed
     
     private void setProfile(List<String> l){
         id.setText(idg.generate(Integer.parseInt(l.get(0)), 1));
@@ -933,11 +1101,7 @@ public class Dashboard extends javax.swing.JFrame {
             alert.setVisible(false);
             alertCount.setVisible(false);
         }
-        if(l.get(1).equals("Office Manager")){
-            log.setVisible(true);
-        } else {
-            log.setVisible(false);
-        }
+        
         new MySQLQueries(conn).deadline();
     }
     
@@ -994,21 +1158,22 @@ public class Dashboard extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Submit;
     private javax.swing.JButton Submit1;
-    private javax.swing.JButton Submit5;
     private javax.swing.JButton Submit6;
     private javax.swing.JButton Submit7;
-    private javax.swing.JButton Submit8;
     private javax.swing.JLabel activeAcc;
     private javax.swing.JButton addTask;
     private javax.swing.JLabel alert;
     private javax.swing.JLabel alertCount;
-    private javax.swing.JButton br;
+    private javax.swing.JMenuItem backup;
     private javax.swing.JLabel cj;
     private javax.swing.JLabel copyright;
     private javax.swing.JTextField csearch;
     private cambodia.raven.DateChooser dateChooser1;
+    private cambodia.raven.DateChooser dateChooser2;
+    private javax.swing.JMenuItem dueList;
     private javax.swing.JLabel employeeLogin;
     private javax.swing.JLabel employeeLogin1;
+    private javax.swing.JLabel employeeLogin10;
     private javax.swing.JLabel employeeLogin11;
     private javax.swing.JLabel employeeLogin12;
     private javax.swing.JLabel employeeLogin13;
@@ -1021,13 +1186,15 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel employeeLogin3;
     private javax.swing.JLabel employeeLogin4;
     private javax.swing.JLabel employeeLogin5;
-    private javax.swing.JLabel employeeLogin6;
-    private javax.swing.JLabel employeeLogin7;
+    private javax.swing.JLabel employeeLogin8;
+    private javax.swing.JLabel employeeLogin9;
     private javax.swing.JLabel employeeLogin99;
     private javax.swing.JButton exit;
+    private javax.swing.JTextField from;
     private javax.swing.JLabel id;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton ipr;
+    private javax.swing.JButton ipr0;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
@@ -1053,16 +1220,21 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JButton js;
-    private javax.swing.JTextField jsText;
-    private javax.swing.JButton log;
+    private javax.swing.JMenuItem lo;
+    private javax.swing.JMenuItem loggerv;
     private javax.swing.JLabel name;
+    private javax.swing.JMenuItem note;
     private javax.swing.JLabel oj;
+    private javax.swing.JMenuItem onhold;
+    private javax.swing.JMenuItem passwd;
+    private javax.swing.JPopupMenu pop;
+    private javax.swing.JComboBox<String> reports;
     private javax.swing.JLabel role;
     private javax.swing.JTextField ssearch;
     private javax.swing.JLabel statValued;
     private javax.swing.JLabel suspendNo;
+    private javax.swing.JMenuItem taskList;
     private javax.swing.JLabel tj;
-    private javax.swing.JTextField username5;
+    private javax.swing.JTextField to;
     // End of variables declaration//GEN-END:variables
 }

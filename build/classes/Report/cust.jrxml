@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b26dc1a3-22ee-47d7-95f9-10162851c91e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="acc2" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="acc1" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["E:\\Projects\\Photo-Shop-Management-Software\\src\\Report\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select j.job_id, j.price, j.discount, j.task_id, t.description, j.start_time,
+  CONCAT(FLOOR(timestampdiff(hour, j.start_time,j.end_time)/24),'hr ',
+         MOD(timestampdiff(minute, j.start_time,j.end_time),60),'min ',
+         MOD(timestampdiff(second, j.start_time,j.end_time),60),'sec') as timetaken,
+  s.first_name,t.`Shelf slot`
+from job j
+  inner join task t on j.task_id = t.task_id
+  inner join  staff_account s on j.staff_id = s.staff_id
+where j.customer_id = $P{acc2} and j.start_time is not null and j.end_time is not null]]>
+	</queryString>
+	<field name="job_id" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="price" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="discount" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="task_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="description" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="start_time" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="timetaken" class="java.lang.String"/>
+	<field name="first_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Shelf slot" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="18" width="802" height="20" uuid="b29236a2-0cd7-4225-b1f7-4af066f7140a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Individual Customer Report]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="92" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="702" y="0" width="100" height="20" uuid="da1b42a2-9cc7-4140-810e-fc2bcf4ace6c"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="0" width="100" height="20" uuid="1cb20ba8-845b-4310-bbb5-8f25b6280305"/>
+				<textFieldExpression><![CDATA[$P{acc1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="136" height="20" uuid="3cc034e2-5e36-4dba-bbfa-c11c0c1b90ed"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Customer Account Number:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="665" y="0" width="37" height="20" uuid="a97cf3ec-ecd8-4314-acb4-34b5b996cd30"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Date:]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="0" y="41" width="802" height="50" uuid="e2594084-90c1-4c39-b957-264c1e317e9f"/>
+				<subreportParameter name="acc2">
+					<subreportParameterExpression><![CDATA[$P{acc2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "cust_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="8e10a133-1821-4e1c-8558-a8957e66296a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Job ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="66" height="20" uuid="22d0db1b-77b4-4483-a759-630070520ffe"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Price]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="166" y="0" width="71" height="20" uuid="23383694-502f-4a46-9cc0-886a638b93e2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Discount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="237" y="0" width="45" height="20" uuid="d7f93661-8847-40f1-bcb8-778e565a1ada"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Task ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="282" y="0" width="150" height="20" uuid="73bdf674-75c3-471e-8a98-2f08bd3f4ebf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="432" y="0" width="100" height="20" uuid="1f46a320-5e2a-488a-876c-8604a47320bc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Start Time]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="532" y="0" width="100" height="20" uuid="f2eabb8b-3f5f-4f76-a32d-5c7843948d22"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Time Taken]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="632" y="0" width="100" height="20" uuid="a78641e7-d695-428b-b85e-c93eaff2fef8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[First Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="732" y="0" width="70" height="20" uuid="52a9a133-e606-40e0-b1fe-800d310f5aa3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Shelf slot]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="100" height="20" uuid="214837be-2a40-4a2c-8a94-0141b5bcf9de"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="100" y="0" width="66" height="20" uuid="f484f8c6-7812-48b9-9cf7-588deacf7f37"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="166" y="0" width="71" height="20" uuid="959bdf09-ea56-475e-9ff0-1e406b80d740"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="237" y="0" width="45" height="20" uuid="8c0775e1-3404-467c-b6bd-5737c1c99704"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="282" y="0" width="150" height="20" uuid="ca5e87d7-2497-4f88-8a11-261f7d2552ba"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="432" y="0" width="100" height="20" uuid="0fa4ab73-fc01-4ed5-8d28-ac0965caa518"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="532" y="0" width="100" height="20" uuid="86d54ce2-e08d-47bf-a52a-ad0ce6081431"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="632" y="0" width="100" height="20" uuid="31c65986-3a13-4181-8f25-4947e9a9b42e"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="732" y="0" width="70" height="20" uuid="b07857a7-b18e-4b51-9878-29288ea5ca63"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="7fd25952-0c9f-49dd-8a4e-81f4a01efba5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{job_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="66" height="20" uuid="2fcdc418-ad8a-4924-b8d8-2c59d820e29c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="166" y="0" width="71" height="20" uuid="f9c5672f-1a4a-4c81-b8e4-1215460e2385"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{discount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="237" y="0" width="45" height="20" uuid="a1770f9f-30e5-4edf-bdce-accc6ff01a30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{task_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="282" y="0" width="150" height="20" uuid="6f2416f6-78bc-4a1d-b2d5-78e3b4c11e3e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="432" y="0" width="100" height="20" uuid="97c95ed6-abd3-4e70-8fc8-e51c57ce288c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{start_time}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="532" y="0" width="100" height="20" uuid="5a49731d-e86b-4378-ba67-1e2154131529"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{timetaken}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="632" y="0" width="100" height="20" uuid="f5110d90-0da7-4e98-878d-7acbf916c69a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{first_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="732" y="0" width="70" height="20" uuid="8a82d645-ce7f-4a68-a353-477c318873d7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Shelf slot}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="100" height="20" uuid="4cc956e8-a138-430c-a5ea-399da54ebff4"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="100" y="0" width="66" height="20" uuid="83a47af0-e39c-4aac-b3c9-fe9db729c706"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="166" y="0" width="71" height="20" uuid="35241c6f-7cbe-4f96-9b07-ae31e74ca629"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="237" y="0" width="45" height="20" uuid="51709502-d23e-4397-8c25-2072921a9d14"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="282" y="0" width="150" height="20" uuid="94774a46-d780-4242-9986-5146f218fec5"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="432" y="0" width="100" height="20" uuid="579ffda9-bf3c-4b9e-93aa-02d555bc086f"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="532" y="0" width="100" height="20" uuid="825a2d5c-0cbd-4f43-a5f0-e0a5bef8cea6"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="632" y="0" width="100" height="20" uuid="d7027d20-8fa9-48c1-bcba-af56d06f418a"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="732" y="0" width="70" height="20" uuid="efe35fee-5cda-4262-b314-2a4faeb5cf8d"/>
+			</rectangle>
+		</band>
+	</detail>
+</jasperReport>

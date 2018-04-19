@@ -125,6 +125,7 @@ public class ForgotPassword extends javax.swing.JFrame {
         if (id.getText().equals(" Employee ID") || id.getText().equals("")) {
             text.setText("Please Enter your Employee ID and press enter!");
         }else if (new MySQLQueries(conn).IsExist(id.getText())){
+            new MySQLQueries(conn).initPassword(id.getText());
             new MySQLQueries(conn).notificationAdd(new CodeSet().DateTime(true)+": Paassword reset request: Staff account: " + id.getText(), "OS", "R");
             new MySQLQueries(conn).logAdd(new CodeSet().DateTime(true)+": Paassword reset request: Staff account: " + id.getText());
             frame.enable(true);
