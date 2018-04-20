@@ -307,7 +307,7 @@ public class Dashboard extends javax.swing.JFrame {
         employeeLogin8.setForeground(new java.awt.Color(59, 63, 66));
         employeeLogin8.setText("Select Peirod");
 
-        reports.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Indivisual Performance Report", "Summery Performance Report", "Individual customer sales report" }));
+        reports.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Indivisual Performance Report", "Summery Performance Report" }));
 
         employeeLogin9.setBackground(new java.awt.Color(171, 172, 173));
         employeeLogin9.setFont(employeeLogin9.getFont().deriveFont(employeeLogin9.getFont().getStyle() | java.awt.Font.BOLD, employeeLogin9.getFont().getSize()+2));
@@ -1031,11 +1031,9 @@ public class Dashboard extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         if(reports.getSelectedIndex() == 0){
             new CodeSet().individualPerformance(conn, new CodeSet().convertStringToDataString(to.getText(),true), new CodeSet().convertStringToDataString(from.getText(),true));
-        } else if (reports.getSelectedIndex() == 1){
-            new CodeSet().summeryPerformance(conn, new CodeSet().convertStringToDataString(to.getText(),true), new CodeSet().convertStringToDataString(from.getText(),true));
         } else {
-            
-        }
+            new CodeSet().summeryPerformance(conn, new CodeSet().convertStringToDataString(to.getText(),true), new CodeSet().convertStringToDataString(from.getText(),true));
+        } 
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void taskListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taskListActionPerformed

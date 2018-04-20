@@ -1196,7 +1196,7 @@ public class MySQLQueries {
         } catch (SQLException ex) {
             Logger.getLogger(MySQLQueries.class.getName()).log(Level.SEVERE, null, ex);
             return null;
-        }
+        }  
     }
 
     public void initPassword(String s) {

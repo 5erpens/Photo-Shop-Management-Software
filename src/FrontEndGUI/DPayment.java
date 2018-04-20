@@ -6,6 +6,7 @@
 package FrontEndGUI;
 
 import BackEndCode.CodeSet;
+import BackEndCode.IDgen;
 import BackEndCode.MySQLQueries;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -349,13 +350,17 @@ public class DPayment extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        
         if(type.equals("Cash")){
+            String job = new MySQLQueries(conn).updateTask((DefaultTableModel) t, cid);
             new MySQLQueries(conn).generateReceipt(type,
                 " ",
-                new MySQLQueries(conn).getPrime(new MySQLQueries(conn).updateTask((DefaultTableModel) t, cid)));
+                new MySQLQueries(conn).getPrime(job));
+            new CodeSet().printInvoice(conn, job,new IDgen().generate((cid),2));
         } else {
+            String job = new MySQLQueries(conn).updateTask((DefaultTableModel) t, cid);
            new MySQLQueries(conn).generateReceipt(type,
                 card.getSelectedItem().toString(),
-                new MySQLQueries(conn).getPrime(new MySQLQueries(conn).updateTask((DefaultTableModel) t, cid)));
+                new MySQLQueries(conn).getPrime(job));
+           new CodeSet().printInvoice(conn, job,new IDgen().generate((cid),2));
         }
         
         frame.dispose();

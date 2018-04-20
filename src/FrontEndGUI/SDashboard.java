@@ -150,7 +150,6 @@ public class SDashboard extends javax.swing.JFrame {
         jPanel11.setBackground(new java.awt.Color(171, 172, 173));
         jPanel11.setForeground(new java.awt.Color(60, 63, 65));
 
-        from.setText("18-04-2018");
         from.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fromuserActionPerformed(evt);
@@ -194,7 +193,7 @@ public class SDashboard extends javax.swing.JFrame {
         employeeLogin8.setForeground(new java.awt.Color(59, 63, 66));
         employeeLogin8.setText("Select Peirod");
 
-        reports.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Indivisual Performance Report", "Summery Performance Report", "Individual customer sales report" }));
+        reports.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Indivisual Performance Report", "Summery Performance Report" }));
 
         employeeLogin9.setBackground(new java.awt.Color(171, 172, 173));
         employeeLogin9.setFont(employeeLogin9.getFont().deriveFont(employeeLogin9.getFont().getStyle() | java.awt.Font.BOLD, employeeLogin9.getFont().getSize()+2));
@@ -920,11 +919,9 @@ public class SDashboard extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         if(reports.getSelectedIndex() == 0){
             new CodeSet().individualPerformance(conn, new CodeSet().convertStringToDataString(to.getText(),true), new CodeSet().convertStringToDataString(from.getText(),true));
-        } else if (reports.getSelectedIndex() == 1){
-
-        } else {
-
-        }
+        } else{
+             new CodeSet().summeryPerformance(conn, new CodeSet().convertStringToDataString(to.getText(),true), new CodeSet().convertStringToDataString(from.getText(),true));
+        } 
     }//GEN-LAST:event_jButton3ActionPerformed
     
     private void setProfile(List<String> l){
